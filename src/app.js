@@ -1,10 +1,20 @@
 require('dotenv').config();
+require('./database/models/user');
 
 const express = require('express');
 const app = express();
 const path = require('path');
-const port = process.env.PORT;
+const port = process.env.SERVER_PORT;
+const sequelize = require('./database/mysql');
 
-app.use(express.static(path.join(__dirname, 'views')));
-
-app.listen(port, () => console.log(`${port} 포트 서버 실행🔥 `));
+// db sync
+(async () => {
+  try {
+    await sequelize.sync();
+    app.listen(port, () => {
+      console.log(`${port} 서버가 켜졌습니다 👌`);
+    });
+  } catch (error) {
+    console.error('DB 연결 오류:', error);
+  }
+})();
