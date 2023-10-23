@@ -1,0 +1,24 @@
+# 패키지 의존성 디렉토리 (node_modules) 제외
+/node_modules
+
+# 환경 설정 파일 제외 (예: .env)
+.env
+
+# 로컬 설정 파일 (예: config.js) 제외 (실제 환경에서 다를 수 있음)
+config.js
+
+# 로그 파일 제외
+*.log
+
+# 임시 파일 및 디렉토리 제외
+*.tmp
+*.temp
+*.swp
+.DS_Store
+
+# VSCode 설정 파일 및 디렉토리 제외 (사용 중인 편집기에 따라 다를 수 있음)
+.vscode
+
+# 개발자 환경 파일 제외 (예: .editorconfig, .eslintrc)
+.editorconfig
+.eslintrc
