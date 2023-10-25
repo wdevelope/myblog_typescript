@@ -6,7 +6,7 @@ const lifePost = require('./lifePost');
 
 // 유저
 router.use('/user', userRouter);
-// 일기
+// life 게시판
 router.use('/lifePost', lifePost);
 
 module.exports = router;

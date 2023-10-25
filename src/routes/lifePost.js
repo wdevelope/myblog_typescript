@@ -2,9 +2,9 @@ const express = require('express');
 const router = express.Router();
 const lifePostController = require('../controllers/lifePost');
 
-// 회원가입
+// 게시글 생성
 router.post('/', lifePostController.create);
-// 로그인
-router.post('/', lifePostController.get);
+// 게시글 전체조회
+router.get('/', lifePostController.get);
 
 module.exports = router;
