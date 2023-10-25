@@ -11,20 +11,19 @@ module.exports = {
   },
 
   // 로그인
-  login: async (req, res) => {
-    const { email, password } = req.body;
-    const user = await userRepository.login(email);
+  login: async (email, password) => {
+    const user = await userRepository.findUserByEmail(email);
 
     if (!user) {
-      return res.status(404).json({ message: '유저가 존재하지 않습니다.' });
+      throw new Error('존재하지 않는 회원입니다.');
     }
 
     const isPasswordValid = await bcrypt.compare(password, user.password);
 
     if (!isPasswordValid) {
-      return res.status(401).json({ message: '아이디 또는 비밀번호가 틀렸습니다.' });
+      throw new Error('아이디 또는 비밀번호가 틀렸습니다.');
     }
 
-    return res.status(200).json({ message: '로그인 성공' });
+    return;
   },
 };

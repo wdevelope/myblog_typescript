@@ -1,4 +1,4 @@
-const authService = require('../services/user');
+const userService = require('../services/user');
 
 module.exports = {
   // 회원가입
@@ -18,7 +18,7 @@ module.exports = {
     const { email, password } = req.body;
     try {
       const token = await userService.login(email, password);
-      res.status(200).json({ token });
+      res.status(200).json({ message: '로그인 성공' });
     } catch (err) {
       console.log(err);
       res.status(500).json({ message: err.message });

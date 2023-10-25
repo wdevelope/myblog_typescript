@@ -22,3 +22,6 @@ config.js
 # 개발자 환경 파일 제외 (예: .editorconfig, .eslintrc)
 .editorconfig
 .eslintrc
+
+# study
+study.txt
