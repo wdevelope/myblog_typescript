@@ -1,5 +1,6 @@
 const userRepository = require('../repositories/user');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 module.exports = {
   // 회원가입
@@ -24,6 +25,10 @@ module.exports = {
       throw new Error('아이디 또는 비밀번호가 틀렸습니다.');
     }
 
-    return;
+    const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET, {
+      expiresIn: process.env.JWT_EXPIREIN,
+    });
+
+    return token;
   },
 };

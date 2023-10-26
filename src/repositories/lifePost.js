@@ -1,4 +1,4 @@
-const lifePost = require('../database/models/likfePost');
+const lifePost = require('../database/models/lifePost');
 
 module.exports = {
   // 게시글 생성

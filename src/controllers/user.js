@@ -18,7 +18,7 @@ module.exports = {
     const { email, password } = req.body;
     try {
       const token = await userService.login(email, password);
-      res.status(200).json({ message: '로그인 성공' });
+      res.status(200).json({ token });
     } catch (err) {
       console.log(err);
       res.status(500).json({ message: err.message });
