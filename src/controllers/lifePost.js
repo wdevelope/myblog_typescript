@@ -10,7 +10,7 @@ module.exports = {
       res.status(201).json({ message: '게시글 생성 완료' });
     } catch (err) {
       console.log(err);
-      res.status(500).json({ message: err.message });
+      res.status(500).json({ errorMessage: err.message });
     }
   },
 
@@ -21,7 +21,7 @@ module.exports = {
       res.status(200).json(lifePost);
     } catch (err) {
       console.log(err);
-      res.status(500).json({ message: err.message });
+      res.status(500).json({ errorMessage: err.message });
     }
   },
 };
