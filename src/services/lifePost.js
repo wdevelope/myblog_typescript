@@ -2,8 +2,8 @@ const lifePostRepository = require('../repositories/lifePost');
 
 module.exports = {
   // 게시글 생성
-  create: async (title, content) => {
-    const newLifePost = await lifePostRepository.create(title, content);
+  create: async (userId, title, content) => {
+    const newLifePost = await lifePostRepository.create(userId, title, content);
     return newLifePost;
   },
 
