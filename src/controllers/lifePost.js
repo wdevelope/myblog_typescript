@@ -14,6 +14,18 @@ module.exports = {
     }
   },
 
+  // 게시글 삭제
+  delete: async (req, res) => {
+    const postId = req.params.postId;
+    try {
+      await lifePostService.delete(postId);
+      res.status(200).json({ message: '게시글 삭제 완료' });
+    } catch (err) {
+      console.log(err);
+      res.status(500).json({ errorMessage: err.message });
+    }
+  },
+
   // 게시글 전체조회
   get: async (req, res) => {
     try {
