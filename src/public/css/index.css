@@ -57,13 +57,6 @@ nav a:hover {
 /* 메인 콘텐츠 스타일 */
 main {
   margin: 5vw;
-
-  font-size: 30px;
-  padding: 20px;
-}
-
-main h2 {
-  font-size: 20px;
 }
 
 /* 바닥 스타일 */

@@ -21,8 +21,17 @@ module.exports = {
     });
   },
 
+  // 게시글 상세 조회
+  get: async (postId) => {
+    return await post.findOne({
+      where: {
+        id: postId,
+      },
+    });
+  },
+
   // 게시글 전체 조회
-  get: async (req, res) => {
+  getAll: async (req, res) => {
     return await post.findAll({
       include: {
         model: user,

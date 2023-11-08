@@ -5,8 +5,8 @@ const userRouter = require('./user');
 const post = require('./post');
 
 // 유저
-router.use('api/user', userRouter);
+router.use('/api/user', userRouter);
 // 게시판
-router.use('api/post', post);
+router.use('/api/post', post);
 
 module.exports = router;

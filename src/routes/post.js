@@ -8,7 +8,9 @@ const validation = require('../middlewares/validation');
 router.post('/', authMiddleware, validation.createPost, postController.create);
 // 게시글 삭제
 router.delete('/:postId', authMiddleware, postController.delete);
+// 게시글 상세조회
+router.get('/:postId', postController.get);
 // 게시글 전체조회
-router.get('/', authMiddleware, postController.get);
+router.get('/', postController.getAll);
 
 module.exports = router;

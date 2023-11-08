@@ -13,9 +13,15 @@ module.exports = {
     return deletedpost;
   },
 
+  // 게시글 상세조회
+  get: async (postId) => {
+    const getPost = await postRepository.get(postId);
+    return getPost;
+  },
+
   // 게시글 전체조회
-  get: async () => {
-    const posts = await postRepository.get();
+  getAll: async () => {
+    const posts = await postRepository.getAll();
     return posts;
   },
 };
