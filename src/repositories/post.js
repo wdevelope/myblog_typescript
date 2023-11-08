@@ -1,19 +1,20 @@
-const lifePost = require('../database/models/lifePost');
+const post = require('../database/models/post');
 const user = require('../database/models/user');
 
 module.exports = {
   // 게시글 생성
-  create: async (userId, title, content) => {
-    return await lifePost.create({
+  create: async (userId, title, content, category) => {
+    return await post.create({
       title,
       content,
       userId,
+      category,
     });
   },
 
   // 게시글 삭제
   delete: async (postId) => {
-    return await lifePost.destroy({
+    return await post.destroy({
       where: {
         id: postId,
       },
@@ -22,7 +23,7 @@ module.exports = {
 
   // 게시글 전체 조회
   get: async (req, res) => {
-    return await lifePost.findAll({
+    return await post.findAll({
       include: {
         model: user,
         attributes: ['name'],

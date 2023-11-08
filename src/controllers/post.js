@@ -1,12 +1,12 @@
-const lifePostService = require('../services/lifePost');
+const postService = require('../services/post');
 
 module.exports = {
   // 게시글 생성
   create: async (req, res) => {
-    const { title, content } = req.body;
+    const { title, content, category } = req.body;
     const userId = req.user.userId;
     try {
-      await lifePostService.create(userId, title, content);
+      await postService.create(userId, title, content, category);
       res.status(201).json({ message: '게시글 생성 완료' });
     } catch (err) {
       console.log(err);
@@ -18,7 +18,7 @@ module.exports = {
   delete: async (req, res) => {
     const postId = req.params.postId;
     try {
-      await lifePostService.delete(postId);
+      await postService.delete(postId);
       res.status(200).json({ message: '게시글 삭제 완료' });
     } catch (err) {
       console.log(err);
@@ -29,8 +29,8 @@ module.exports = {
   // 게시글 전체조회
   get: async (req, res) => {
     try {
-      const lifePost = await lifePostService.get();
-      res.status(200).json(lifePost);
+      const post = await postService.get();
+      res.status(200).json(post);
     } catch (err) {
       console.log(err);
       res.status(500).json({ errorMessage: err.message });

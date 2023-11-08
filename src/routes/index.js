@@ -2,11 +2,11 @@ const express = require('express');
 const router = express.Router();
 
 const userRouter = require('./user');
-const lifePost = require('./lifePost');
+const post = require('./post');
 
 // 유저
-router.use('/user', userRouter);
-// life 게시판
-router.use('/lifePost', lifePost);
+router.use('api/user', userRouter);
+// 게시판
+router.use('api/post', post);
 
 module.exports = router;

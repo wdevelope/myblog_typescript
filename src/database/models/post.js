@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../mysql');
 
-const lifePost = sequelize.define('lifePost', {
+const post = sequelize.define('post', {
   id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
@@ -16,6 +16,13 @@ const lifePost = sequelize.define('lifePost', {
     type: DataTypes.TEXT,
     allowNull: false,
   },
+  category: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    validate: {
+      isIn: [['life', 'study', 'hobby']],
+    },
+  },
 });
 
-module.exports = lifePost;
+module.exports = post;

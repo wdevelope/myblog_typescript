@@ -1,0 +1,77 @@
+/* 전체 페이지 스타일 */
+body {
+  margin: 10vw;
+  padding: 0;
+  background-color: #f2f2f2;
+}
+
+/* 헤더 스타일 */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-left: 5vw;
+  margin-right: 5vw;
+}
+
+header h1 {
+  font-size: 2rem;
+}
+
+header h1:hover {
+  color: blue;
+}
+
+header button {
+  font-size: 1.2rem;
+  padding: 5px 10px;
+
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+header button:hover {
+  color: blue;
+}
+
+/* 네비게이션 스타일 */
+nav > div {
+  margin-left: 15vw;
+  margin-right: 15vw;
+  display: flex;
+  justify-content: space-between;
+}
+
+nav a {
+  text-decoration: none;
+  color: black;
+  font-size: 1.4rem;
+  padding: 7px 10px;
+  cursor: pointer;
+}
+
+nav a:hover {
+  color: blue;
+}
+
+/* 메인 콘텐츠 스타일 */
+main {
+  margin: 5vw;
+
+  font-size: 30px;
+  padding: 20px;
+}
+
+main h2 {
+  font-size: 20px;
+}
+
+/* 바닥 스타일 */
+footer {
+  text-align: center;
+  padding: 10px 0;
+}
+
+footer h3 {
+  margin: 0;
+}

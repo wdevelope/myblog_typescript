@@ -5,11 +5,19 @@ const express = require('express');
 const app = express();
 const sequelize = require('./database/mysql');
 const router = require('./routes');
+const path = require('path');
 
 app.use(express.json());
 app.use(router);
 
-// db sync
+// 프론트 연결
+app.use(express.static(__dirname + '/public'));
+app.get('/:pageName', (req, res) => {
+  const pageName = req.params.pageName;
+  res.sendFile(path.join(__dirname, `public/views/${pageName}.html`));
+});
+
+// DB 동기화 + 서버실행
 (async () => {
   try {
     await sequelize.sync();
