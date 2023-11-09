@@ -4,7 +4,11 @@ const jwt = require('jsonwebtoken');
 
 module.exports = {
   // 회원가입
-  register: async (name, email, password) => {
+  register: async (name, email, password, confirmPassword) => {
+    if (!confirmPassword) {
+      throw new Error('비밀번호 확인이 필요합니다.');
+    }
+
     const hashedPassword = await bcrypt.hash(password, 10);
     const newUser = await userRepository.register(name, email, hashedPassword);
 

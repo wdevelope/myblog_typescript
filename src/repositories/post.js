@@ -12,6 +12,19 @@ module.exports = {
     });
   },
 
+  // life 게시글 전체 조회
+  getAllLife: async () => {
+    return await post.findAll({
+      where: {
+        category: 'study',
+      },
+      include: {
+        model: user,
+        attributes: ['name'],
+      },
+    });
+  },
+
   // 게시글 삭제
   delete: async (postId) => {
     return await post.destroy({
@@ -26,16 +39,6 @@ module.exports = {
     return await post.findOne({
       where: {
         id: postId,
-      },
-    });
-  },
-
-  // 게시글 전체 조회
-  getAll: async (req, res) => {
-    return await post.findAll({
-      include: {
-        model: user,
-        attributes: ['name'],
       },
     });
   },

@@ -3,9 +3,9 @@ const userService = require('../services/user');
 module.exports = {
   // 회원가입
   register: async (req, res) => {
-    const { name, email, password } = req.body;
+    const { name, email, password, confirmPassword } = req.body;
     try {
-      const newUser = await userService.register(name, email, password);
+      const newUser = await userService.register(name, email, password, confirmPassword);
       res.status(201).json(newUser);
     } catch (err) {
       console.log(err);

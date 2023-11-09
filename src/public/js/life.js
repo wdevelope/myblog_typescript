@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
 // 🎯 일기 게시판 전체 렌더링
 async function lifePostRender() {
   try {
-    const response = await fetch('/api/post');
+    const response = await fetch('/api/post/life');
 
     if (!response.ok) {
       console.log('렌더링 에러');

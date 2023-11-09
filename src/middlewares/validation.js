@@ -16,28 +16,31 @@ const validate = function (req, res, next) {
 // 유효성 체크
 module.exports = {
   // 회원가입
-  createUser: [
+  register: [
     body('name').trim().notEmpty().withMessage('이름을 입력해주세요.'),
     body('email').isEmail().normalizeEmail().withMessage('이메일 형식이 아닙니다. 확인해주세요.'),
     body('password')
       .custom((value, { req }) => {
-        if (value != req.body.confirm) {
+        if (value != req.body.confirmPassword) {
           throw new Error('확인 비밀번호와 일치하지 않습니다.');
         } else {
           return value;
         }
       })
-      .matches(/^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,15}$/)
-      .withMessage('숫자와 문자, 기호를 포함한 8~15자리 비밀번호를 입력해주세요.'),
+      .trim()
+      .isLength({ min: 6 })
+      .matches(/^(?=.*[a-zA-Z])(?=.*[0-9])/)
+      .withMessage('숫자와 문자를 포함한 6자리 이상의 비밀번호를 입력해주세요.'),
     validate,
   ],
   // 로그인
-  loginUser: [
+  login: [
     body('email').isEmail().withMessage('이메일 형식이 아닙니다. 확인해주세요.'),
     body('password')
       .trim()
-      .matches(/^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,15}$/)
-      .withMessage('숫자와 문자, 기호를 포함한 8~15자리 비밀번호를 입력해주세요.'),
+      .isLength({ min: 6 })
+      .matches(/^(?=.*[a-zA-Z])(?=.*[0-9])/)
+      .withMessage('숫자와 문자를 포함한 6자리 이상의 비밀번호를 입력해주세요.'),
     validate,
   ],
   // 게시글 생성

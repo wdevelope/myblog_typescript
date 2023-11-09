@@ -7,6 +7,12 @@ module.exports = {
     return newpost;
   },
 
+  // life 게시글 전체조회
+  getAllLife: async () => {
+    const posts = await postRepository.getAllLife();
+    return posts;
+  },
+
   // 게시글 삭제
   delete: async (postId) => {
     const deletedpost = await postRepository.delete(postId);
@@ -17,11 +23,5 @@ module.exports = {
   get: async (postId) => {
     const getPost = await postRepository.get(postId);
     return getPost;
-  },
-
-  // 게시글 전체조회
-  getAll: async () => {
-    const posts = await postRepository.getAll();
-    return posts;
   },
 };

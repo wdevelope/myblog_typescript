@@ -14,6 +14,17 @@ module.exports = {
     }
   },
 
+  // life 게시글 전체조회
+  getAllLife: async (req, res) => {
+    try {
+      const post = await postService.getAllLife();
+      res.status(200).json(post);
+    } catch (err) {
+      console.log(err);
+      res.status(500).json({ errorMessage: err.message });
+    }
+  },
+
   // 게시글 삭제
   delete: async (req, res) => {
     const postId = req.params.postId;
@@ -31,17 +42,6 @@ module.exports = {
     const postId = req.params.postId;
     try {
       const post = await postService.get(postId);
-      res.status(200).json(post);
-    } catch (err) {
-      console.log(err);
-      res.status(500).json({ errorMessage: err.message });
-    }
-  },
-
-  // 게시글 전체조회
-  getAll: async (req, res) => {
-    try {
-      const post = await postService.getAll();
       res.status(200).json(post);
     } catch (err) {
       console.log(err);

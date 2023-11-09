@@ -14,23 +14,21 @@ header {
   margin-right: 5vw;
 }
 
-header h1 {
-  font-size: 2rem;
+header > div > a {
+  text-decoration: none;
+  font-size: 1.3rem;
+  margin-left: 10px;
 }
 
-header h1:hover {
-  color: blue;
+#mainTitle {
+  font-size: 3.5rem;
+  font-weight: bold;
+  color: #333;
+  text-decoration: none;
 }
 
-header button {
-  font-size: 1.2rem;
-  padding: 5px 10px;
-
-  border-radius: 10px;
-  cursor: pointer;
-}
-
-header button:hover {
+header a:hover,
+#mainTitle:hover {
   color: blue;
 }
 
@@ -68,3 +66,28 @@ footer {
 footer h3 {
   margin: 0;
 }
+
+/* 로그인 박스 */
+#loginBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#loginBox button {
+  width: 100px;
+  padding: 8px 5px;
+}
+
+/* Input 창 크기 조절 */
+#loginBox input {
+  width: 300px;
+  padding: 8px 5px;
+}
+/* 
+#email,
+#password,
+#confirmPassword,
+#name {
+  caret-color: auto;
+} */
