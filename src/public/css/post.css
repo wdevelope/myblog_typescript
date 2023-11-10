@@ -48,3 +48,15 @@
   justify-content: space-between;
   align-items: center;
 }
+
+/* 글쓰기 */
+.writePostBox {
+  display: flex;
+  flex-direction: column;
+  margin: 5vw;
+}
+
+textarea#content {
+  height: 200px;
+  resize: vertical;
+}

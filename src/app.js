@@ -6,6 +6,7 @@ const app = express();
 const sequelize = require('./database/mysql');
 const router = require('./routes');
 const path = require('path');
+const cookieParser = require('cookie-parser');
 
 // 프론트 연결
 app.use(express.static(__dirname + '/public'));
@@ -14,6 +15,7 @@ app.get('/:pageName', (req, res) => {
   res.sendFile(path.join(__dirname, `public/views/${pageName}.html`));
 });
 
+app.use(cookieParser());
 app.use(express.json());
 app.use(router);
 

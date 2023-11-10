@@ -14,16 +14,16 @@ async function login() {
       body: JSON.stringify(loginDate),
     });
 
+    const data = await response.json();
+
     if (!response.ok) {
       console.log('응답 에러');
       return;
     }
-
-    const data = await response.json();
-    console.log(data);
-    alert('로그인 성공');
+    alert('로그인에 성공했습니다.');
   } catch (error) {
-    console.log('에러 발생');
+    alert('로그인이 실패했습니다.');
+    console.log(error, '에러 발생');
   }
 }
 
