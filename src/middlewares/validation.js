@@ -28,8 +28,7 @@ module.exports = {
         }
       })
       .trim()
-      .isLength({ min: 6 })
-      .matches(/^(?=.*[a-zA-Z])(?=.*[0-9])/)
+      .matches(/^(?=.*[a-zA-Z])(?=.*[0-9]).{6,}$/)
       .withMessage('숫자와 문자를 포함한 6자리 이상의 비밀번호를 입력해주세요.'),
     validate,
   ],
@@ -38,8 +37,7 @@ module.exports = {
     body('email').isEmail().withMessage('이메일 형식이 아닙니다. 확인해주세요.'),
     body('password')
       .trim()
-      .isLength({ min: 6 })
-      .matches(/^(?=.*[a-zA-Z])(?=.*[0-9])/)
+      .matches(/^(?=.*[a-zA-Z])(?=.*[0-9]).{6,}$/)
       .withMessage('숫자와 문자를 포함한 6자리 이상의 비밀번호를 입력해주세요.'),
     validate,
   ],

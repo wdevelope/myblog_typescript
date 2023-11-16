@@ -10,25 +10,13 @@ async function createPost() {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        // Authorization: token,
       },
       body: JSON.stringify(postData),
     });
 
-    if (response.status === 400) {
-      // 400 Bad Request 에러 처리
-      const data = await response.json(); // 에러 응답 데이터 가져오기
-      console.error('400 에러:', data.errorMessage);
-    }
-
     if (!response.ok) {
-      console.log('응답 에러');
-      return;
+      throw new Error('게시글 작성 실패');
     }
-
-    const data = await response.json();
-    console.log(data);
-
     alert('게시글 작성 성공!');
   } catch (error) {
     alert(data.errorMessage || '게시글 작성중 에러가 발생했습니다');

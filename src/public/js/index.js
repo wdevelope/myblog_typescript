@@ -16,14 +16,14 @@ async function login() {
 
     const data = await response.json();
 
-    if (!response.ok) {
-      console.log('응답 에러');
-      return;
+    if (response.status === 200) {
+      alert('로그인에 성공했습니다.');
+    } else {
+      alert(data.errorMessage || '로그인에 실패했습니다.');
     }
-    alert('로그인에 성공했습니다.');
   } catch (error) {
     alert('로그인이 실패했습니다.');
-    console.log(error, '에러 발생');
+    console.log(error, '알수없는 에러 발생');
   }
 }
 

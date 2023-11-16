@@ -2,11 +2,13 @@ const jwt = require('jsonwebtoken');
 
 function auth(req, res, next) {
   const BearerToken = req.cookies.Authorization;
+
   if (!BearerToken) {
     return res.status(401).json({ errorMessage: '토큰이 공급되지 않았습니다.' });
   }
 
   const token = BearerToken.split(' ')[1];
+
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     req.user = decoded;
