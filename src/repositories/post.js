@@ -22,6 +22,7 @@ module.exports = {
         model: user,
         attributes: ['name'],
       },
+      order: [['createdAt', 'DESC']],
     });
   },
 
@@ -35,6 +36,7 @@ module.exports = {
         model: user,
         attributes: ['name'],
       },
+      order: [['createdAt', 'DESC']],
     });
   },
 
@@ -48,6 +50,7 @@ module.exports = {
         model: user,
         attributes: ['name'],
       },
+      order: [['createdAt', 'DESC']],
     });
   },
 

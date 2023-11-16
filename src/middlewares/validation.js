@@ -44,7 +44,7 @@ module.exports = {
   // 게시글 생성
   createPost: [
     body('title').trim().notEmpty().withMessage('제목을 입력해주세요.'),
-    body('content').trim().isLength({ min: 5 }).withMessage('5글자 이상을 입력하셔야 합니다.'),
+    body('content').trim().isLength({ min: 5 }).withMessage('내용은 5글자 이상을 입력하셔야 합니다.'),
     validate,
   ],
 };

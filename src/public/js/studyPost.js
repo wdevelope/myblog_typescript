@@ -15,7 +15,8 @@ async function studyPostRender() {
     const data = await response.json();
     const postList = document.querySelector('#post-table tbody');
 
-    data.forEach((post) => {
+    data.forEach((post, index) => {
+      const postIndex = data.length - index;
       const row = document.createElement('tr');
       const date = new Date(post.createdAt);
       const formatDate = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date
@@ -23,7 +24,7 @@ async function studyPostRender() {
         .toString()
         .padStart(2, '0')}`;
       row.innerHTML = `
-                        <td>1</td>
+                        <td>${postIndex}</td>
                         <td><a href="/detailPost?postid=${post.id}">${post.title}</a></td>
                         <td>${post.user.name}</a></td>
                         <td>${formatDate}</td>
