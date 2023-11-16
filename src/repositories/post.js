@@ -16,7 +16,33 @@ module.exports = {
   getAllLife: async () => {
     return await post.findAll({
       where: {
+        category: 'life',
+      },
+      include: {
+        model: user,
+        attributes: ['name'],
+      },
+    });
+  },
+
+  // study 게시글 전체 조회
+  getAllStudy: async () => {
+    return await post.findAll({
+      where: {
         category: 'study',
+      },
+      include: {
+        model: user,
+        attributes: ['name'],
+      },
+    });
+  },
+
+  // life 게시글 전체 조회
+  getAllHobby: async () => {
+    return await post.findAll({
+      where: {
+        category: 'hobby',
       },
       include: {
         model: user,

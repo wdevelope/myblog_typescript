@@ -8,6 +8,10 @@ const validation = require('../middlewares/validation');
 router.post('/', authMiddleware, validation.createPost, postController.create);
 // life 게시글 전체조회
 router.get('/life', postController.getAllLife);
+// study 게시글 전체조회
+router.get('/study', postController.getAllStudy);
+// hobby 게시글 전체조회
+router.get('/hobby', postController.getAllHobby);
 // 게시글 삭제
 router.delete('/:postId', authMiddleware, postController.delete);
 // 게시글 상세조회

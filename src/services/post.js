@@ -13,6 +13,18 @@ module.exports = {
     return posts;
   },
 
+  // study 게시글 전체조회
+  getAllStudy: async () => {
+    const posts = await postRepository.getAllStudy();
+    return posts;
+  },
+
+  // hobby 게시글 전체조회
+  getAllHobby: async () => {
+    const posts = await postRepository.getAllHobby();
+    return posts;
+  },
+
   // 게시글 삭제
   delete: async (postId) => {
     const deletedpost = await postRepository.delete(postId);
