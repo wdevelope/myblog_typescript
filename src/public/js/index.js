@@ -68,3 +68,19 @@ async function register() {
     console.log('에러 발생');
   }
 }
+
+// 조회수 증가 함수
+async function views(postId) {
+  try {
+    const response = await fetch(`/api/post/${postId}/views`, {
+      method: 'POST',
+    });
+
+    if (!response.ok) {
+      console.log('조회수 증가 에러');
+      return;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}

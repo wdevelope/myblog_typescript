@@ -25,10 +25,10 @@ async function hobbyPostRender() {
         .padStart(2, '0')}`;
       row.innerHTML = `
                         <td>${postIndex}</td>
-                        <td><a href="/detailPost?postid=${post.id}">${post.title}</a></td>
+                        <td><a href="/detailPost?postid=${post.id}" onclick="views(${post.id})">${post.title}</a></td>
                         <td>${post.user.name}</a></td>
                         <td>${formatDate}</td>
-                        <td>100</td>
+                        <td>${post.views}</td>
                       `;
       postList.appendChild(row);
     });

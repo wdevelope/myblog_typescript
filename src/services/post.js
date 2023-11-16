@@ -36,4 +36,10 @@ module.exports = {
     const getPost = await postRepository.get(postId);
     return getPost;
   },
+
+  // 조회수
+  views: async (postId) => {
+    const viewsPost = await postRepository.views(postId);
+    return viewsPost;
+  },
 };

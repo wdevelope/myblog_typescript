@@ -16,5 +16,7 @@ router.get('/hobby', postController.getAllHobby);
 router.delete('/:postId', authMiddleware, postController.delete);
 // 게시글 상세조회
 router.get('/:postId', postController.get);
+// 조회수 증가
+router.post('/:postId/views', postController.views);
 
 module.exports = router;

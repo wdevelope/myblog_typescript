@@ -23,6 +23,10 @@ const post = sequelize.define('post', {
       isIn: [['life', 'study', 'hobby']],
     },
   },
+  views: {
+    type: DataTypes.INTEGER,
+    defaultValue: 0,
+  },
 });
 
 module.exports = post;

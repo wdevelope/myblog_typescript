@@ -69,4 +69,16 @@ module.exports = {
       res.status(500).json({ errorMessage: err.message });
     }
   },
+
+  // 조회수
+  views: async (req, res) => {
+    const postId = req.params.postId;
+    try {
+      await postService.views(postId);
+      res.status(200).json({ message: '조회수 업' });
+    } catch (err) {
+      console.log(err);
+      res.status(500).json({ errorMessage: err.message });
+    }
+  },
 };
