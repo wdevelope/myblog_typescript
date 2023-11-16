@@ -1,3 +1,14 @@
+// 페이지 로딩 시 URL에서 query string 파싱
+function getURLParameter(name) {
+  return (
+    decodeURIComponent(
+      (new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search) || [, ''])[1].replace(/\+/g, '%20')
+    ) || null
+  );
+}
+
+const postId = getURLParameter('postid');
+
 // 로그인 함수
 async function login() {
   try {

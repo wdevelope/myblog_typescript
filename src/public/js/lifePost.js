@@ -24,7 +24,7 @@ async function lifePostRender() {
         .padStart(2, '0')}`;
       row.innerHTML = `
                       <td>1</td>
-                      <td>${post.title}</td>
+                      <td><a href="/detailPost?postid=${post.id}">${post.title}</a></td>
                       <td>${post.user.name}</a></td>
                       <td>${formatDate}</td>
                       <td>100</td>

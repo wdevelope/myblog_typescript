@@ -84,3 +84,14 @@ footer h3 {
   width: 300px;
   padding: 8px 5px;
 }
+
+/* a태그 기본적인 스타일 (평소에는 적용되지 않음) */
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+a:hover {
+  color: blue;
+  text-decoration: underline;
+}
