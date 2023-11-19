@@ -16,13 +16,13 @@ app.get('/:pageName', (req, res) => {
   res.sendFile(path.join(__dirname, `public/views/${pageName}.html`));
 });
 
-app.use(
-  cors({
-    origin: 'http://localhost:3000',
-    methods: ['GET', 'POST'],
-    credentials: true,
-  })
-);
+// app.use(
+//   cors({
+//     origin: 'http://localhost:3000',
+//     methods: ['GET', 'POST'],
+//     credentials: true,
+//   })
+// );
 
 app.use(cookieParser());
 app.use(express.json());

@@ -7,22 +7,46 @@ module.exports = {
     return newpost;
   },
 
-  // life 게시글 전체조회
-  getAllLife: async () => {
-    const posts = await postRepository.getAllLife();
-    return posts;
+  // life 전체조회 (페이지네이션)
+  getAllLife: async (page) => {
+    const pageSize = 15;
+    const offset = (page - 1) * pageSize;
+    const totalItems = await postRepository.getCountLife();
+    const totalPages = Math.ceil(totalItems / pageSize);
+    const posts = await postRepository.getAllLife(offset, pageSize);
+
+    return {
+      posts,
+      totalPages,
+    };
   },
 
-  // study 게시글 전체조회
-  getAllStudy: async () => {
-    const posts = await postRepository.getAllStudy();
-    return posts;
+  // study 전체조회 (페이지네이션)
+  getAllStudy: async (page) => {
+    const pageSize = 15;
+    const offset = (page - 1) * pageSize;
+    const totalItems = await postRepository.getCountStudy();
+    const totalPages = Math.ceil(totalItems / pageSize);
+    const posts = await postRepository.getAllStudy(offset, pageSize);
+
+    return {
+      posts,
+      totalPages,
+    };
   },
 
-  // hobby 게시글 전체조회
-  getAllHobby: async () => {
-    const posts = await postRepository.getAllHobby();
-    return posts;
+  // hobby 전체조회 (페이지네이션)
+  getAllHobby: async (page) => {
+    const pageSize = 15;
+    const offset = (page - 1) * pageSize;
+    const totalItems = await postRepository.getCountHobby();
+    const totalPages = Math.ceil(totalItems / pageSize);
+    const posts = await postRepository.getAllHobby(offset, pageSize);
+
+    return {
+      posts,
+      totalPages,
+    };
   },
 
   // 게시글 삭제

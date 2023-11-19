@@ -17,8 +17,12 @@ module.exports = {
   // life 게시글 전체조회
   getAllLife: async (req, res) => {
     try {
-      const post = await postService.getAllLife();
-      res.status(200).json(post);
+      const page = parseInt(req.query.page) || 1;
+      const { posts, totalPages } = await postService.getAllLife(page);
+      res.status(200).json({
+        posts,
+        totalPages,
+      });
     } catch (err) {
       console.log(err);
       res.status(500).json({ errorMessage: err.message });
@@ -28,18 +32,27 @@ module.exports = {
   // study 게시글 전체조회
   getAllStudy: async (req, res) => {
     try {
-      const post = await postService.getAllStudy();
-      res.status(200).json(post);
+      const page = parseInt(req.query.page) || 1;
+      const { posts, totalPages } = await postService.getAllStudy(page);
+      res.status(200).json({
+        posts,
+        totalPages,
+      });
     } catch (err) {
       console.log(err);
       res.status(500).json({ errorMessage: err.message });
     }
   },
+
   // hobby 게시글 전체조회
   getAllHobby: async (req, res) => {
     try {
-      const post = await postService.getAllHobby();
-      res.status(200).json(post);
+      const page = parseInt(req.query.page) || 1;
+      const { posts, totalPages } = await postService.getAllHobby(page);
+      res.status(200).json({
+        posts,
+        totalPages,
+      });
     } catch (err) {
       console.log(err);
       res.status(500).json({ errorMessage: err.message });
