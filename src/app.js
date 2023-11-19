@@ -3,10 +3,11 @@ require('./database/relations');
 
 const express = require('express');
 const app = express();
-const sequelize = require('./database/mysql');
+const sequelize = require('./config/mysql');
 const router = require('./routes');
 const path = require('path');
 const cookieParser = require('cookie-parser');
+const cors = require('cors');
 
 // 프론트 연결
 app.use(express.static(__dirname + '/public'));
@@ -14,6 +15,14 @@ app.get('/:pageName', (req, res) => {
   const pageName = req.params.pageName;
   res.sendFile(path.join(__dirname, `public/views/${pageName}.html`));
 });
+
+app.use(
+  cors({
+    origin: 'http://localhost:3000',
+    methods: ['GET', 'POST'],
+    credentials: true,
+  })
+);
 
 app.use(cookieParser());
 app.use(express.json());
