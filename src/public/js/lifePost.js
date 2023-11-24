@@ -5,18 +5,18 @@ document.addEventListener('DOMContentLoaded', () => {
 // 🎯 일기 게시판 전체 렌더링
 async function lifePostRender() {
   try {
-    const response = await fetch('/api/post/life');
-
+    const pageNumber = 1;
+    const response = await fetch(`/api/post/life?page=${pageNumber}`);
     if (!response.ok) {
       console.log('렌더링 에러');
       return;
     }
-
+    console.log(response);
     const data = await response.json();
     const postList = document.querySelector('#post-table tbody');
-
-    data.forEach((post, index) => {
-      const postIndex = data.length - index;
+    data.posts.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+    data.posts.forEach((post, index) => {
+      const postIndex = index + 1;
       const row = document.createElement('tr');
       const date = new Date(post.createdAt);
       const formatDate = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date
