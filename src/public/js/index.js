@@ -1,3 +1,8 @@
+// 로그인 확인
+document.addEventListener('DOMContentLoaded', function () {
+  checkLogin();
+});
+
 // 페이지 로딩 시 URL에서 query string 파싱
 function getURLParameter(name) {
   return (
@@ -69,18 +74,36 @@ async function register() {
   }
 }
 
-// 조회수 증가 함수
-async function views(postId) {
+// 로그인 상태확인
+async function checkLogin() {
   try {
-    const response = await fetch(`/api/post/${postId}/views`, {
-      method: 'POST',
-    });
-
-    if (!response.ok) {
-      console.log('조회수 증가 에러');
-      return;
+    const response = await fetch('/api/user/check');
+    if (response.ok) {
+      updateLoginButtons(true);
+    } else {
+      updateLoginButtons(false);
     }
   } catch (error) {
-    console.log(error);
+    console.error('로그인 상태 확인 실패:', error);
+  }
+}
+
+// 로그인, 로그아웃 버튼 업데이트 함수
+function updateLoginButtons(isLoggedIn) {
+  const loginButton = document.getElementById('loginButton');
+  const registerButton = document.getElementById('registerButton');
+  const logoutButton = document.getElementById('logoutButton');
+  const accountButton = document.getElementById('accountButton');
+
+  if (isLoggedIn) {
+    loginButton.style.display = 'none';
+    registerButton.style.display = 'none';
+    logoutButton.style.display = 'inline';
+    accountButton.style.display = 'inline';
+  } else {
+    loginButton.style.display = 'inline';
+    registerButton.style.display = 'inline';
+    logoutButton.style.display = 'none';
+    accountButton.style.display = 'none';
   }
 }

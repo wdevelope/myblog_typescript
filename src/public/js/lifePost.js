@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
 async function lifePostRender() {
   try {
     const pageNumber = 1;
-    const response = await fetch(`/api/post/life?page=${pageNumber}`);
+    const response = await fetch(`/api/life?page=${pageNumber}`);
     if (!response.ok) {
       console.log('렌더링 에러');
       return;

@@ -2,7 +2,6 @@
 body {
   margin: 10vw;
   padding: 0;
-  background-color: #f2f2f2;
 }
 
 /* 헤더 스타일 */
@@ -30,6 +29,11 @@ header > div > a {
 header a:hover,
 #mainTitle:hover {
   color: blue;
+}
+
+#logoutButton,
+#accountButton {
+  display: none;
 }
 
 /* 네비게이션 스타일 */

@@ -2,9 +2,8 @@ async function createPost() {
   try {
     const title = document.getElementById('title').value;
     const content = document.getElementById('content').value;
-    const category = document.getElementById('category').value;
 
-    const postData = { title, content, category };
+    const postData = { title, content };
 
     const response = await fetch('/api/post', {
       method: 'POST',
