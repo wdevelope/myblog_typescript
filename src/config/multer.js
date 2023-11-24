@@ -20,6 +20,7 @@ const upload = multer({
       cb(null, Date.now().toString() + '-' + file.originalname);
     },
   }),
+  limits: { fileSize: 1024 * 1024 * 5 }, // 5mb 제한
 });
 
 module.exports = { upload };
