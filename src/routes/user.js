@@ -8,6 +8,8 @@ const authMiddleware = require('../middlewares/auth');
 router.post('/register', validation.register, userController.register);
 // 로그인
 router.post('/login', validation.login, userController.login);
+// 로그아웃
+router.post('/logout', authMiddleware, userController.logout);
 // 로그인 확인
 router.get('/check', authMiddleware, (req, res) => {
   res.status(200).json({ isLoggedIn: true });

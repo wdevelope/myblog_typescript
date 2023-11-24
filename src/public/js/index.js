@@ -34,6 +34,7 @@ async function login() {
 
     if (response.status === 200) {
       alert('로그인에 성공했습니다.');
+      window.location.href = '/index';
     } else {
       alert(data.errorMessage || '로그인에 실패했습니다.');
     }
@@ -43,6 +44,27 @@ async function login() {
   }
 }
 
+async function logout() {
+  try {
+    const response = await fetch('/api/user/logout', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    const data = await response.json();
+
+    if (response.status === 200) {
+      alert('로그아웃 되었습니다.');
+      window.location.reload();
+    } else {
+      alert(data.errorMessage || '로그아웃에 실패했습니다.');
+    }
+  } catch (error) {
+    alert('로그아웃에 실패했습니다.');
+    console.log(error, '알수없는 에러 발생');
+  }
+}
 // 회원가입 함수
 async function register() {
   try {
