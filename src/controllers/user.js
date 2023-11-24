@@ -26,6 +26,17 @@ module.exports = {
     }
   },
 
+  // 유저정보
+  userInfo: async (req, res) => {
+    try {
+      const user = await userService.userInfo(req.user.userId);
+      res.status(200).json(user);
+    } catch (err) {
+      console.log(err);
+      res.status(500).json({ errorMessage: err.message });
+    }
+  },
+
   //로그아웃
   logout: async (req, res) => {
     try {

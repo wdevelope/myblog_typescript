@@ -20,4 +20,13 @@ module.exports = {
   findUserByEmail: async (email) => {
     return await user.findOne({ where: { email } });
   },
+
+  // 유저 Id 찾기
+  findUserById: async (userId) => {
+    const userInfo = await user.findOne({
+      attributes: ['name', 'email'],
+      where: { id: userId },
+    });
+    return userInfo;
+  },
 };

@@ -35,4 +35,15 @@ module.exports = {
 
     return token;
   },
+
+  // 유저 정보
+  userInfo: async (userId) => {
+    const user = await userRepository.findUserById(userId);
+
+    if (!user) {
+      throw new Error('존재하지 않는 회원입니다.');
+    }
+
+    return user;
+  },
 };
