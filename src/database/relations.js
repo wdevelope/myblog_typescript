@@ -1,25 +1,28 @@
-const life = require('./models/life');
+const post = require('./models/post');
 const user = require('./models/user');
 const image = require('./models/image');
 const view = require('./models/view');
 const category = require('./models/category');
 
 //관계 정의
-user.hasMany(life, { foreignKey: 'userId' });
-life.belongsTo(user, { foreignKey: 'userId' });
+user.hasMany(post, { foreignKey: 'userId' });
+post.belongsTo(user, { foreignKey: 'userId' });
 
-life.hasMany(image, { foreignKey: 'postId' });
-image.belongsTo(life, { foreignKey: 'postId' });
+post.hasMany(image, { foreignKey: 'postId' });
+image.belongsTo(post, { foreignKey: 'postId' });
 
-life.hasMany(view, { foreignKey: 'postId' });
-view.belongsTo(life, { foreignKey: 'postId' });
+post.hasMany(view, { foreignKey: 'postId' });
+view.belongsTo(post, { foreignKey: 'postId' });
 
-category.hasMany(life, { foreignKey: 'categoryId' });
-life.belongsTo(category, { foreignKey: 'categoryId' });
+category.hasMany(post, { foreignKey: 'categoryId' });
+post.belongsTo(category, { foreignKey: 'categoryId' });
+
+category.hasMany(category, { as: 'SubCategories', foreignKey: 'parentId' });
+category.belongsTo(category, { as: 'Parent', foreignKey: 'parentId' });
 
 module.exports = {
   user,
-  life,
+  post,
   image,
   view,
   category,

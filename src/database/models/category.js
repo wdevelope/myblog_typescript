@@ -12,6 +12,14 @@ const category = sequelize.define('category', {
     type: DataTypes.STRING,
     allowNull: false,
   },
+  parentId: {
+    type: DataTypes.INTEGER,
+    allowNull: true,
+    references: {
+      model: 'categories',
+      key: 'id',
+    },
+  },
 });
 
 module.exports = category;

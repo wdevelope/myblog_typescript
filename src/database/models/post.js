@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../../config/mysql');
 
-const life = sequelize.define('lifePost', {
+const post = sequelize.define('postPost', {
   id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
@@ -22,4 +22,4 @@ const life = sequelize.define('lifePost', {
   },
 });
 
-module.exports = life;
+module.exports = post;

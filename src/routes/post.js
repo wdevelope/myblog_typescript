@@ -1,16 +1,16 @@
 const express = require('express');
 const router = express.Router();
-const lifeController = require('../controllers/life');
+const postController = require('../controllers/post');
 const { auth, authAdmin } = require('../middlewares/auth');
 const validation = require('../middlewares/validation');
 
 // 게시글 생성
-router.post('/', auth, validation.createPost, lifeController.create);
+router.post('/', auth, validation.createPost, postController.create);
 // 게시글 전체조회
-router.get('/', lifeController.getAllLife);
+router.get('/', postController.getAllpost);
 // 게시글 삭제
-router.delete('/:postId', auth, lifeController.delete);
+router.delete('/:postId', auth, postController.delete);
 // 게시글 상세조회
-router.get('/:postId', lifeController.get);
+router.get('/:postId', postController.get);
 
 module.exports = router;
