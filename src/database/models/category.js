@@ -1,21 +1,17 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../../config/mysql');
 
-const life = sequelize.define('lifePost', {
+const category = sequelize.define('category', {
   id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
     autoIncrement: true,
     allowNull: false,
   },
-  title: {
+  name: {
     type: DataTypes.STRING,
-    allowNull: false,
-  },
-  content: {
-    type: DataTypes.TEXT,
     allowNull: false,
   },
 });
 
-module.exports = life;
+module.exports = category;
