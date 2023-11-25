@@ -3,12 +3,11 @@ const user = require('../database/models/user');
 
 module.exports = {
   // 게시글 생성
-  create: async (userId, title, content, category) => {
+  create: async (userId, title, content) => {
     return await life.create({
       title,
       content,
       userId,
-      category,
     });
   },
 
@@ -27,13 +26,6 @@ module.exports = {
     return posts;
   },
 
-  // life 게시글 수 조회
-  getCountLife: async () => {
-    return await life.count({
-      where: { category: 'life' },
-    });
-  },
-
   // 게시글 삭제
   delete: async (postId) => {
     return await life.destroy({
@@ -45,9 +37,10 @@ module.exports = {
 
   // 게시글 상세 조회
   get: async (postId) => {
-    return await life.findOne({
-      where: {
-        id: postId,
+    return await life.findByPk(postId, {
+      include: {
+        model: user,
+        attributes: ['name', 'role'],
       },
     });
   },

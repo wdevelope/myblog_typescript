@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const imageController = require('../controllers/image');
 const { upload } = require('../config/multer');
+const { auth, authAdmin } = require('../middlewares/auth');
 
 // 이미지 업로드
 router.post('/upload', upload.single('image'), imageController.uploadImage);

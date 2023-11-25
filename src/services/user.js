@@ -29,7 +29,7 @@ module.exports = {
       throw new Error('아이디 또는 비밀번호가 틀렸습니다.');
     }
 
-    const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET, {
+    const token = jwt.sign({ userId: user.id, status: user.status }, process.env.JWT_SECRET, {
       expiresIn: process.env.JWT_EXPIREIN,
     });
 
@@ -42,6 +42,23 @@ module.exports = {
 
     if (!user) {
       throw new Error('존재하지 않는 회원입니다.');
+    }
+
+    return user;
+  },
+
+  // 유저 상태변경
+  updateUser: async (email, status) => {
+    const user = await userRepository.findUserByEmail(email);
+
+    if (!user) {
+      throw new Error('존재하지 않는 회원입니다.');
+    }
+
+    const updatedUser = await userRepository.updateUser(user.id, status);
+
+    if (!updatedUser) {
+      throw new Error('유저 상태변경 실패');
     }
 
     return user;

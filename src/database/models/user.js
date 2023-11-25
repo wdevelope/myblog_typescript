@@ -22,6 +22,17 @@ const user = sequelize.define('user', {
     type: DataTypes.STRING,
     allowNull: false,
   },
+  status: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    defaultValue: 'user',
+    validate: {
+      isIn: {
+        args: [['admin', 'verifiedUser', 'user']],
+        msg: "유효하지 않은 역할입니다. 'admin', 'verifiedUser', 'user' 중 하나여야 합니다.",
+      },
+    },
+  },
 });
 
 module.exports = user;

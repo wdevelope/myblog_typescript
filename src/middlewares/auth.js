@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
 
+// 유저 인증 체크
 function auth(req, res, next) {
   const BearerToken = req.cookies.Authorization;
 
@@ -19,4 +20,15 @@ function auth(req, res, next) {
   }
 }
 
-module.exports = auth;
+// 관리자 권한 체크
+function authAdmin(req, res, next) {
+  if (req.user.status !== 'admin') {
+    return res.status(403).json({ errorMessage: '관리자 권한이 필요합니다.' });
+  }
+  next();
+}
+
+module.exports = {
+  auth,
+  authAdmin,
+};

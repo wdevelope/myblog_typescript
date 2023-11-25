@@ -11,13 +11,11 @@ module.exports = {
   getAllLife: async (page) => {
     const pageSize = 15;
     const offset = (page - 1) * pageSize;
-    const totalItems = await lifeRepository.getCountLife();
-    const totalPages = Math.ceil(totalItems / pageSize);
+
     const posts = await lifeRepository.getAllLife(offset, pageSize);
 
     return {
       posts,
-      totalPages,
     };
   },
 
@@ -30,6 +28,11 @@ module.exports = {
   // 게시글 상세조회
   get: async (postId) => {
     const getPost = await lifeRepository.get(postId);
+
+    if (!getPost) {
+      throw new Error('게시글이 존재하지 않습니다.');
+    }
+
     return getPost;
   },
 };

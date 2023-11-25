@@ -16,6 +16,10 @@ const life = sequelize.define('lifePost', {
     type: DataTypes.TEXT,
     allowNull: false,
   },
+  accessLevel: {
+    type: DataTypes.INTEGER,
+    defaultValue: 0, // 기본적으로 모든 사용자가 접근 가능
+  },
 });
 
 module.exports = life;

@@ -37,6 +37,18 @@ module.exports = {
     }
   },
 
+  // 유저상태 변경
+  updateUser: async (req, res) => {
+    try {
+      const { email, status } = req.body;
+      const user = await userService.updateUser(email, status);
+      res.status(200).json(user);
+    } catch (err) {
+      console.log(err);
+      res.status(500).json({ errorMessage: err.message });
+    }
+  },
+
   //로그아웃
   logout: async (req, res) => {
     try {

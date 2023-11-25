@@ -29,4 +29,15 @@ module.exports = {
     });
     return userInfo;
   },
+
+  // 유저 상태 변경
+  updateUser: async (userId, status) => {
+    const updatedUser = await user.update(
+      {
+        status: status,
+      },
+      { where: { id: userId } }
+    );
+    return updatedUser;
+  },
 };
