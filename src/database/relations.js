@@ -4,10 +4,14 @@ const image = require('./models/image');
 const view = require('./models/view');
 const category = require('./models/category');
 const subCategory = require('./models/subCategory');
+const visitor = require('./models/visitor');
 
 //관계 정의
 user.hasMany(post, { foreignKey: 'userId' });
 post.belongsTo(user, { foreignKey: 'userId' });
+
+user.hasMany(visitor, { foreignKey: 'userId' });
+visitor.belongsTo(user, { foreignKey: 'userId' });
 
 post.hasMany(image, { foreignKey: 'postId' });
 image.belongsTo(post, { foreignKey: 'postId' });
@@ -28,4 +32,5 @@ module.exports = {
   view,
   category,
   subCategory,
+  visitor,
 };

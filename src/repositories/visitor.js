@@ -1,24 +1,41 @@
-const visitorService = require('../services/visitor.js');
+const Visitor = require('../database/models/visitor');
+const user = require('../database/models/user');
 
 module.exports = {
-  create: (req, res) => {
-    try {
-    } catch (error) {}
+  // 방명록 생성
+  createVisitor: async (userId, title, content, password, isPrivate) => {
+    return await Visitor.create({ userId, title, content, password, isPrivate });
   },
-  getAll: (req, res) => {
-    try {
-    } catch (error) {}
+
+  // 방명록 전체조회
+  getAllVisitors: async () => {
+    const visitors = await Visitor.findAll({
+      attributes: { exclude: ['password'] }, // 'password' 필드 제외
+      include: { model: user, attributes: ['name'] },
+    });
+    return visitors;
   },
-  getOne: (req, res) => {
-    try {
-    } catch (error) {}
+
+  // 특정 방명록 조회
+  getVisitorById: async (id) => {
+    const visitor = await Visitor.findByPk(id);
+    return visitor;
   },
-  update: (req, res) => {
-    try {
-    } catch (error) {}
+
+  // 방명록 업데이트
+  updateVisitor: async (id, title, content) => {
+    return await Visitor.update(
+      { title, content },
+      {
+        where: { id },
+      }
+    );
   },
-  delete: (req, res) => {
-    try {
-    } catch (error) {}
+
+  // 방명록 삭제
+  deleteVisitor: async (id) => {
+    return await Visitor.destroy({
+      where: { id },
+    });
   },
 };

@@ -1,24 +1,38 @@
-const visitorService = require('../services/visitor.js');
+const visitorRepository = require('../repositories/visitor');
 
 module.exports = {
-  create: (req, res) => {
-    try {
-    } catch (error) {}
+  // 방명록 생성
+  createVisitor: async (userId, title, content, password, isPrivate) => {
+    const newVisitor = await visitorRepository.createVisitor(userId, title, content, password, isPrivate);
+
+    if (!newVisitor) {
+      throw new Error('방명록 생성 실패');
+    }
+
+    return newVisitor;
   },
-  getAll: (req, res) => {
-    try {
-    } catch (error) {}
+
+  // 모든 방명록 조회
+  getAllVisitors: async () => {
+    const visitors = await visitorRepository.getAllVisitors();
+    return visitors;
   },
-  getOne: (req, res) => {
-    try {
-    } catch (error) {}
+
+  // 특정 방명록 조회
+  getVisitorById: async (id) => {
+    const visitor = await visitorRepository.getVisitorById(id);
+    return visitor;
   },
-  update: (req, res) => {
-    try {
-    } catch (error) {}
+
+  // 방명록 업데이트
+  updateVisitor: async (id, title, content) => {
+    const updatedVisitor = await visitorRepository.updateVisitor(id, title, content);
+    return updatedVisitor;
   },
-  delete: (req, res) => {
-    try {
-    } catch (error) {}
+
+  // 방명록 삭제
+  deleteVisitor: async (id) => {
+    const deletedVisitor = await visitorRepository.deleteVisitor(id);
+    return deletedVisitor;
   },
 };

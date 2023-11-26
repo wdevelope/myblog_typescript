@@ -1,24 +1,65 @@
 const visitorService = require('../services/visitor.js');
 
 module.exports = {
-  create: (req, res) => {
+  // 방명록 생성
+  create: async (req, res) => {
     try {
-    } catch (error) {}
+      const { title, content, password, isPrivate } = req.body;
+      const userId = req.user.userId;
+      const newVisitor = await visitorService.createVisitor(userId, title, content, password, isPrivate);
+      res.status(201).json(newVisitor);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ errorMessage: error.message });
+    }
   },
-  getAll: (req, res) => {
+
+  // 모든 방명록 조회
+  getAll: async (req, res) => {
     try {
-    } catch (error) {}
+      const visitors = await visitorService.getAllVisitors();
+      res.status(200).json(visitors);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ errorMessage: error.message });
+    }
   },
-  getOne: (req, res) => {
+
+  // 특정 방명록 조회
+  getOne: async (req, res) => {
     try {
-    } catch (error) {}
+      const id = req.params.id;
+      const visitor = await visitorService.getVisitorById(id);
+      res.status(200).json(visitor);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ errorMessage: error.message });
+    }
   },
-  update: (req, res) => {
+
+  // 방명록 수정
+  update: async (req, res) => {
     try {
-    } catch (error) {}
+      const id = req.params.id;
+      const { title, content } = req.body;
+      const updatedVisitor = await visitorService.updateVisitor(id, title, content);
+
+      res.status(200).json(updatedVisitor);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ errorMessage: error.message });
+    }
   },
-  delete: (req, res) => {
+
+  // 방명록 삭제
+  delete: async (req, res) => {
     try {
-    } catch (error) {}
+      const id = req.params.id;
+      const deletedVisitor = await visitorService.deleteVisitor(id);
+      res.status(200).json(deletedVisitor);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ errorMessage: error.message });
+    }
   },
 };
