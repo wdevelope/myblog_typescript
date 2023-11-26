@@ -3,13 +3,13 @@ const categoryRepository = require('../repositories/category');
 module.exports = {
   // 카테고리 생성
   create: async (name, position) => {
-    const findName = await categoryRepository.create(name, position);
+    const createCategory = await categoryRepository.create(name, position);
 
-    if (!findName) {
-      throw new Error('Category name is required');
+    if (!createCategory) {
+      throw new Error('카테고리 생성에 실패했습니다.');
     }
 
-    return findName;
+    return createCategory;
   },
 
   // 모든 카테고리 조회

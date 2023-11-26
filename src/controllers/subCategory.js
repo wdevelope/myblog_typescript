@@ -1,36 +1,23 @@
-const categoryService = require('../services/category.js');
+const subCategoryService = require('../services/subCategory.js');
 
 module.exports = {
   // 서브 카테고리 생성
   create: async (req, res) => {
     try {
-      const { name } = req.body;
-      const category = await categoryService.create(name, parentId);
+      const { categoryId, name, position } = req.body;
+      const category = await subCategoryService.create(categoryId, name, position);
       res.status(201).json(category);
     } catch (error) {
       res.status(400).json({ errorMessage: error.message });
     }
   },
 
-  // 모든 서브 카테고리 조회
+  // 카테고리안의 서브 카테고리 조회
   getAll: async (req, res) => {
     try {
-      const categories = await categoryService.getAll();
+      const { categoryId } = req.params;
+      const categories = await subCategoryService.getAll(categoryId);
       res.status(200).json(categories);
-    } catch (error) {
-      res.status(500).json({ errorMessage: error.message });
-    }
-  },
-
-  // 특정 서브 카테고리 조회
-  getOne: async (req, res) => {
-    try {
-      const { id } = req.params;
-      const category = await categoryService.getOne(id);
-      if (!category) {
-        return res.status(404).json({ message: 'Category not found' });
-      }
-      res.status(200).json(category);
     } catch (error) {
       res.status(500).json({ errorMessage: error.message });
     }
@@ -41,11 +28,8 @@ module.exports = {
     try {
       const { id } = req.params;
       const { name } = req.body;
-      const updated = await categoryService.update(id, name, parentId);
-      if (!updated) {
-        return res.status(404).json({ message: 'Category not found' });
-      }
-      res.status(200).json({ message: 'Category updated successfully' });
+      const updated = await subCategoryService.update(id, name);
+      res.status(200).json(updated);
     } catch (error) {
       res.status(500).json({ errorMessage: error.message });
     }
@@ -55,11 +39,8 @@ module.exports = {
   delete: async (req, res) => {
     try {
       const { id } = req.params;
-      const deleted = await categoryService.delete(id);
-      if (!deleted) {
-        return res.status(404).json({ message: 'Category not found' });
-      }
-      res.status(200).json({ message: 'Category deleted successfully' });
+      await subCategoryService.delete(id);
+      res.status(200).json({ message: '서브 카테고리 삭제완료' });
     } catch (error) {
       res.status(500).json({ errorMessage: error.message });
     }
