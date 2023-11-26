@@ -3,18 +3,18 @@ const user = require('../database/models/user');
 
 module.exports = {
   // 게시글 생성
-  create: async (userId, title, content, categoryId) => {
+  create: async (userId, title, content, subCategoryId) => {
     return await post.create({
+      userId,
       title,
       content,
-      userId,
-      categoryId,
+      subCategoryId,
     });
   },
 
   // post 게시글 전체 조회
   getAllpost: async (offset, pageSize) => {
-    const posts = await post.findAll({
+    const result = await post.findAndCountAll({
       include: {
         model: user,
         attributes: ['name'],
@@ -23,21 +23,25 @@ module.exports = {
       offset, // 페이지 시작 위치
       limit: pageSize, // 페이지당 아이템 수
     });
-    return posts;
+
+    return {
+      posts: result.rows, // 조회된 게시글
+      totalCount: result.count, // 총 게시글 수
+    };
   },
 
   // 게시글 삭제
-  delete: async (postId) => {
+  delete: async (id) => {
     return await post.destroy({
       where: {
-        id: postId,
+        id: id,
       },
     });
   },
 
   // 게시글 상세 조회
-  get: async (postId) => {
-    return await post.findByPk(postId, {
+  get: async (id) => {
+    return await post.findByPk(id, {
       include: {
         model: user,
         attributes: ['name', 'status'],

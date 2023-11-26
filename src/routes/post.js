@@ -9,8 +9,8 @@ router.post('/', auth, validation.createPost, postController.create);
 // 게시글 전체조회
 router.get('/', postController.getAllpost);
 // 게시글 삭제
-router.delete('/:postId', auth, postController.delete);
+router.delete('/:id', auth, postController.delete);
 // 게시글 상세조회
-router.get('/:postId', postController.get);
+router.get('/:id', postController.get);
 
 module.exports = router;
