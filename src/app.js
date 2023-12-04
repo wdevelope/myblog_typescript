@@ -9,21 +9,14 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
 
-// 프론트 연결
-app.use(express.static(__dirname + '/public'));
-app.get('/:pageName', (req, res) => {
-  const pageName = req.params.pageName;
-  res.sendFile(path.join(__dirname, `public/views/${pageName}.html`));
-});
-
-// app.use(
-//   cors({
-//     origin: 'http://localhost:3000',
-//     methods: ['GET', 'POST'],
-//     credentials: true,
-//   })
-// );
-
+// middleWares
+app.use(
+  cors({
+    origin: `http://localhost:${process.env.FNT_SERVER_PORT}`,
+    methods: ['GET', 'POST', 'DELETE', 'PATCH', 'PUT'],
+    credentials: true,
+  })
+);
 app.use(cookieParser());
 app.use(express.json());
 app.use(router);

@@ -8,13 +8,11 @@ module.exports = {
   },
 
   // post 전체조회 (페이지네이션)
-  getAllpost: async (page) => {
+  getAllpost: async (page, subCategoryId) => {
     const pageSize = 15;
-    console.log('Page:', page, 'Type of Page:', typeof page);
     const offset = (page - 1) * pageSize;
-    console.log(offset);
 
-    const { posts, totalCount } = await postRepository.getAllpost(offset, pageSize);
+    const { posts, totalCount } = await postRepository.getAllpost(offset, pageSize, subCategoryId);
     const totalPages = Math.ceil(totalCount / pageSize);
 
     return {

@@ -17,8 +17,9 @@ module.exports = {
   // post 게시글 전체조회
   getAllpost: async (req, res) => {
     try {
+      const subCategoryId = req.query.subCategoryId;
       const page = parseInt(req.query.page) || 1;
-      const response = await postService.getAllpost(page);
+      const response = await postService.getAllpost(page, subCategoryId);
       res.status(200).json(response);
     } catch (err) {
       res.status(500).json({ errorMessage: err.message });

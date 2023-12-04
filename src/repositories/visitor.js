@@ -12,13 +12,19 @@ module.exports = {
     const visitors = await Visitor.findAll({
       attributes: { exclude: ['password'] }, // 'password' 필드 제외
       include: { model: user, attributes: ['name'] },
+      order: [['createdAt', 'DESC']],
     });
     return visitors;
   },
 
   // 특정 방명록 조회
   getVisitorById: async (id) => {
-    const visitor = await Visitor.findByPk(id);
+    const visitor = await Visitor.findByPk(id, {
+      include: {
+        model: user,
+        attributes: ['name', 'status'],
+      },
+    });
     return visitor;
   },
 

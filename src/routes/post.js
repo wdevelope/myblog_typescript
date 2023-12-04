@@ -6,7 +6,7 @@ const validation = require('../middlewares/validation');
 
 // 게시글 생성
 router.post('/', auth, validation.createPost, postController.create);
-// 게시글 전체조회
+// 특정 카테고리 게시글 전체조회
 router.get('/', postController.getAllpost);
 // 게시글 삭제
 router.delete('/:id', auth, postController.delete);

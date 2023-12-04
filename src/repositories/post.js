@@ -13,13 +13,16 @@ module.exports = {
   },
 
   // post 게시글 전체 조회
-  getAllpost: async (offset, pageSize) => {
+  getAllpost: async (offset, pageSize, subCategoryId) => {
     const result = await post.findAndCountAll({
       include: {
         model: user,
         attributes: ['name'],
       },
       order: [['createdAt', 'DESC']],
+      where: {
+        subCategoryId,
+      },
       offset, // 페이지 시작 위치
       limit: pageSize, // 페이지당 아이템 수
     });
