@@ -24,7 +24,7 @@ module.exports = {
   // 유저 Id 찾기
   findUserById: async (userId) => {
     const userInfo = await user.findOne({
-      attributes: ['name', 'email'],
+      attributes: ['name', 'email', 'status'],
       where: { id: userId },
     });
     return userInfo;

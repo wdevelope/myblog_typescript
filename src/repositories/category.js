@@ -16,6 +16,11 @@ module.exports = {
     return await category.findByPk(id);
   },
 
+  // 카테고리 이름 조회
+  findByName: async (name) => {
+    return await category.findOne({ where: { name } });
+  },
+
   // 카테고리 업데이트
   update: async (id, name) => {
     return await category.update(

@@ -4,8 +4,8 @@ module.exports = {
   // 서브 카테고리 생성
   create: async (req, res) => {
     try {
-      const { categoryId, name, position } = req.body;
-      const category = await subCategoryService.create(categoryId, name, position);
+      const { categoryName, name, position } = req.body;
+      const category = await subCategoryService.create(categoryName, name, position);
       res.status(201).json(category);
     } catch (error) {
       res.status(400).json({ errorMessage: error.message });
