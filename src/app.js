@@ -19,7 +19,7 @@ app.use(
 );
 
 // 프론트 연결
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static('public'));
 
 app.use(cookieParser());
 app.use(express.json());
