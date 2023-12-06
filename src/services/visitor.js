@@ -13,9 +13,21 @@ module.exports = {
   },
 
   // 모든 방명록 조회
-  getAllVisitors: async () => {
-    const visitors = await visitorRepository.getAllVisitors();
-    return visitors;
+  getAllVisitors: async (page) => {
+    const pageSize = 15;
+    const offset = (page - 1) * pageSize;
+
+    const { visitors, totalCount } = await visitorRepository.getAllVisitors(offset, pageSize);
+    const totalPages = Math.ceil(totalCount / pageSize);
+
+    return {
+      visitors,
+      meta: {
+        totalPages,
+        currentPage: page,
+        totalCount,
+      },
+    };
   },
 
   // 특정 방명록 조회

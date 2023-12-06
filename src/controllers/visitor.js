@@ -17,7 +17,8 @@ module.exports = {
   // 모든 방명록 조회
   getAll: async (req, res) => {
     try {
-      const visitors = await visitorService.getAllVisitors();
+      const page = parseInt(req.query.page) || 1;
+      const visitors = await visitorService.getAllVisitors(page);
       res.status(200).json(visitors);
     } catch (error) {
       console.error(error);

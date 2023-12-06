@@ -1,5 +1,6 @@
 const post = require('../database/models/post');
 const user = require('../database/models/user');
+const subCategory = require('../database/models/subCategory');
 
 module.exports = {
   // 게시글 생성
@@ -15,10 +16,16 @@ module.exports = {
   // post 게시글 전체 조회
   getAllpost: async (offset, pageSize, subCategoryId) => {
     const result = await post.findAndCountAll({
-      include: {
-        model: user,
-        attributes: ['name'],
-      },
+      include: [
+        {
+          model: user,
+          attributes: ['name'],
+        },
+        {
+          model: subCategory,
+          attributes: ['name'],
+        },
+      ],
       order: [['createdAt', 'DESC']],
       where: {
         subCategoryId,

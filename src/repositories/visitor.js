@@ -8,13 +8,18 @@ module.exports = {
   },
 
   // 방명록 전체조회
-  getAllVisitors: async () => {
-    const visitors = await Visitor.findAll({
+  getAllVisitors: async (offset, pageSize) => {
+    const result = await Visitor.findAndCountAll({
       attributes: { exclude: ['password'] }, // 'password' 필드 제외
       include: { model: user, attributes: ['name'] },
       order: [['createdAt', 'DESC']],
+      offset,
+      limit: pageSize,
     });
-    return visitors;
+    return {
+      visitors: result.rows, // 조회된 게시글
+      totalCount: result.count, // 총 게시글 수
+    };
   },
 
   // 특정 방명록 조회
