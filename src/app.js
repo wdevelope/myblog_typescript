@@ -1,6 +1,7 @@
 require('dotenv').config();
 require('./database/relations');
 
+const compression = require('compression');
 const express = require('express');
 const app = express();
 const sequelize = require('./config/mysql');
@@ -24,6 +25,9 @@ app.use(express.static('public'));
 app.use(cookieParser());
 app.use(express.json());
 app.use(router);
+
+// HTTP 요청 압축
+app.use(compression());
 
 // DB 동기화 + 서버실행
 (async () => {
