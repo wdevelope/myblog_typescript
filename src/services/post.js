@@ -15,8 +15,12 @@ module.exports = {
     const { posts, totalCount } = await postRepository.getAllpost(offset, pageSize, subCategoryId);
     const totalPages = Math.ceil(totalCount / pageSize);
 
+    // 서브 카테고리 정보 조회
+    const subCategoryInfo = await postRepository.getSubCategory(subCategoryId);
+    console.log(subCategoryInfo);
     return {
       posts,
+      subCategory: subCategoryInfo,
       meta: {
         totalPages,
         currentPage: page,

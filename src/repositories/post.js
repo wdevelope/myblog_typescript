@@ -21,23 +21,29 @@ module.exports = {
           model: user,
           attributes: ['name'],
         },
-        {
-          model: subCategory,
-          attributes: ['name'],
-        },
       ],
       order: [['createdAt', 'DESC']],
       where: {
         subCategoryId,
       },
+
       offset, // 페이지 시작 위치
       limit: pageSize, // 페이지당 아이템 수
     });
 
     return {
-      posts: result.rows, // 조회된 게시글
-      totalCount: result.count, // 총 게시글 수
+      posts: result.rows,
+      totalCount: result.count,
     };
+  },
+
+  //서브카테고리 이름 조회
+  getSubCategory: async (subCategoryId) => {
+    const subCategoryResult = await subCategory.findOne({
+      where: { id: subCategoryId },
+      attributes: ['name'],
+    });
+    return subCategoryResult;
   },
 
   // 게시글 삭제
