@@ -13,7 +13,7 @@ const cors = require('cors');
 // middleWares
 app.use(
   cors({
-    origin: `http://localhost:${process.env.FNT_SERVER_PORT}`,
+    origin: `https://${process.env.FNT_SERVER_PORT}`,
     methods: ['GET', 'POST', 'DELETE', 'PATCH', 'PUT'],
     credentials: true,
   })
