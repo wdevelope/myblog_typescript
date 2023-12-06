@@ -20,6 +20,7 @@ module.exports = {
       meta: {
         totalPages,
         currentPage: page,
+        totalCount,
       },
     };
   },
