@@ -19,9 +19,7 @@ app.use(
 );
 
 // 프론트 연결
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public/index.html'));
-});
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(cookieParser());
 app.use(express.json());
