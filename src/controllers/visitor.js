@@ -56,8 +56,9 @@ module.exports = {
   delete: async (req, res) => {
     try {
       const id = req.params.id;
-      const deletedVisitor = await visitorService.deleteVisitor(id);
-      res.status(200).json(deletedVisitor);
+      const userId = req.user.userId;
+      const deletedVisitor = await visitorService.deleteVisitor(id, userId);
+      res.status(200).json({ message: '게시글 삭제 완료' });
     } catch (error) {
       console.error(error);
       res.status(500).json({ errorMessage: error.message });

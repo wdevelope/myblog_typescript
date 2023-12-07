@@ -64,4 +64,13 @@ module.exports = {
       },
     });
   },
+
+  // 게시글 조회
+  findById: async (userId) => {
+    return await post.findOne({
+      where: {
+        id: userId,
+      },
+    });
+  },
 };

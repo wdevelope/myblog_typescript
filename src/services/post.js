@@ -30,7 +30,13 @@ module.exports = {
   },
 
   // 게시글 삭제
-  delete: async (id) => {
+  delete: async (id, userId) => {
+    const post = await postRepository.findById(id);
+
+    if (post.userId !== userId) {
+      throw new Error('삭제 권한이 없습니다.');
+    }
+
     const deletedpost = await postRepository.delete(id);
     return deletedpost;
   },

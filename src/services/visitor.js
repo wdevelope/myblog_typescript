@@ -43,7 +43,14 @@ module.exports = {
   },
 
   // 방명록 삭제
-  deleteVisitor: async (id) => {
+  deleteVisitor: async (id, userId) => {
+    console.log(id);
+    const visitor = await visitorRepository.findById(id);
+    console.log(visitor);
+    if (visitor.userId !== userId) {
+      throw new Error('삭제 권한이 없습니다.');
+    }
+
     const deletedVisitor = await visitorRepository.deleteVisitor(id);
     return deletedVisitor;
   },

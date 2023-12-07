@@ -30,7 +30,8 @@ module.exports = {
   delete: async (req, res) => {
     try {
       const { id } = req.params;
-      await postService.delete(id);
+      const userId = req.user.userId;
+      await postService.delete(id, userId);
       res.status(200).json({ message: '게시글 삭제 완료' });
     } catch (err) {
       console.log(err);

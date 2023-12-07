@@ -33,6 +33,15 @@ module.exports = {
     return visitor;
   },
 
+  // 방명록 조회
+  findById: async (id) => {
+    return await Visitor.findOne({
+      where: {
+        id: id,
+      },
+    });
+  },
+
   // 방명록 업데이트
   updateVisitor: async (id, title, content) => {
     return await Visitor.update(
