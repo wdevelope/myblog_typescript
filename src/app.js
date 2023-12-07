@@ -21,6 +21,10 @@ app.use(
 
 // 프론트 연결
 app.use(express.static('public'));
+// 모든 라우트에 대해 index.html 반환 (vue-router관련)
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public/index.html'));
+});
 
 app.use(cookieParser());
 app.use(express.json());
