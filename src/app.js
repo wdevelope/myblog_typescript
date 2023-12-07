@@ -10,7 +10,12 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
 
-// middleWares
+// 미들웨어 설정
+app.use(cookieParser());
+app.use(express.json());
+app.use(compression());
+
+// cors 설정
 app.use(
   cors({
     origin: [`https://${process.env.FNT_SERVER_PORT}`, 'http://localhost:8080'],
@@ -19,19 +24,18 @@ app.use(
   })
 );
 
-// 프론트 연결
+// API 라우트 설정
+app.use(router);
+
+// 프론트 정적 파일 제공
 app.use(express.static('public'));
-// 모든 라우트에 대해 index.html 반환 (vue-router관련)
+
+// Vue Router를 위한 와일드카드 라우트
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '../public/index.html'));
 });
 
-app.use(cookieParser());
-app.use(express.json());
 app.use(router);
-
-// HTTP 요청 압축
-app.use(compression());
 
 // DB 동기화 + 서버실행
 (async () => {
