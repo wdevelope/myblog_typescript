@@ -24,6 +24,10 @@ const visitor = sequelize.define('visitor', {
     type: DataTypes.BOOLEAN,
     defaultValue: false, // 기본값은 공개 게시글로 설정
   },
+  views: {
+    type: DataTypes.INTEGER,
+    defaultValue: 0,
+  },
 });
 
 module.exports = visitor;

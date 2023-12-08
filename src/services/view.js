@@ -1,9 +1,15 @@
-const viewRepository = require('../repositories/viewRepository');
+const viewRepository = require('../repositories/view');
 
 module.exports = {
-  // 조회수
-  views: async (postId) => {
-    const viewsPost = await lifeRepository.views(postId);
+  // 게시글 조회수
+  postViews: async (postId) => {
+    const viewsPost = await viewRepository.postViews(postId);
+    return viewsPost;
+  },
+
+  // 방명록 조회수
+  visitorViews: async (postId) => {
+    const viewsPost = await viewRepository.visitorViews(postId);
     return viewsPost;
   },
 };

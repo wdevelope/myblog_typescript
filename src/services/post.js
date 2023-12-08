@@ -17,7 +17,6 @@ module.exports = {
 
     // 서브 카테고리 정보 조회
     const subCategoryInfo = await postRepository.getSubCategory(subCategoryId);
-    console.log(subCategoryInfo);
     return {
       posts,
       subCategory: subCategoryInfo,

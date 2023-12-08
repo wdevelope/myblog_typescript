@@ -1,10 +1,14 @@
-const user = require('../database/models/user');
+const post = require('../database/models/post');
+const visitor = require('../database/models/visitor');
 
 module.exports = {
-  // 조회수
-  views: async (postId) => {
-    const updatedPost = await life.increment('views', { where: { id: postId } });
+  // 게시글 조회수
+  postViews: async (postId) => {
+    return await post.increment('views', { where: { id: postId } });
+  },
 
-    return updatedPost;
+  // 방명록 조회수
+  visitorViews: async (postId) => {
+    return await visitor.increment('views', { where: { id: postId } });
   },
 };

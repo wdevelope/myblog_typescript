@@ -20,6 +20,10 @@ const post = sequelize.define('post', {
     type: DataTypes.INTEGER,
     defaultValue: 0, // 기본적으로 모든 사용자가 접근 가능
   },
+  views: {
+    type: DataTypes.INTEGER,
+    defaultValue: 0,
+  },
 });
 
 module.exports = post;
