@@ -8,7 +8,7 @@ module.exports = {
   },
 
   // 방명록 조회수
-  visitorViews: async (postId) => {
-    return await visitor.increment('views', { where: { id: postId } });
+  visitorViews: async (visitorId) => {
+    return await visitor.increment('views', { where: { id: visitorId } });
   },
 };

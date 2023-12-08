@@ -8,8 +8,8 @@ module.exports = {
   },
 
   // 방명록 조회수
-  visitorViews: async (postId) => {
-    const viewsPost = await viewRepository.visitorViews(postId);
+  visitorViews: async (visitorId) => {
+    const viewsPost = await viewRepository.visitorViews(visitorId);
     return viewsPost;
   },
 };

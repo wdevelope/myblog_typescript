@@ -16,9 +16,9 @@ module.exports = {
 
   // 방명록 조회수 증가
   visitorViews: async (req, res) => {
-    const postId = req.params.postId;
+    const visitorId = req.params.visitorId;
     try {
-      await viewService.visitorViews(postId);
+      await viewService.visitorViews(visitorId);
       res.sendStatus(200);
     } catch (err) {
       console.log(err);
