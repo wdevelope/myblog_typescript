@@ -46,6 +46,21 @@ module.exports = {
     return subCategoryResult;
   },
 
+  // 게시글 수정
+  patch: async (id, title, content) => {
+    return await post.update(
+      {
+        title,
+        content,
+      },
+      {
+        where: {
+          id: id,
+        },
+      }
+    );
+  },
+
   // 게시글 삭제
   delete: async (id) => {
     return await post.destroy({

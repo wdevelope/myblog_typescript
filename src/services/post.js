@@ -28,6 +28,18 @@ module.exports = {
     };
   },
 
+  // 게시글 수정
+  patch: async (id, userId, title, content) => {
+    const post = await postRepository.findById(id);
+
+    if (post.userId !== userId) {
+      throw new Error('수정 권한이 없습니다.');
+    }
+
+    const updatedpost = await postRepository.patch(id, title, content);
+    return updatedpost;
+  },
+
   // 게시글 삭제
   delete: async (id, userId) => {
     const post = await postRepository.findById(id);

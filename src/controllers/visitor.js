@@ -52,13 +52,27 @@ module.exports = {
     }
   },
 
+  // 방명록 수정
+  patch: async (req, res) => {
+    try {
+      const { id } = req.params;
+      const userId = req.user.userId;
+      const { title, content } = req.body;
+      await visitorService.patch(id, userId, title, content);
+      res.status(200).json({ message: '방명록 수정 완료' });
+    } catch (err) {
+      console.log(err);
+      res.status(500).json({ errorMessage: err.message });
+    }
+  },
+
   // 방명록 삭제
   delete: async (req, res) => {
     try {
       const id = req.params.id;
       const userId = req.user.userId;
-      const deletedVisitor = await visitorService.deleteVisitor(id, userId);
-      res.status(200).json({ message: '게시글 삭제 완료' });
+      await visitorService.deleteVisitor(id, userId);
+      res.status(200).json({ message: '방명록 삭제 완료' });
     } catch (error) {
       console.error(error);
       res.status(500).json({ errorMessage: error.message });

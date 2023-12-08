@@ -26,6 +26,20 @@ module.exports = {
     }
   },
 
+  // 게시글 수정
+  patch: async (req, res) => {
+    try {
+      const { id } = req.params;
+      const userId = req.user.userId;
+      const { title, content } = req.body;
+      await postService.patch(id, userId, title, content);
+      res.status(200).json({ message: '게시글 수정 완료' });
+    } catch (err) {
+      console.log(err);
+      res.status(500).json({ errorMessage: err.message });
+    }
+  },
+
   // 게시글 삭제
   delete: async (req, res) => {
     try {

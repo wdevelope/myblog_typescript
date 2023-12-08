@@ -52,10 +52,34 @@ module.exports = {
     );
   },
 
+  // 방명록 수정
+  patch: async (id, title, content) => {
+    return await Visitor.update(
+      {
+        title,
+        content,
+      },
+      {
+        where: {
+          id: id,
+        },
+      }
+    );
+  },
+
   // 방명록 삭제
   deleteVisitor: async (id) => {
     return await Visitor.destroy({
       where: { id },
+    });
+  },
+
+  // 방명록 조회
+  findById: async (userId) => {
+    return await Visitor.findOne({
+      where: {
+        id: userId,
+      },
     });
   },
 };

@@ -42,6 +42,18 @@ module.exports = {
     return updatedVisitor;
   },
 
+  // 방명록 수정
+  patch: async (id, userId, title, content) => {
+    const post = await visitorRepository.findById(id);
+
+    if (post.userId !== userId) {
+      throw new Error('수정 권한이 없습니다.');
+    }
+
+    const updatedpost = await visitorRepository.patch(id, title, content);
+    return updatedpost;
+  },
+
   // 방명록 삭제
   deleteVisitor: async (id, userId) => {
     const visitor = await visitorRepository.findById(id);
