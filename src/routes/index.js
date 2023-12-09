@@ -8,6 +8,7 @@ const categoryRouter = require('./category');
 const subCategoryRouter = require('./subCategory');
 const visitorRouter = require('./visitor');
 const viewRouter = require('./view');
+const visitorCommentRouter = require('./visitorComment');
 
 // 유저
 router.use('/api/user', userRouter);
@@ -21,6 +22,8 @@ router.use('/api/post', postRouter);
 router.use('/api/image', imageRouter);
 // 방명록
 router.use('/api/visitor', visitorRouter);
+// 방명록 댓글
+router.use('/api/visitorComment', visitorCommentRouter);
 // 조회수
 router.use('/api/view', viewRouter);
 

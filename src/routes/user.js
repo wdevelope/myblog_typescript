@@ -11,7 +11,7 @@ router.post('/login', validation.login, userController.login);
 // 회원정보
 router.get('/userInfo', auth, userController.userInfo);
 // 유저상태변경
-router.patch('/status', auth, authAdmin, userController.updateUser);
+router.patch('/status', [auth, authAdmin], userController.updateUser);
 // 로그아웃
 router.post('/logout', auth, userController.logout);
 // 로그인 확인
