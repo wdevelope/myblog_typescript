@@ -38,6 +38,19 @@ module.exports = {
     }
   },
 
+  // 방명록 비밀번호 체크
+  visitorPasswordCheck: async (req, res) => {
+    try {
+      const id = req.params.id;
+      const { password } = req.body;
+      await visitorService.visitorPasswordCheck(id, password);
+      res.sendStatus(200);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ errorMessage: error.message });
+    }
+  },
+
   // 방명록 수정
   update: async (req, res) => {
     try {

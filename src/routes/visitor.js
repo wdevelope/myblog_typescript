@@ -14,5 +14,7 @@ router.get('/:id', visitorController.getOne);
 router.patch('/:id', auth, visitorController.patch);
 // 방명록 삭제
 router.delete('/:id', auth, visitorController.delete);
+// 방명록 비밀번호 체크
+router.post('/:id/password', visitorController.visitorPasswordCheck);
 
 module.exports = router;
