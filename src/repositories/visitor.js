@@ -1,5 +1,6 @@
 const Visitor = require('../database/models/visitor');
 const user = require('../database/models/user');
+const visitorComment = require('../database/models/visitorComment.js');
 
 module.exports = {
   // 방명록 생성
@@ -25,10 +26,16 @@ module.exports = {
   // 특정 방명록 조회
   getVisitorById: async (id) => {
     const visitor = await Visitor.findByPk(id, {
-      include: {
-        model: user,
-        attributes: ['name', 'status'],
-      },
+      include: [
+        {
+          model: user,
+          attributes: ['name', 'status'],
+        },
+        {
+          model: visitorComment,
+          attributes: ['name', 'comment'],
+        },
+      ],
     });
     return visitor;
   },
