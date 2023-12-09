@@ -1,7 +1,7 @@
-const express = require('express');
+import express from 'express';
 const router = express.Router();
-const { auth, authAdmin } = require('../middlewares/auth');
-const categoryController = require('../controllers/category');
+import { auth, authAdmin } from '../middlewares/auth';
+import categoryController from '../controllers/category';
 
 // 카테고리 생성
 router.post('/', [auth, authAdmin], categoryController.create);
@@ -14,4 +14,4 @@ router.patch('/:id', [auth, authAdmin], categoryController.update);
 // 카테고리 삭제
 router.delete('/:id', [auth, authAdmin], categoryController.delete);
 
-module.exports = router;
+export default router;

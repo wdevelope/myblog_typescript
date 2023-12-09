@@ -1,14 +1,14 @@
-const express = require('express');
+import express from 'express';
 const router = express.Router();
 
-const userRouter = require('./user');
-const postRouter = require('./post');
-const imageRouter = require('./image');
-const categoryRouter = require('./category');
-const subCategoryRouter = require('./subCategory');
-const visitorRouter = require('./visitor');
-const viewRouter = require('./view');
-const visitorCommentRouter = require('./visitorComment');
+import userRouter from './user';
+import postRouter from './post';
+import imageRouter from './image';
+import categoryRouter from './category';
+import subCategoryRouter from './subCategory';
+import visitorRouter from './visitor';
+import viewRouter from './view';
+import visitorCommentRouter from './visitorComment';
 
 // 유저
 router.use('/api/user', userRouter);
@@ -27,4 +27,4 @@ router.use('/api/visitorComment', visitorCommentRouter);
 // 조회수
 router.use('/api/view', viewRouter);
 
-module.exports = router;
+export default router;

@@ -1,7 +1,8 @@
-const express = require('express');
+import express from 'express';
 const router = express.Router();
-const { auth, authAdmin } = require('../middlewares/auth');
-const subCategoryController = require('../controllers/subCategory');
+import { auth, authAdmin } from '../middlewares/auth';
+// import validation from '../middlewares/validation';
+import subCategoryController from '../controllers/subCategory';
 
 // 서브 카테고리 생성
 router.post('/', [auth, authAdmin], subCategoryController.create);
@@ -12,4 +13,4 @@ router.patch('/:id', [auth, authAdmin], subCategoryController.update);
 // 서브 카테고리 삭제
 router.delete('/:id', [auth, authAdmin], subCategoryController.delete);
 
-module.exports = router;
+export default router;

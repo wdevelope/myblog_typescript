@@ -1,8 +1,8 @@
-const express = require('express');
+import express from 'express';
 const router = express.Router();
-const userController = require('../controllers/user');
-const validation = require('../middlewares/validation');
-const { auth, authAdmin } = require('../middlewares/auth');
+import { auth, authAdmin } from '../middlewares/auth';
+import validation from '../middlewares/validation';
+import userController from '../controllers/user';
 
 // 회원가입
 router.post('/register', validation.register, userController.register);
@@ -19,4 +19,4 @@ router.get('/check', auth, (req, res) => {
   res.status(200).json({ isLoggedIn: true });
 });
 
-module.exports = router;
+export default router;

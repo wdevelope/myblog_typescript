@@ -1,8 +1,8 @@
-const express = require('express');
+import express from 'express';
 const router = express.Router();
-const postController = require('../controllers/post');
-const { auth, authAdmin } = require('../middlewares/auth');
-const validation = require('../middlewares/validation');
+import { auth } from '../middlewares/auth';
+import validation from '../middlewares/validation';
+import postController from '../controllers/post';
 
 // 게시글 생성
 router.post('/', auth, validation.createPost, postController.create);
@@ -15,4 +15,4 @@ router.delete('/:id', auth, postController.delete);
 // 게시글 상세조회
 router.get('/:id', postController.get);
 
-module.exports = router;
+export default router;

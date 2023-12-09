@@ -1,8 +1,7 @@
-const express = require('express');
+import express from 'express';
 const router = express.Router();
-const { auth, authAdmin } = require('../middlewares/auth');
-const validation = require('../middlewares/validation');
-const visitorController = require('../controllers/visitor');
+import { auth } from '../middlewares/auth';
+import visitorController from '../controllers/visitor';
 
 // 방명록 생성
 router.post('/', auth, visitorController.create);
@@ -17,4 +16,4 @@ router.delete('/:id', auth, visitorController.delete);
 // 방명록 비밀번호 체크
 router.post('/:id/password', visitorController.visitorPasswordCheck);
 
-module.exports = router;
+export default router;
