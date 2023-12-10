@@ -12,7 +12,8 @@
     "start:node": "nodemon src/app.js",
     "build": "tsc",
     "start": "tsc-watch --onSuccess \"node dist/src/app.js\"",
-    "dev": "ts-node src/app.ts"
+    "dev": "ts-node src/app.ts",
+    "prod": "node dist/src/app.js"
   },
   "author": "",
   "license": "ISC",
