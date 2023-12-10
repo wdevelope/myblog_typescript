@@ -1,14 +1,10 @@
 import { DataTypes, Model } from 'sequelize';
 import sequelize from '../../config/mysql';
 
-interface imageAttributes {
-  id: number;
-  imageUrl: string;
-}
-
-class Image extends Model<imageAttributes> implements imageAttributes {
+class Image extends Model {
   public id!: number;
   public imageUrl!: string;
+  public postId!: number;
 }
 
 Image.init(
@@ -21,6 +17,10 @@ Image.init(
     },
     imageUrl: {
       type: DataTypes.STRING,
+    },
+    postId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
     },
   },
   {

@@ -1,16 +1,11 @@
 import { DataTypes, Model } from 'sequelize';
 import sequelize from '../../config/mysql';
 
-interface SubCategoryAttributes {
-  id: number;
-  name: string;
-  position: number;
-}
-
-class SubCategory extends Model<SubCategoryAttributes> implements SubCategoryAttributes {
+class SubCategory extends Model {
   public id!: number;
   public name!: string;
   public position!: number;
+  public categoryId!: number;
 }
 
 SubCategory.init(
@@ -28,6 +23,10 @@ SubCategory.init(
     position: {
       type: DataTypes.BIGINT,
       allowNull: false,
+    },
+    categoryId: {
+      allowNull: false,
+      type: DataTypes.INTEGER,
     },
   },
   {

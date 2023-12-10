@@ -1,22 +1,12 @@
 import { DataTypes, Model } from 'sequelize';
 import sequelize from '../../config/mysql';
 
-interface PostAttributes {
-  id: number;
-  title: string;
-  content: string;
-  accessLevel: number;
-  views: number;
-}
-
-class Post extends Model<PostAttributes> implements PostAttributes {
+class Post extends Model {
   public id!: number;
   public title!: string;
   public content!: string;
-  public accessLevel!: number;
-  public views!: number;
-  public readonly createdAt!: Date;
-  public readonly updatedAt!: Date;
+  public userId!: number;
+  public subCategoryId!: number;
 }
 
 Post.init(
@@ -42,6 +32,14 @@ Post.init(
     views: {
       type: DataTypes.INTEGER,
       defaultValue: 0,
+    },
+    subCategoryId: {
+      allowNull: false,
+      type: DataTypes.INTEGER,
+    },
+    userId: {
+      allowNull: false,
+      type: DataTypes.INTEGER,
     },
   },
   {

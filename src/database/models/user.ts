@@ -1,15 +1,7 @@
 import { DataTypes, Model } from 'sequelize';
 import sequelize from '../../config/mysql';
 
-interface UserAttributes {
-  id: number;
-  name: string;
-  email: string;
-  password: string;
-  status: string;
-}
-
-class User extends Model<UserAttributes> implements UserAttributes {
+class User extends Model {
   public id!: number;
   public name!: string;
   public email!: string;

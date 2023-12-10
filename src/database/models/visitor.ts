@@ -1,22 +1,14 @@
 import { DataTypes, Model } from 'sequelize';
 import sequelize from '../../config/mysql';
 
-interface VisitorAttributes {
-  id: number;
-  title: string;
-  content: string;
-  password: string;
-  isPrivate: boolean;
-  views: number;
-}
-
-class Visitor extends Model<VisitorAttributes> implements VisitorAttributes {
+class Visitor extends Model {
   public id!: number;
   public title!: string;
   public content!: string;
   public password!: string;
   public isPrivate!: boolean;
   public views!: number;
+  public userId!: number;
 
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
@@ -49,6 +41,10 @@ Visitor.init(
     views: {
       type: DataTypes.INTEGER,
       defaultValue: 0,
+    },
+    userId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
     },
   },
   {

@@ -1,16 +1,11 @@
 import { DataTypes, Model } from 'sequelize';
 import sequelize from '../../config/mysql';
 
-interface VisitorCommentAttributes {
-  id: number;
-  name: string;
-  comment: string;
-}
-
-class VisitorComment extends Model<VisitorCommentAttributes> implements VisitorCommentAttributes {
+class VisitorComment extends Model {
   public id!: number;
   public name!: string;
   public comment!: string;
+  public visitorId!: number;
 
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
@@ -30,6 +25,10 @@ VisitorComment.init(
     },
     comment: {
       type: DataTypes.TEXT,
+      allowNull: false,
+    },
+    visitorId: {
+      type: DataTypes.INTEGER,
       allowNull: false,
     },
   },

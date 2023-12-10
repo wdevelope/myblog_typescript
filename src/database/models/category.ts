@@ -1,13 +1,7 @@
 import { DataTypes, Model } from 'sequelize';
 import sequelize from '../../config/mysql';
 
-interface CategoryAttributes {
-  id: number;
-  name: string;
-  position: number;
-}
-
-class Category extends Model<CategoryAttributes> implements CategoryAttributes {
+class Category extends Model {
   public id!: number;
   public name!: string;
   public position!: number;
