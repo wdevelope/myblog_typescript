@@ -1,61 +1,62 @@
-const userService = require('../services/user');
+import { Request, Response } from 'express';
+import userService from '../services/user';
 
-module.exports = {
+export default {
   // 회원가입
-  register: async (req, res) => {
+  register: async (req: Request, res: Response): Promise<void> => {
     const { name, email, password, confirmPassword } = req.body;
     try {
       const newUser = await userService.register(name, email, password, confirmPassword);
       res.status(201).json(newUser);
     } catch (err) {
-      console.log(err);
+      console.error(err);
       res.status(500).json({ errorMessage: err.message });
     }
   },
 
   // 로그인
-  login: async (req, res) => {
+  login: async (req: Request, res: Response): Promise<void> => {
     const { email, password } = req.body;
     try {
       const token = await userService.login(email, password);
       res.cookie('Authorization', `Bearer ${token}`, { maxAge: 3 * 24 * 60 * 60 * 1000 });
       res.status(200).json({ token });
     } catch (err) {
-      console.log(err);
+      console.error(err);
       res.status(500).json({ errorMessage: err.message });
     }
   },
 
   // 유저정보
-  userInfo: async (req, res) => {
+  userInfo: async (req: Request, res: Response): Promise<void> => {
     try {
-      const user = await userService.userInfo(req.user.userId);
+      const user = await userService.userInfo(res.locals.user.userId);
       res.status(200).json(user);
     } catch (err) {
-      console.log(err);
+      console.error(err);
       res.status(500).json({ errorMessage: err.message });
     }
   },
 
   // 유저상태 변경
-  updateUser: async (req, res) => {
+  updateUser: async (req: Request, res: Response): Promise<void> => {
     try {
       const { email, status } = req.body;
       const user = await userService.updateUser(email, status);
       res.status(200).json(user);
     } catch (err) {
-      console.log(err);
+      console.error(err);
       res.status(500).json({ errorMessage: err.message });
     }
   },
 
-  //로그아웃
-  logout: async (req, res) => {
+  // 로그아웃
+  logout: async (req: Request, res: Response): Promise<void> => {
     try {
       res.clearCookie('Authorization');
       res.status(200).json({ message: '로그아웃 되었습니다.' });
     } catch (err) {
-      console.log(err);
+      console.error(err);
       res.status(500).json({ errorMessage: err.message });
     }
   },

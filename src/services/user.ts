@@ -1,10 +1,10 @@
-const userRepository = require('../repositories/user');
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
+import userRepository from '../repositories/user';
+import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
 
-module.exports = {
+export default {
   // 회원가입
-  register: async (name, email, password, confirmPassword) => {
+  register: async (name: string, email: string, password: string, confirmPassword: string) => {
     if (!confirmPassword) {
       throw new Error('비밀번호 확인이 필요합니다.');
     }
@@ -16,7 +16,7 @@ module.exports = {
   },
 
   // 로그인
-  login: async (email, password) => {
+  login: async (email: string, password: string) => {
     const user = await userRepository.findUserByEmail(email);
 
     if (!user) {
@@ -29,15 +29,15 @@ module.exports = {
       throw new Error('아이디 또는 비밀번호가 틀렸습니다.');
     }
 
-    const token = jwt.sign({ userId: user.id, status: user.status }, process.env.JWT_SECRET, {
-      expiresIn: process.env.JWT_EXPIREIN,
+    const token = jwt.sign({ userId: user.id, status: user.status }, process.env.JWT_SECRET || '', {
+      expiresIn: process.env.JWT_EXPIREIN || '1h',
     });
 
     return token;
   },
 
   // 유저 정보
-  userInfo: async (userId) => {
+  userInfo: async (userId: number) => {
     const user = await userRepository.findUserById(userId);
 
     if (!user) {
@@ -48,7 +48,7 @@ module.exports = {
   },
 
   // 유저 상태변경
-  updateUser: async (email, status) => {
+  updateUser: async (email: string, status: string) => {
     const user = await userRepository.findUserByEmail(email);
 
     if (!user) {

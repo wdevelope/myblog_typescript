@@ -1,8 +1,9 @@
-const visitorCommentService = require('../services/visitorComment.js');
+import { Request, Response } from 'express';
+import visitorCommentService from '../services/visitorComment';
 
-module.exports = {
+export default {
   // 방명록 댓글 생성
-  commentCreate: async (req, res) => {
+  commentCreate: async (req: Request, res: Response): Promise<void> => {
     try {
       const { visitorId } = req.params;
       const { comment } = req.body;
@@ -15,7 +16,7 @@ module.exports = {
   },
 
   // 방명록 댓글 삭제
-  commentDelete: async (req, res) => {
+  commentDelete: async (req: Request, res: Response): Promise<void> => {
     try {
       const { visitorCommentId } = req.params;
       await visitorCommentService.commentDelete(visitorCommentId);

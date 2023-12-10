@@ -1,9 +1,11 @@
-const e = require('express');
-const visitorRepository = require('../repositories/visitor');
+import { Request } from 'express';
+import visitorRepository from '../repositories/visitor';
 
-module.exports = {
+export default {
   // 방명록 생성
-  createVisitor: async (userId, title, content, password, isPrivate) => {
+  createVisitor: async (req: Request) => {
+    const { userId, title, content, password, isPrivate } = req.body;
+
     if (isPrivate) {
       if (!password) {
         throw new Error('비밀번호를 입력해주세요.');
@@ -20,7 +22,8 @@ module.exports = {
   },
 
   // 모든 방명록 조회
-  getAllVisitors: async (page) => {
+  getAllVisitors: async (req: Request) => {
+    const page = parseInt(req.query.page) || 1;
     const pageSize = 15;
     const offset = (page - 1) * pageSize;
 
@@ -38,13 +41,17 @@ module.exports = {
   },
 
   // 특정 방명록 조회
-  getVisitorById: async (id) => {
+  getVisitorById: async (req: Request) => {
+    const id = req.params.id;
     const visitor = await visitorRepository.getVisitorById(id);
     return visitor;
   },
 
   // 방명록 비밀번호 체크
-  visitorPasswordCheck: async (id, password) => {
+  visitorPasswordCheck: async (req: Request) => {
+    const id = req.params.id;
+    const { password } = req.body;
+
     if (!password) {
       throw new Error('비밀번호를 입력해주세요.');
     }
@@ -59,13 +66,19 @@ module.exports = {
   },
 
   // 방명록 업데이트
-  updateVisitor: async (id, title, content) => {
+  updateVisitor: async (req: Request) => {
+    const id = req.params.id;
+    const { title, content } = req.body;
+
     const updatedVisitor = await visitorRepository.updateVisitor(id, title, content);
     return updatedVisitor;
   },
 
   // 방명록 수정
-  patch: async (id, userId, title, content) => {
+  patch: async (req: Request) => {
+    const { id } = req.params;
+    const userId = req.user.userId;
+    const { title, content } = req.body;
     const post = await visitorRepository.findById(id);
 
     if (post.userId !== userId) {
@@ -77,8 +90,11 @@ module.exports = {
   },
 
   // 방명록 삭제
-  deleteVisitor: async (id, userId) => {
+  deleteVisitor: async (req: Request) => {
+    const id = req.params.id;
+    const userId = req.user.userId;
     const visitor = await visitorRepository.findById(id);
+
     if (visitor.userId !== userId) {
       throw new Error('삭제 권한이 없습니다.');
     }

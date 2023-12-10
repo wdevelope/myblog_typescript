@@ -1,11 +1,11 @@
-const post = require('../database/models/post');
-const user = require('../database/models/user');
-const subCategory = require('../database/models/subCategory');
+import Post from '../database/models/post';
+import User from '../database/models/user';
+import subCategory from '../database/models/subCategory';
 
-module.exports = {
+export default {
   // 게시글 생성
-  create: async (userId, title, content, subCategoryId) => {
-    return await post.create({
+  createPost: async (userId: number, title: string, content: string, subCategoryId: number): Promise<Post> => {
+    return await Post.create({
       userId,
       title,
       content,
@@ -13,12 +13,12 @@ module.exports = {
     });
   },
 
-  // post 게시글 전체 조회
-  getAllpost: async (offset, pageSize, subCategoryId) => {
-    const result = await post.findAndCountAll({
+  // 게시글 전체 조회
+  getAllPost: async (offset: number, pageSize: number, subCategoryId: number) => {
+    const result = await Post.findAndCountAll({
       include: [
         {
-          model: user,
+          model: User,
           attributes: ['name'],
         },
       ],
@@ -38,7 +38,7 @@ module.exports = {
   },
 
   //서브카테고리 이름 조회
-  getSubCategory: async (subCategoryId) => {
+  getSubCategory: async (subCategoryId: number) => {
     const subCategoryResult = await subCategory.findOne({
       where: { id: subCategoryId },
       attributes: ['name'],
@@ -47,8 +47,8 @@ module.exports = {
   },
 
   // 게시글 수정
-  patch: async (id, title, content) => {
-    return await post.update(
+  updatePost: async (id: number, title: string, content: string) => {
+    return await Post.update(
       {
         title,
         content,
@@ -62,30 +62,26 @@ module.exports = {
   },
 
   // 게시글 삭제
-  delete: async (id) => {
-    return await post.destroy({
+  deletePost: async (id: number) => {
+    return await Post.destroy({
       where: {
-        id: id,
+        id,
       },
     });
   },
 
   // 게시글 상세 조회
-  get: async (id) => {
-    return await post.findByPk(id, {
+  getPost: async (id: number) => {
+    return await Post.findByPk(id, {
       include: {
-        model: user,
+        model: User,
         attributes: ['name', 'status'],
       },
     });
   },
 
-  // 게시글 조회
-  findById: async (userId) => {
-    return await post.findOne({
-      where: {
-        id: userId,
-      },
-    });
+  // 게시글 id 조회
+  postFindById: async (id: number) => {
+    return await Post.findByPk(id);
   },
 };

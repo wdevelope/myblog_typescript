@@ -3,7 +3,6 @@ const router = express.Router();
 
 import userRouter from './user';
 import postRouter from './post';
-import imageRouter from './image';
 import categoryRouter from './category';
 import subCategoryRouter from './subCategory';
 import visitorRouter from './visitor';
@@ -18,8 +17,6 @@ router.use('/api/category', categoryRouter);
 router.use('/api/subCategory', subCategoryRouter);
 // 게시판
 router.use('/api/post', postRouter);
-// 이미지 업로드
-router.use('/api/image', imageRouter);
 // 방명록
 router.use('/api/visitor', visitorRouter);
 // 방명록 댓글

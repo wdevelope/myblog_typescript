@@ -1,13 +1,13 @@
 import express from 'express';
 const router = express.Router();
 import { auth, authAdmin } from '../middlewares/auth';
-import validation from '../middlewares/validation';
+import { register, login } from '../middlewares/validation';
 import userController from '../controllers/user';
 
 // 회원가입
-router.post('/register', validation.register, userController.register);
+router.post('/register', register, userController.register);
 // 로그인
-router.post('/login', validation.login, userController.login);
+router.post('/login', login, userController.login);
 // 회원정보
 router.get('/userInfo', auth, userController.userInfo);
 // 유저상태변경

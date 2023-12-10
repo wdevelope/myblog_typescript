@@ -4,14 +4,14 @@ import { auth, authAdmin } from '../middlewares/auth';
 import categoryController from '../controllers/category';
 
 // 카테고리 생성
-router.post('/', [auth, authAdmin], categoryController.create);
+router.post('/', [auth, authAdmin], categoryController.createCategory);
 // 모든 카테고리 조회
-router.get('/', categoryController.getAll);
+router.get('/', categoryController.getAllCategory);
 // 특정 카테고리 조회
-router.get('/:id', categoryController.getOne);
+router.get('/:categoryId', categoryController.getOneCategory);
 // 카테고리 업데이트
-router.patch('/:id', [auth, authAdmin], categoryController.update);
+router.patch('/:categoryId', [auth, authAdmin], categoryController.updateCategory);
 // 카테고리 삭제
-router.delete('/:id', [auth, authAdmin], categoryController.delete);
+router.delete('/:categoryId', [auth, authAdmin], categoryController.deleteCategory);
 
 export default router;

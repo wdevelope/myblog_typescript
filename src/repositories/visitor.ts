@@ -1,38 +1,35 @@
-const Visitor = require('../database/models/visitor');
-const user = require('../database/models/user');
-const visitorComment = require('../database/models/visitorComment.js');
+import Visitor from '../database/models/visitor';
+import User from '../database/models/user';
+import VisitorComment from '../database/models/visitorComment.js';
 
-module.exports = {
-  // 방명록 생성
+export default {
   createVisitor: async (userId, title, content, password, isPrivate) => {
     return await Visitor.create({ userId, title, content, password, isPrivate });
   },
 
-  // 방명록 전체조회
   getAllVisitors: async (offset, pageSize) => {
     const result = await Visitor.findAndCountAll({
-      attributes: { exclude: ['password'] }, // 'password' 필드 제외
-      include: { model: user, attributes: ['name'] },
+      attributes: { exclude: ['password'] },
+      include: { model: User, attributes: ['name'] },
       order: [['createdAt', 'DESC']],
       offset,
       limit: pageSize,
     });
     return {
-      visitors: result.rows, // 조회된 게시글
-      totalCount: result.count, // 총 게시글 수
+      visitors: result.rows,
+      totalCount: result.count,
     };
   },
 
-  // 특정 방명록 조회
   getVisitorById: async (id) => {
     const visitor = await Visitor.findByPk(id, {
       include: [
         {
-          model: user,
+          model: User,
           attributes: ['name', 'status'],
         },
         {
-          model: visitorComment,
+          model: VisitorComment,
           attributes: ['name', 'comment'],
         },
       ],
@@ -40,7 +37,6 @@ module.exports = {
     return visitor;
   },
 
-  // 방명록 조회
   findById: async (id) => {
     return await Visitor.findOne({
       where: {
@@ -49,7 +45,6 @@ module.exports = {
     });
   },
 
-  // 방명록 업데이트
   updateVisitor: async (id, title, content) => {
     return await Visitor.update(
       { title, content },
@@ -59,7 +54,6 @@ module.exports = {
     );
   },
 
-  // 방명록 수정
   patch: async (id, title, content) => {
     return await Visitor.update(
       {
@@ -74,14 +68,12 @@ module.exports = {
     );
   },
 
-  // 방명록 삭제
   deleteVisitor: async (id) => {
     return await Visitor.destroy({
       where: { id },
     });
   },
 
-  // 방명록 조회
   findById: async (userId) => {
     return await Visitor.findOne({
       where: {

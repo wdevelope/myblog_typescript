@@ -1,9 +1,9 @@
-const subCategoryRepository = require('../repositories/subCategory');
-const categoryRepository = require('../repositories/category');
+import subCategoryRepository from '../repositories/subCategory';
+import categoryRepository from '../repositories/category';
 
-module.exports = {
+export default {
   // 서브 카테고리 생성
-  create: async (categoryName, name, position) => {
+  create: async (categoryName: string, name: string, position: number) => {
     const category = await categoryRepository.findByName(categoryName);
 
     if (!category) {
@@ -20,12 +20,12 @@ module.exports = {
   },
 
   // 서브 카테고리안의 서브 카테고리 조회
-  getAll: async (categoryId) => {
+  getAll: async (categoryId: number) => {
     return await subCategoryRepository.getAll(categoryId);
   },
 
   // 서브 카테고리 업데이트
-  update: async (id, name) => {
+  update: async (id: number, name: string) => {
     const findSubCategory = await subCategoryRepository.getOne(id);
 
     if (!findSubCategory) {
@@ -42,7 +42,7 @@ module.exports = {
   },
 
   // 서브 카테고리 삭제
-  delete: async (id) => {
+  delete: async (id: number) => {
     const findSubCategory = await subCategoryRepository.getOne(id);
     if (!findSubCategory) {
       throw new Error('삭제할 카테고리가 존재하지 않습니다.');

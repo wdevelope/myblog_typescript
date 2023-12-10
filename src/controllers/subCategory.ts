@@ -1,8 +1,9 @@
-const subCategoryService = require('../services/subCategory.js');
+import { Request, Response } from 'express';
+import subCategoryService from '../services/subCategory';
 
-module.exports = {
+export default {
   // 서브 카테고리 생성
-  create: async (req, res) => {
+  create: async (req: Request, res: Response): Promise<void> => {
     try {
       const { categoryName, name, position } = req.body;
       const category = await subCategoryService.create(categoryName, name, position);
@@ -13,7 +14,7 @@ module.exports = {
   },
 
   // 카테고리안의 서브 카테고리 조회
-  getAll: async (req, res) => {
+  getAll: async (req: Request, res: Response): Promise<void> => {
     try {
       const { categoryId } = req.params;
       const categories = await subCategoryService.getAll(categoryId);
@@ -24,7 +25,7 @@ module.exports = {
   },
 
   // 서브 카테고리 업데이트
-  update: async (req, res) => {
+  update: async (req: Request, res: Response): Promise<void> => {
     try {
       const { id } = req.params;
       const { name } = req.body;
@@ -36,7 +37,7 @@ module.exports = {
   },
 
   // 서브 카테고리 삭제
-  delete: async (req, res) => {
+  delete: async (req: Request, res: Response): Promise<void> => {
     try {
       const { id } = req.params;
       await subCategoryService.delete(id);

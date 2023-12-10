@@ -1,8 +1,8 @@
-const visitorCommentRepository = require('../repositories/visitorComment.js');
+import visitorCommentRepository from '../repositories/visitorComment';
 
-module.exports = {
+export default {
   // 방명록 댓글 생성
-  commentCreate: async (visitorId, comment) => {
+  commentCreate: async (visitorId: number, comment: string) => {
     const findVisitor = await visitorCommentRepository.commentFind(visitorId);
 
     if (!findVisitor) {
@@ -13,7 +13,7 @@ module.exports = {
   },
 
   // 방명록 댓글 삭제
-  commentDelete: async (visitorCommentId) => {
+  commentDelete: async (visitorCommentId: number) => {
     const findVisitorComment = await visitorCommentRepository.visitorCommentFind(visitorCommentId);
 
     if (!findVisitorComment) {

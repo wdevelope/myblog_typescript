@@ -1,18 +1,18 @@
 import express from 'express';
 const router = express.Router();
 import { auth } from '../middlewares/auth';
-import validation from '../middlewares/validation';
+import { createPost } from '../middlewares/validation';
 import postController from '../controllers/post';
 
 // 게시글 생성
-router.post('/', auth, validation.createPost, postController.create);
+router.post('/', auth, createPost, postController.createPost);
 // 특정 카테고리 게시글 전체조회
-router.get('/', postController.getAllpost);
+router.get('/', postController.getAllPost);
 // 게시글 수정
-router.patch('/:id', auth, postController.patch);
+router.patch('/:postId', auth, postController.updatePost);
 // 게시글 삭제
-router.delete('/:id', auth, postController.delete);
+router.delete('/:postId', auth, postController.deletePost);
 // 게시글 상세조회
-router.get('/:id', postController.get);
+router.get('/:postId', postController.getPost);
 
 export default router;
