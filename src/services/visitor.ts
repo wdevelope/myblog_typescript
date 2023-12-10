@@ -1,11 +1,8 @@
-import { Request } from 'express';
 import visitorRepository from '../repositories/visitor';
 
 export default {
   // 방명록 생성
-  createVisitor: async (req: Request) => {
-    const { userId, title, content, password, isPrivate } = req.body;
-
+  createVisitor: async (userId: number, title: string, content: string, password: string, isPrivate: number) => {
     if (isPrivate) {
       if (!password) {
         throw new Error('비밀번호를 입력해주세요.');
@@ -22,8 +19,7 @@ export default {
   },
 
   // 모든 방명록 조회
-  getAllVisitors: async (req: Request) => {
-    const page = parseInt(req.query.page) || 1;
+  getAllVisitors: async (page: number) => {
     const pageSize = 15;
     const offset = (page - 1) * pageSize;
 
@@ -41,65 +37,47 @@ export default {
   },
 
   // 특정 방명록 조회
-  getVisitorById: async (req: Request) => {
-    const id = req.params.id;
-    const visitor = await visitorRepository.getVisitorById(id);
+  getVisitorById: async (visitorId: number) => {
+    const visitor = await visitorRepository.getVisitorById(visitorId);
     return visitor;
   },
 
   // 방명록 비밀번호 체크
-  visitorPasswordCheck: async (req: Request) => {
-    const id = req.params.id;
-    const { password } = req.body;
-
+  visitorPasswordCheck: async (visitorId: number, password: string) => {
     if (!password) {
       throw new Error('비밀번호를 입력해주세요.');
     }
 
-    const visitor = await visitorRepository.findById(id);
+    const visitor = await visitorRepository.visitorFindById(visitorId);
 
-    if (visitor.password !== password) {
+    if (!visitor || visitor.password !== password) {
       throw new Error('비밀번호가 일치하지 않습니다.');
     }
 
     return;
   },
 
-  // 방명록 업데이트
-  updateVisitor: async (req: Request) => {
-    const id = req.params.id;
-    const { title, content } = req.body;
-
-    const updatedVisitor = await visitorRepository.updateVisitor(id, title, content);
-    return updatedVisitor;
-  },
-
   // 방명록 수정
-  patch: async (req: Request) => {
-    const { id } = req.params;
-    const userId = req.user.userId;
-    const { title, content } = req.body;
-    const post = await visitorRepository.findById(id);
+  updateVisitor: async (visitorId: number, title: string, content: string, userId: number) => {
+    const post = await visitorRepository.visitorFindById(visitorId);
 
-    if (post.userId !== userId) {
+    if (!post || post.userId !== userId) {
       throw new Error('수정 권한이 없습니다.');
     }
 
-    const updatedpost = await visitorRepository.patch(id, title, content);
-    return updatedpost;
+    const updatedVisitor = await visitorRepository.updateVisitor(visitorId, title, content);
+    return updatedVisitor;
   },
 
   // 방명록 삭제
-  deleteVisitor: async (req: Request) => {
-    const id = req.params.id;
-    const userId = req.user.userId;
-    const visitor = await visitorRepository.findById(id);
+  deleteVisitor: async (visitorId: number, userId: number) => {
+    const visitor = await visitorRepository.visitorFindById(visitorId);
 
-    if (visitor.userId !== userId) {
+    if (!visitor || visitor.userId !== userId) {
       throw new Error('삭제 권한이 없습니다.');
     }
 
-    const deletedVisitor = await visitorRepository.deleteVisitor(id);
+    const deletedVisitor = await visitorRepository.deleteVisitor(visitorId);
     return deletedVisitor;
   },
 };

@@ -3,7 +3,7 @@ import postService from '../services/post';
 
 export default {
   // 게시글 생성
-  createPost: async (req: Request, res: Response): Promise<void> => {
+  createPost: async (req: Request, res: Response) => {
     try {
       const { title, content, subCategoryId } = req.body;
       const user = res.locals.user;

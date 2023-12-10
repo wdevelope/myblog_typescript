@@ -5,12 +5,12 @@ import { auth, authAdmin } from '../middlewares/auth';
 import subCategoryController from '../controllers/subCategory';
 
 // 서브 카테고리 생성
-router.post('/', [auth, authAdmin], subCategoryController.create);
+router.post('/', [auth, authAdmin], subCategoryController.createSubCategory);
 // 카테고리안에 서브 카테고리 조회
-router.get('/:categoryId', subCategoryController.getAll);
+router.get('/:categoryId', subCategoryController.getAllSubCategory);
 // 서브 카테고리 업데이트
-router.patch('/:id', [auth, authAdmin], subCategoryController.update);
+router.patch('/:subCategoryId', [auth, authAdmin], subCategoryController.updateSubCategory);
 // 서브 카테고리 삭제
-router.delete('/:id', [auth, authAdmin], subCategoryController.delete);
+router.delete('/:subCategoryId', [auth, authAdmin], subCategoryController.deleteSubCategory);
 
 export default router;

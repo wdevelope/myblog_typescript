@@ -3,12 +3,12 @@ import visitorService from '../services/visitor';
 
 export default {
   // 방명록 생성
-  create: async (req: Request, res: Response): Promise<void> => {
+  createVisitor: async (req: Request, res: Response) => {
     try {
       const { title, content, password, isPrivate } = req.body;
       const userId = res.locals.user.userId;
-      const newVisitor = await visitorService.createVisitor(userId, title, content, password, isPrivate);
-      res.status(201).json(newVisitor);
+      await visitorService.createVisitor(userId, title, content, password, isPrivate);
+      res.status(201).json({ message: '방명록 생성 완료' });
     } catch (error) {
       console.error(error);
       res.status(500).json({ errorMessage: error.message });
@@ -16,7 +16,7 @@ export default {
   },
 
   // 모든 방명록 조회
-  getAll: async (req: Request, res: Response): Promise<void> => {
+  getAllVisitor: async (req: Request, res: Response) => {
     try {
       const page = parseInt(req.query.page as string) || 1;
       const visitors = await visitorService.getAllVisitors(page);
@@ -28,10 +28,10 @@ export default {
   },
 
   // 특정 방명록 조회
-  getOne: async (req: Request, res: Response): Promise<void> => {
+  getOneVisitor: async (req: Request, res: Response) => {
     try {
-      const id = req.params.id;
-      const visitor = await visitorService.getVisitorById(id);
+      const visitorId = parseInt(req.params.visitorId);
+      const visitor = await visitorService.getVisitorById(visitorId);
       res.status(200).json(visitor);
     } catch (error) {
       console.error(error);
@@ -40,11 +40,11 @@ export default {
   },
 
   // 방명록 비밀번호 체크
-  visitorPasswordCheck: async (req: Request, res: Response): Promise<void> => {
+  PasswordCheckVisitor: async (req: Request, res: Response) => {
     try {
-      const id = req.params.id;
+      const visitorId = parseInt(req.params.visitorId);
       const { password } = req.body;
-      await visitorService.visitorPasswordCheck(id, password);
+      await visitorService.visitorPasswordCheck(visitorId, password);
       res.sendStatus(200);
     } catch (error) {
       console.error(error);
@@ -53,39 +53,25 @@ export default {
   },
 
   // 방명록 수정
-  update: async (req: Request, res: Response): Promise<void> => {
+  updateVisitor: async (req: Request, res: Response) => {
     try {
-      const id = req.params.id;
+      const visitorId = parseInt(req.params.visitorId);
       const { title, content } = req.body;
-      const updatedVisitor = await visitorService.updateVisitor(id, title, content);
-
-      res.status(200).json(updatedVisitor);
+      const userId = res.locals.user.userId;
+      await visitorService.updateVisitor(visitorId, title, content, userId);
+      res.status(200).json({ message: '방명록 수정완료' });
     } catch (error) {
       console.error(error);
       res.status(500).json({ errorMessage: error.message });
     }
   },
 
-  // 방명록 수정
-  patch: async (req: Request, res: Response): Promise<void> => {
-    try {
-      const { id } = req.params;
-      const userId = res.locals.user.userId;
-      const { title, content } = req.body;
-      await visitorService.patch(id, userId, title, content);
-      res.status(200).json({ message: '방명록 수정 완료' });
-    } catch (err) {
-      console.log(err);
-      res.status(500).json({ errorMessage: err.message });
-    }
-  },
-
   // 방명록 삭제
-  delete: async (req: Request, res: Response): Promise<void> => {
+  deleteVisitor: async (req: Request, res: Response) => {
     try {
-      const id = req.params.id;
+      const visitorId = parseInt(req.params.visitorId);
       const userId = res.locals.user.userId;
-      await visitorService.deleteVisitor(id, userId);
+      await visitorService.deleteVisitor(visitorId, userId);
       res.status(200).json({ message: '방명록 삭제 완료' });
     } catch (error) {
       console.error(error);

@@ -3,7 +3,7 @@ import userService from '../services/user';
 
 export default {
   // 회원가입
-  register: async (req: Request, res: Response): Promise<void> => {
+  register: async (req: Request, res: Response) => {
     const { name, email, password, confirmPassword } = req.body;
     try {
       const newUser = await userService.register(name, email, password, confirmPassword);
@@ -15,7 +15,7 @@ export default {
   },
 
   // 로그인
-  login: async (req: Request, res: Response): Promise<void> => {
+  login: async (req: Request, res: Response) => {
     const { email, password } = req.body;
     try {
       const token = await userService.login(email, password);
@@ -28,7 +28,7 @@ export default {
   },
 
   // 유저정보
-  userInfo: async (req: Request, res: Response): Promise<void> => {
+  userInfo: async (req: Request, res: Response) => {
     try {
       const user = await userService.userInfo(res.locals.user.userId);
       res.status(200).json(user);
@@ -39,7 +39,7 @@ export default {
   },
 
   // 유저상태 변경
-  updateUser: async (req: Request, res: Response): Promise<void> => {
+  updateUser: async (req: Request, res: Response) => {
     try {
       const { email, status } = req.body;
       const user = await userService.updateUser(email, status);
@@ -51,7 +51,7 @@ export default {
   },
 
   // 로그아웃
-  logout: async (req: Request, res: Response): Promise<void> => {
+  logout: async (req: Request, res: Response) => {
     try {
       res.clearCookie('Authorization');
       res.status(200).json({ message: '로그아웃 되었습니다.' });

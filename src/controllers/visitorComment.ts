@@ -3,11 +3,11 @@ import visitorCommentService from '../services/visitorComment';
 
 export default {
   // 방명록 댓글 생성
-  commentCreate: async (req: Request, res: Response): Promise<void> => {
+  visitorCommentCreate: async (req: Request, res: Response) => {
     try {
-      const { visitorId } = req.params;
+      const visitorId = parseInt(req.params.visitorId);
       const { comment } = req.body;
-      await visitorCommentService.commentCreate(visitorId, comment);
+      await visitorCommentService.visitorCommentCreate(visitorId, comment);
       res.status(200).json({ message: '방명록 댓글 생성 완료' });
     } catch (error) {
       console.error(error);
@@ -16,10 +16,10 @@ export default {
   },
 
   // 방명록 댓글 삭제
-  commentDelete: async (req: Request, res: Response): Promise<void> => {
+  visitorCommentDelete: async (req: Request, res: Response) => {
     try {
-      const { visitorCommentId } = req.params;
-      await visitorCommentService.commentDelete(visitorCommentId);
+      const visitorCommentId = parseInt(req.params.visitorCommentId);
+      await visitorCommentService.visitorCommentDelete(visitorCommentId);
       res.status(200).json({ message: '방명록 삭제 완료' });
     } catch (error) {
       console.error(error);

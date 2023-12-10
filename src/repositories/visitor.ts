@@ -3,11 +3,13 @@ import User from '../database/models/user';
 import VisitorComment from '../database/models/visitorComment.js';
 
 export default {
-  createVisitor: async (userId, title, content, password, isPrivate) => {
+  // 방명록 생성
+  createVisitor: async (userId: number, title: string, content: string, password: string, isPrivate: number) => {
     return await Visitor.create({ userId, title, content, password, isPrivate });
   },
 
-  getAllVisitors: async (offset, pageSize) => {
+  // 모든 방명록 조회
+  getAllVisitors: async (offset: number, pageSize: number) => {
     const result = await Visitor.findAndCountAll({
       attributes: { exclude: ['password'] },
       include: { model: User, attributes: ['name'] },
@@ -21,7 +23,8 @@ export default {
     };
   },
 
-  getVisitorById: async (id) => {
+  // 특정 방명록 조회
+  getVisitorById: async (id: number) => {
     const visitor = await Visitor.findByPk(id, {
       include: [
         {
@@ -37,48 +40,25 @@ export default {
     return visitor;
   },
 
-  findById: async (id) => {
-    return await Visitor.findOne({
-      where: {
-        id: id,
-      },
-    });
+  //  특정 방명록 아이디로 조회
+  visitorFindById: async (id: number) => {
+    return await Visitor.findByPk(id);
   },
 
-  updateVisitor: async (id, title, content) => {
+  // 방명록 업데이트
+  updateVisitor: async (visitorId: number, title: string, content: string) => {
     return await Visitor.update(
       { title, content },
       {
-        where: { id },
+        where: { id: visitorId },
       }
     );
   },
 
-  patch: async (id, title, content) => {
-    return await Visitor.update(
-      {
-        title,
-        content,
-      },
-      {
-        where: {
-          id: id,
-        },
-      }
-    );
-  },
-
-  deleteVisitor: async (id) => {
+  // 방명록 삭제
+  deleteVisitor: async (visitorId: number) => {
     return await Visitor.destroy({
-      where: { id },
-    });
-  },
-
-  findById: async (userId) => {
-    return await Visitor.findOne({
-      where: {
-        id: userId,
-      },
+      where: { id: visitorId },
     });
   },
 };
