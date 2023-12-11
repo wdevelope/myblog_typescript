@@ -1,5 +1,5 @@
-import VisitorComment from '../database/models/visitorComment.js';
-import Visitor from '../database/models/visitor.js';
+import VisitorComment from '../database/models/visitorComment';
+import Visitor from '../database/models/visitor';
 
 export default {
   // 방명록 댓글 생성

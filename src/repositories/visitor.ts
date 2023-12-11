@@ -1,6 +1,6 @@
 import Visitor from '../database/models/visitor';
 import User from '../database/models/user';
-import VisitorComment from '../database/models/visitorComment.js';
+import VisitorComment from '../database/models/visitorComment';
 
 export default {
   // 방명록 생성

@@ -1,4 +1,4 @@
-import Category from '../database/models/category.js';
+import Category from '../database/models/category';
 
 export default {
   // 카테고리 생성
