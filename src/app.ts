@@ -2,7 +2,6 @@ import * as dotenv from 'dotenv';
 dotenv.config();
 
 import './database/relations';
-import compression from 'compression';
 import express, { Request, Response } from 'express';
 import router from './routes';
 import path from 'path';
@@ -14,7 +13,6 @@ const app = express();
 // 미들웨어 설정
 app.use(cookieParser());
 app.use(express.json());
-app.use(compression());
 
 // cors 설정
 app.use(
