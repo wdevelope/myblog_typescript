@@ -13,7 +13,8 @@
     "build": "tsc",
     "start": "tsc-watch --onSuccess \"node dist/src/app.js\"",
     "dev": "ts-node src/app.ts",
-    "prod": "node dist/src/app.js"
+    "prod": "node dist/src/app.js",
+    "stress": "artillery quick --count 10000 -n 5 http://localhost:"
   },
   "author": "",
   "license": "ISC",
@@ -27,6 +28,7 @@
     "express": "^4.18.2",
     "express-validator": "^7.0.1",
     "jsonwebtoken": "^9.0.2",
+    "morgan": "^1.10.0",
     "multer": "^1.4.5-lts.1",
     "multer-s3": "^2.10.0",
     "mysql2": "^3.6.2",
