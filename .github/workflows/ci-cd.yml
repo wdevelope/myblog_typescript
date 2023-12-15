@@ -5,54 +5,24 @@ on:
     branches: [main]
 
 jobs:
-  build:
-    name: Build
+  build-and-deploy:
     runs-on: ubuntu-latest
-
     steps:
-      # 기본 체크아웃
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # node.js 세팅
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
           node-version: '20.x'
 
-      # 빌드
       - name: Install dependencies
         run: npm install
 
       - name: Build project
         run: npm run build
 
-      # 파일 압축
-      - name: Archive production artifacts
-        uses: actions/upload-artifact@v2
-        with:
-          name: dist
-          path: dist/
-
-  deploy:
-    name: Deploy
-    needs: build
-    runs-on: ubuntu-latest
-
-    steps:
-      # 압축된 아티클 다운
-      - name: Download artifact
-        uses: actions/download-artifact@v2
-        with:
-          name: dist
-          path: temp_dist
-
-      - name: Add EC2 host key
-        run: |
-          mkdir -p ~/.ssh
-          ssh-keyscan -H ${{ secrets.EC2_HOST }} >> ~/.ssh/known_hosts
-
-      # EC2 서버로 파일 전송
+      # EC2 서버로 파일 직접 전송
       - name: Deploy to EC2
         uses: appleboy/ssh-action@v0.1.6
         with:
@@ -61,4 +31,4 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           port: ${{ secrets.EC2_PORT }}
           script: |
-            scp -r temp_dist/* ubuntu@${{ secrets.EC2_HOST }}:/home/ubuntu/myblog
+            scp -r dist/* ubuntu@${{ secrets.EC2_HOST }}:/path/to/your/server
