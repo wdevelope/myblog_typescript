@@ -43,6 +43,7 @@ jobs:
           port: ${{ secrets.EC2_PORT }}
           source: 'dist/'
           target: '/home/ubuntu/myblog'
+          debug: true # 디버그 모드 활성화
 
       - name: Restart server
         uses: appleboy/ssh-action@master
