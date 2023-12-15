@@ -51,6 +51,7 @@ export default {
     try {
       const categoryId = parseInt(req.params.categoryId);
       await categoryService.deleteCategory(categoryId);
+      console.log('cicd 테스트중');
       res.status(200).json({ message: '카테고리 삭제완료.' });
     } catch (error) {
       res.status(500).json({ errorMessage: error.message });

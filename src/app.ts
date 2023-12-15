@@ -8,7 +8,7 @@ import path from 'path';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 // import sequelize from './config/mysql';
-
+console.log("cicd 테스트중")
 const app = express();
 // 미들웨어 설정
 app.use(cookieParser());
