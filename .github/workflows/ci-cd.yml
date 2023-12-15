@@ -23,13 +23,6 @@ jobs:
       - name: Build project
         run: npm run build # 빌드 스크립트 실행
 
-      # .ssh 디렉토리와 known_hosts 파일 생성
-      - name: Setup SSH
-        run: |
-          mkdir -p ~/.ssh/
-          touch ~/.ssh/known_hosts
-          ssh-keyscan -H ${{ secrets.EC2_HOST }} >> ~/.ssh/known_hosts
-
       - name: Deploy to EC2
         uses: appleboy/ssh-action@v0.1.6
         with:
@@ -38,4 +31,4 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           port: ${{ secrets.EC2_PORT }}
           script: |
-            scp -o StrictHostKeyChecking=no -r dist/* ubuntu@${{ secrets.EC2_HOST }}:/home/ubuntu/myblog
+            scp -r dist/* ubuntu@${{ secrets.EC2_HOST }}:/home/ubuntu/myblog
