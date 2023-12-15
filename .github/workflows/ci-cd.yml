@@ -31,4 +31,4 @@ jobs:
           password: ${{ secrets.EC2_SSH_KEY }}
           port: ${{ secrets.EC2_PORT }}
           script: |
-            scp -r dist/* ubuntu@${{ secrets.EC2_HOST }}:/home/ubuntu/myblog
+            whoami
