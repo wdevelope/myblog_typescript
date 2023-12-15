@@ -1,4 +1,4 @@
-name: Build and Deploy
+name: Build and Deploy ec2
 
 on:
   push:
@@ -10,20 +10,24 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # 기본 체크아웃
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
+      # node.js 세팅
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '14'
+          node-version: '20.x'
 
+      # 빌드
       - name: Install dependencies
         run: npm install
 
       - name: Build project
         run: npm run build
-        # 파일 압축
+
+      # 파일 압축
       - name: Archive production artifacts
         uses: actions/upload-artifact@v2
         with:
@@ -36,13 +40,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 파일 압축 해제
+      # 압축된 아티클 다운
       - name: Download artifact
         uses: actions/download-artifact@v2
         with:
           name: dist
           path: temp_dist
 
+      # EC2 서버로 파일 전송
       - name: Deploy to EC2
         uses: appleboy/ssh-action@v0.1.6
         with:
@@ -51,6 +56,4 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           port: ${{ secrets.EC2_PORT }}
           script: |
-            rm -rf /home/ubuntu/myblog/myblog_typescript/*
-
-            scp -r temp_dist/* ubuntu@${{ secrets.EC2_HOST }}:/home/ubuntu/myblog/myblog_typescript/
+            scp -r temp_dist/* ubuntu@${{ secrets.EC2_HOST }}:/home/ubuntu/myblog
