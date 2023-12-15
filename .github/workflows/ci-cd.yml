@@ -10,12 +10,12 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v2
 
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '16' # 사용할 Node.js 버전
+          node-version: '18.x' # 사용할 Node.js 버전
 
       - name: Install dependencies
         run: npm install
@@ -24,11 +24,11 @@ jobs:
         run: npm run build # 빌드 스크립트 실행
 
       - name: Deploy to EC2
-        uses: appleboy/ssh-action@v0.1.6
+        uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USER }}
-          key: ${{ secrets.EC2_SSH_KEY }}
+          password: ${{ secrets.EC2_PASSWORD }}
           port: ${{ secrets.EC2_PORT }}
           script:
             whoami
