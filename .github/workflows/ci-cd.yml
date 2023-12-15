@@ -41,8 +41,8 @@ jobs:
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_SSH_KEY }}
           port: ${{ secrets.EC2_PORT }}
-          source: 'dist/'
-          target: '/home/ubuntu/myblog_typescript'
+          source: '/dist/'
+          target: './home/ubuntu/myblog_typescript'
 
       - name: Restart server
         uses: appleboy/ssh-action@master
@@ -52,6 +52,6 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           port: ${{ secrets.EC2_PORT }}
           script: |
-            cd /home/ubuntu/myblog_typescript
+            cd ./home/ubuntu/myblog_typescript
             npm install --production
             pm2 restart all
