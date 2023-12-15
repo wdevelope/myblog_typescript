@@ -41,7 +41,7 @@ jobs:
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_SSH_KEY }}
           port: ${{ secrets.EC2_PORT }}
-          source: 'dist/'
+          source: '/github/workspace/dist/'
           target: '/home/ubuntu/myblog'
           debug: true # 디버그 모드 활성화
 
