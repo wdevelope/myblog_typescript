@@ -38,4 +38,4 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           port: ${{ secrets.EC2_PORT }}
           script: |
-            scp -r dist/* ubuntu@${{ secrets.EC2_HOST }}:/home/ubuntu/myblog
+            scp -o StrictHostKeyChecking=no -r dist/* ubuntu@${{ secrets.EC2_HOST }}:/home/ubuntu/myblog
