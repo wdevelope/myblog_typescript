@@ -15,15 +15,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version:
-            '20.x'
-
-            # 이 부분에서 EC2_USER 확인
-      - name: Check EC2_USER
-        run: |
-          C2_USER="$(whoami)"
-          echo "EC2_USER is $EC2_USER"
-        id: check-ec2-user
+          node-version: '20.x'
 
       - name: Install Dependencies
         run: npm install
@@ -41,17 +33,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-
-        # 이 부분에서 EC2_USER를 확인하고 일치 여부를 검사
-      - name: Check EC2_USER
-        run: |
-          EC2_USER="$(whoami)"
-          echo "EC2_USER is $EC2_USER"
-          if [ "$EC2_USER" != "${{ secrets.EC2_USER }}" ]; then
-            echo "Error: EC2_USER does not match!"
-            exit 1
-          fi
-        id: check-ec2-user
 
       - name: Copy files to the server
         uses: appleboy/scp-action@master
