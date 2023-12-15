@@ -47,6 +47,11 @@ jobs:
           name: dist
           path: temp_dist
 
+      - name: Add EC2 host key
+        run: |
+          mkdir -p ~/.ssh
+          ssh-keyscan -H ${{ secrets.EC2_HOST }} >> ~/.ssh/known_hosts
+
       # EC2 서버로 파일 전송
       - name: Deploy to EC2
         uses: appleboy/ssh-action@v0.1.6
