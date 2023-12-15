@@ -26,5 +26,7 @@ config.js
 # study
 study.txt
 
-# 빌드파일 일단 제회
+# 빌드파일 일단 제외
+dist/
+
 # dist
