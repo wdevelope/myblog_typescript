@@ -1,26 +1,56 @@
-name: dev branch auto ci process script
+name: Build and Deploy
 
-on: # 아래 job을 실행시킬 상황
+on:
   push:
     branches: [main]
 
 jobs:
-  deploy:
-    name: deploy
-    runs-on: ubuntu-latest # 실행될 인스턴스 OS와 버전
+  build:
+    name: Build
+    runs-on: ubuntu-latest
 
     steps:
-      - name: excuting remote ssh commands
-        uses: appleboy/ssh-action@v0.1.6 # ssh 접속하는 오픈소스
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
         with:
-          host: ${{ secrets.EC2_HOST }} # 인스턴스 IP
-          username: ${{ secrets.EC2_USER }} # 우분투 아이디
-          key: ${{ secrets.EC2_SSH_KEY }} # ec2 instance pem key
-          port: ${{ secrets.EC2_PORT }} # 접속포트
-          script: | # 실행할 스크립트
-            cd /home/ubuntu/myblog
-            git pull origin main
-            pm2 kill
-            npm i
-            npm run build
-            pm2 start dist/app.js
+          node-version: '14'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build project
+        run: npm run build
+        # 파일 압축
+      - name: Archive production artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: dist
+          path: dist/
+
+  deploy:
+    name: Deploy
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      # 파일 압축 해제
+      - name: Download artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: dist
+          path: temp_dist
+
+      - name: Deploy to EC2
+        uses: appleboy/ssh-action@v0.1.6
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          port: ${{ secrets.EC2_PORT }}
+          script: |
+            rm -rf /home/ubuntu/myblog/myblog_typescript/*
+
+            scp -r temp_dist/* ubuntu@${{ secrets.EC2_HOST }}:/home/ubuntu/myblog/myblog_typescript/
