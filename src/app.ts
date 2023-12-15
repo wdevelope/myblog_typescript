@@ -29,7 +29,7 @@ app.use(router);
 app.use(express.static(path.join(__dirname, '..', '..', 'frontend', 'dist')));
 
 // Vue Router를 위한 와일드카드 라우트
-app.get('*', (req, res) => {
+app.get('*', (req: Request, res: Response) => {
   res.sendFile(path.join(__dirname, '..', '..', 'frontend', 'dist', 'index.html'));
 });
 
