@@ -11,6 +11,15 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
+        # .ssh 디렉토리와 known_hosts 파일 생성
+      - name: Setup SSH
+        run: |
+          mkdir -p ~/.ssh/
+          touch ~/.ssh/known_hosts
+          ssh-keyscan ${{ secrets.EC2_HOST }} >> ~/.ssh/known_hosts
+          eval $(ssh-agent)
+          ssh-add - <<< "${{ secrets.SSH_PRIVATE_KEY }}"
+
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
@@ -24,11 +33,6 @@ jobs:
 
       # EC2 서버로 파일 직접 전송
       - name: Deploy to EC2
-        uses: appleboy/ssh-action@v0.1.6
-        with:
-          host: ${{ secrets.EC2_HOST }}
-          username: ${{ secrets.EC2_USER }}
-          key: ${{ secrets.EC2_SSH_KEY }}
-          port: ${{ secrets.EC2_PORT }}
-          script: |
-            scp -r dist/* ubuntu@${{ secrets.EC2_HOST }}:/path/to/your/server
+        run: scp -r dist/* ubuntu@${{ secrets.EC2_HOST }}:/home/ubuntu/myblog
+        env:
+          SSH_AUTH_SOCK: ${{ steps.ssh-agent.outputs.ssh-auth-sock }}
