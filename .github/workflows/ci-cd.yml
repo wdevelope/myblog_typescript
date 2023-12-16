@@ -28,8 +28,8 @@ jobs:
         with:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USER }}
-          password: ${{ secrets.EC2_PASSWORD }}
+          key: ${{ secrets.EC2_SSH_KEY }}
           port: ${{ secrets.EC2_PORT }}
           script: |
-            scp -r dist/* ubuntu@${{ secrets.EC2_HOST }}:/home/ubuntu/myblog/myblog_backend
-            ssh ubuntu@${{ secrets.EC2_HOST }} "cd /home/ubuntu/myblog/myblog_backendr && pm2 start dist/app.js"
+            sudo scp -r dist/* ubuntu@${{ secrets.EC2_HOST }}:/home/ubuntu/myblog/myblog_backend
+            sudo ssh ubuntu@${{ secrets.EC2_HOST }} "cd /home/ubuntu/myblog/myblog_backend && pm2 start dist/app.js"
