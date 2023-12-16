@@ -47,4 +47,4 @@ jobs:
           port: ${{ secrets.EC2_PORT }}
           script: |
             cd /home/ubuntu/myblog/myblog_backend
-            cd node app.js
+            node app.js
