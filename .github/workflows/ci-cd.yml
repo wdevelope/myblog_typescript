@@ -1,42 +1,15 @@
-name: Build and Deploy to EC2
+name: Deploy to EC2
 
 on:
   push:
     branches: [main] # 메인 브랜치에 푸시될 때만 작동
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: '18.x' # 사용할 Node.js 버전
-
-      - name: Install dependencies
-        run: npm install
-
-      - name: Build project
-        run: npm run build # 빌드 스크립트 실행
-
-      - name: Upload dist to Artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: dist
-          path: dist/
-
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - name: Download dist from Artifact
-        uses: actions/download-artifact@v2
-        with:
-          name: dist
-          path: dist
 
       - name: Deploy to EC2
         uses: appleboy/ssh-action@v0.1.6
@@ -46,4 +19,7 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           port: ${{ secrets.EC2_PORT }}
           script: |
-            cd /home/ubuntu/myblog/myblog_backend
+            cd /home/ubuntu/myblog_typescript
+            git pull
+            npm install --production
+            npm restart app
