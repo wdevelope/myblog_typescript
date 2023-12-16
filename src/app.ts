@@ -30,7 +30,7 @@ app.use(express.static('public'));
 
 // Vue Router를 위한 와일드카드 라우트
 app.get('*', (req: Request, res: Response) => {
-  res.sendFile(path.join(__dirname, '../public/index.html'));
+  res.sendFile(path.join(__dirname, '../src/public/index.html'));
 });
 
 app.use(router);
