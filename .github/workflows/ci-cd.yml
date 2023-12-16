@@ -11,6 +11,9 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      - name: Configure Git
+        run: git config --global --add safe.directory /home/***/myblog_typescript
+
       - name: Deploy to EC2
         uses: appleboy/ssh-action@v0.1.6
         with:
