@@ -23,5 +23,5 @@ jobs:
           port: ${{ secrets.EC2_PORT }}
           script: |
             cd /home/ubuntu/myblog_typescript
-            sudo git pull origin main
+            sudo git pull
             pm2 restart app
