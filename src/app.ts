@@ -26,10 +26,10 @@ app.use(
 app.use(router);
 
 // 프론트 정적 파일 경로
-app.use(express.static(path.join(__dirname, 'dist/public')));
+app.use(express.static(path.join(__dirname, 'public')));
 
 // Vue Router를 위한 와일드카드 라우트
-app.get('*', (req, res) => {
+app.get('*', (req: Request, res: Response) => {
   res.sendFile(path.join(__dirname, 'public/index.html'));
 });
 
