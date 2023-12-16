@@ -27,6 +27,6 @@ config.js
 study.txt
 
 # 빌드파일 일단 제외
-dist/
+# dist/
 
 # dist
