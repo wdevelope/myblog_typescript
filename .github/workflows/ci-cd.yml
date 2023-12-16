@@ -46,7 +46,6 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           port: ${{ secrets.EC2_PORT }}
           script: |
-            rsync -avz --delete dist/ ubuntu@${{ secrets.EC2_HOST }}:/home/ubuntu/myblog/myblog_backend
-            ssh ubuntu@${{ secrets.EC2_HOST }} "cd /home/ubuntu/myblog/myblog_backend && pm2 restart all"
 
-          # cd /home/ubuntu/myblog/myblog_backend
+
+            cd /home/ubuntu/myblog/myblog_backend
