@@ -5,9 +5,8 @@ on:
     branches: [main] # 메인 브랜치에 푸시될 때만 작동
 
 jobs:
-  build-and-deploy:
-    runs-on: ubuntu-latest # GitHub Actions 러너 OS 설정
-
+  build:
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -23,6 +22,22 @@ jobs:
       - name: Build project
         run: npm run build # 빌드 스크립트 실행
 
+      - name: Upload dist to Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: dist
+          path: dist/
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download dist from Artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: dist
+          path: dist
+
       - name: Deploy to EC2
         uses: appleboy/ssh-action@master
         with:
@@ -31,5 +46,5 @@ jobs:
           password: ${{ secrets.EC2_PASSWORD }}
           port: ${{ secrets.EC2_PORT }}
           script: |
-            sudo scp -r dist/* /home/ubuntu/myblog/myblog_backend
-            sudo pm2 start /home/ubuntu/myblog/myblog_backend/dist/app.js
+            sudo scp -r dist/* ubuntu@${{ secrets.EC2_HOST }}:/home/ubuntu/myblog/myblog_backend
+            sudo ssh ubuntu@${{ secrets.EC2_HOST }} "cd /home/ubuntu/myblog/myblog_backend && pm2 start dist/app.js"
