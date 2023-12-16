@@ -30,4 +30,6 @@ jobs:
           username: ${{ secrets.EC2_USER }}
           password: ${{ secrets.EC2_PASSWORD }}
           port: ${{ secrets.EC2_PORT }}
-          script: sudo scp -r dist/* ubuntu@${{ secrets.EC2_HOST }}:/home/ubuntu/myblog
+          script: |
+            scp -r dist/* ubuntu@${{ secrets.EC2_HOST }}:/home/ubuntu/myblog/myblog_backend
+            ssh ubuntu@${{ secrets.EC2_HOST }} "cd /home/ubuntu/myblog/myblog_backendr && pm2 start dist/app.js"
