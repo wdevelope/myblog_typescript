@@ -30,4 +30,6 @@ jobs:
           username: ${{ secrets.EC2_USER }}
           password: ${{ secrets.EC2_PASSWORD }}
           port: ${{ secrets.EC2_PORT }}
-          script: sudo scp -r dist/* ubuntu@${{ secrets.EC2_HOST }}:/home/ubuntu/myblog
+          source: 'build/*'
+          strip_components: 1
+          target: '/home/ubuntu/myblog'
