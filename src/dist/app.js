@@ -47,7 +47,6 @@ app.use(express_1.default.static(path_1.default.join(__dirname, 'public')));
 app.get('*', (req, res) => {
     res.sendFile(path_1.default.join(__dirname, 'public/index.html'));
 });
-app.use(routes_1.default);
 app.listen(process.env.SERVER_PORT, () => {
     console.log(`서버가 켜졌습니다 👌`);
 });

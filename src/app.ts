@@ -7,8 +7,8 @@ import router from './routes';
 import path from 'path';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
-// import sequelize from './config/mysql';
 const app = express();
+
 // 미들웨어 설정
 app.use(cookieParser());
 app.use(express.json());
@@ -32,8 +32,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.get('*', (req: Request, res: Response) => {
   res.sendFile(path.join(__dirname, 'public/index.html'));
 });
-
-app.use(router);
 
 // 서버 실행
 app.listen(process.env.SERVER_PORT, () => {
