@@ -31,7 +31,8 @@ export default {
   getOneVisitor: async (req: Request, res: Response) => {
     try {
       const visitorId = parseInt(req.params.visitorId);
-      const visitor = await visitorService.getVisitorById(visitorId);
+      const password = req.body.password;
+      const visitor = await visitorService.getVisitorById(visitorId, password);
       res.status(200).json(visitor);
     } catch (error) {
       console.error(error);

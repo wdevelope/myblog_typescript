@@ -16,9 +16,9 @@ const post_1 = __importDefault(require("../services/post"));
 exports.default = {
     createPost: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         try {
-            const { title, content, subCategoryId } = req.body;
+            const { title, content, subCategoryName } = req.body;
             const user = res.locals.user;
-            yield post_1.default.createPost(user.userId, title, content, subCategoryId);
+            yield post_1.default.createPost(user.userId, title, content, subCategoryName);
             res.status(201).json({ message: '게시글 생성 완료' });
         }
         catch (err) {
@@ -28,9 +28,10 @@ exports.default = {
     }),
     getAllPost: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         try {
-            const subCategoryId = parseInt(req.query.subCategoryId);
+            const subCategoryName = req.query.subCategoryName;
             const page = parseInt(req.query.page) || 1;
-            const response = yield post_1.default.getAllPost(page, subCategoryId);
+            console.log(subCategoryName);
+            const response = yield post_1.default.getAllPost(page, subCategoryName);
             res.status(200).json(response);
         }
         catch (err) {

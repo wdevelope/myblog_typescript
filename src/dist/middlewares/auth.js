@@ -8,7 +8,7 @@ const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const auth = (req, res, next) => {
     const BearerToken = req.cookies.Authorization;
     if (!BearerToken) {
-        res.status(401).json({ errorMessage: '토큰이 공급되지 않았습니다.' });
+        res.status(401).json({ errorMessage: '로그인을 해주세요.' });
         return;
     }
     const token = BearerToken.split(' ')[1];
@@ -24,8 +24,8 @@ const auth = (req, res, next) => {
 };
 exports.auth = auth;
 const authAdmin = (req, res, next) => {
-    const user = req.user;
-    if (user && user.status !== 'admin') {
+    const user = res.locals.user;
+    if (!user || user.status !== 'admin') {
         res.status(403).json({ errorMessage: '관리자 권한이 필요합니다.' });
         return;
     }

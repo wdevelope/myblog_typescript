@@ -37,8 +37,15 @@ export default {
   },
 
   // 특정 방명록 조회
-  getVisitorById: async (visitorId: number) => {
+  getVisitorById: async (visitorId: number, password: string) => {
     const visitor = await visitorRepository.getVisitorById(visitorId);
+    if (!visitor) {
+      throw new Error('존재하지않는 방명록입니다.');
+    }
+
+    if (visitor.isPrivate && visitor.password !== password) {
+      throw new Error('보호된 방명록입니다.');
+    }
     return visitor;
   },
 

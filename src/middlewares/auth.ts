@@ -10,7 +10,7 @@ interface UserPayload {
 const auth = (req: Request, res: Response, next: NextFunction) => {
   const BearerToken = req.cookies.Authorization;
   if (!BearerToken) {
-    res.status(401).json({ errorMessage: '토큰이 공급되지 않았습니다.' });
+    res.status(401).json({ errorMessage: '로그인을 해주세요.' });
     return;
   }
 
@@ -27,8 +27,8 @@ const auth = (req: Request, res: Response, next: NextFunction) => {
 
 // 관리자 권한 체크
 const authAdmin = (req: Request, res: Response, next: NextFunction) => {
-  const user = (req as any).user as UserPayload;
-  if (user && user.status !== 'admin') {
+  const user = res.locals.user as UserPayload;
+  if (!user || user.status !== 'admin') {
     res.status(403).json({ errorMessage: '관리자 권한이 필요합니다.' });
     return;
   }

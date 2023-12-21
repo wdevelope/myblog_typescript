@@ -40,7 +40,8 @@ exports.default = {
     getOneVisitor: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         try {
             const visitorId = parseInt(req.params.visitorId);
-            const visitor = yield visitor_1.default.getVisitorById(visitorId);
+            const password = req.body.password;
+            const visitor = yield visitor_1.default.getVisitorById(visitorId, password);
             res.status(200).json(visitor);
         }
         catch (error) {

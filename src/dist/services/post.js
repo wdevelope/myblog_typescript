@@ -14,16 +14,23 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const post_1 = __importDefault(require("../repositories/post"));
 exports.default = {
-    createPost: (userId, title, content, subCategoryId) => __awaiter(void 0, void 0, void 0, function* () {
-        const newpost = yield post_1.default.createPost(userId, title, content, subCategoryId);
+    createPost: (userId, title, content, subCategoryName) => __awaiter(void 0, void 0, void 0, function* () {
+        const subCategoryInfo = yield post_1.default.getSubCategory(subCategoryName);
+        if (!subCategoryInfo) {
+            throw new Error('서브카테고리가 존재하지 않습니다.');
+        }
+        const newpost = yield post_1.default.createPost(userId, title, content, subCategoryInfo.id);
         return newpost;
     }),
-    getAllPost: (page, subCategoryId) => __awaiter(void 0, void 0, void 0, function* () {
+    getAllPost: (page, subCategoryName) => __awaiter(void 0, void 0, void 0, function* () {
+        const subCategoryInfo = yield post_1.default.getSubCategory(subCategoryName);
+        if (!subCategoryInfo) {
+            throw new Error('서브카테고리가 존재하지 않습니다.');
+        }
         const pageSize = 15;
         const offset = (page - 1) * pageSize;
-        const { posts, totalCount } = yield post_1.default.getAllPost(offset, pageSize, subCategoryId);
+        const { posts, totalCount } = yield post_1.default.getAllPost(offset, pageSize, subCategoryInfo.id);
         const totalPages = Math.ceil(totalCount / pageSize);
-        const subCategoryInfo = yield post_1.default.getSubCategory(subCategoryId);
         return {
             posts,
             subCategory: subCategoryInfo,

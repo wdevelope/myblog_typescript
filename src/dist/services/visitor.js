@@ -40,8 +40,14 @@ exports.default = {
             },
         };
     }),
-    getVisitorById: (visitorId) => __awaiter(void 0, void 0, void 0, function* () {
+    getVisitorById: (visitorId, password) => __awaiter(void 0, void 0, void 0, function* () {
         const visitor = yield visitor_1.default.getVisitorById(visitorId);
+        if (!visitor) {
+            throw new Error('존재하지않는 방명록입니다.');
+        }
+        if (visitor.isPrivate && visitor.password !== password) {
+            throw new Error('보호된 방명록입니다.');
+        }
         return visitor;
     }),
     visitorPasswordCheck: (visitorId, password) => __awaiter(void 0, void 0, void 0, function* () {

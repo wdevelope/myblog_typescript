@@ -31,10 +31,14 @@ exports.default = {
                     model: user_1.default,
                     attributes: ['name'],
                 },
+                {
+                    model: subCategory_1.default,
+                    attributes: ['name'],
+                },
             ],
             order: [['createdAt', 'DESC']],
             where: {
-                subCategoryId,
+                subCategoryId: subCategoryId,
             },
             offset,
             limit: pageSize,
@@ -44,10 +48,10 @@ exports.default = {
             totalCount: result.count,
         };
     }),
-    getSubCategory: (subCategoryId) => __awaiter(void 0, void 0, void 0, function* () {
+    getSubCategory: (subCategoryName) => __awaiter(void 0, void 0, void 0, function* () {
         const subCategoryResult = yield subCategory_1.default.findOne({
-            where: { id: subCategoryId },
-            attributes: ['name'],
+            where: { name: subCategoryName },
+            attributes: ['id'],
         });
         return subCategoryResult;
     }),
