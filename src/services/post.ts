@@ -3,21 +3,32 @@ import Post from '../database/models/post';
 
 export default {
   // 게시글 생성
-  createPost: async (userId: number, title: string, content: string, subCategoryId: number): Promise<Post> => {
-    const newpost = await postRepository.createPost(userId, title, content, subCategoryId);
+  createPost: async (userId: number, title: string, content: string, subCategoryName: string): Promise<Post> => {
+    const subCategoryInfo = await postRepository.getSubCategory(subCategoryName);
+
+    if (!subCategoryInfo) {
+      throw new Error('서브카테고리가 존재하지 않습니다.');
+    }
+
+    const newpost = await postRepository.createPost(userId, title, content, subCategoryInfo.id);
+
     return newpost;
   },
 
   // 게시글 전체조회 <페이지네이션>
-  getAllPost: async (page: number, subCategoryId: number) => {
+  getAllPost: async (page: number, subCategoryName: string) => {
+    const subCategoryInfo = await postRepository.getSubCategory(subCategoryName);
+
+    if (!subCategoryInfo) {
+      throw new Error('서브카테고리가 존재하지 않습니다.');
+    }
+
     const pageSize = 15;
     const offset = (page - 1) * pageSize;
 
-    const { posts, totalCount } = await postRepository.getAllPost(offset, pageSize, subCategoryId);
+    const { posts, totalCount } = await postRepository.getAllPost(offset, pageSize, subCategoryInfo.id);
     const totalPages = Math.ceil(totalCount / pageSize);
 
-    // 서브 카테고리 정보 조회
-    const subCategoryInfo = await postRepository.getSubCategory(subCategoryId);
     return {
       posts,
       subCategory: subCategoryInfo,

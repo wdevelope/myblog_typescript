@@ -21,12 +21,15 @@ export default {
           model: User,
           attributes: ['name'],
         },
+        {
+          model: subCategory,
+          attributes: ['name'],
+        },
       ],
       order: [['createdAt', 'DESC']],
       where: {
-        subCategoryId,
+        subCategoryId: subCategoryId, // 서브카테고리 ID로 필터링
       },
-
       offset, // 페이지 시작 위치
       limit: pageSize, // 페이지당 아이템 수
     });
@@ -38,10 +41,10 @@ export default {
   },
 
   //서브카테고리 이름 조회
-  getSubCategory: async (subCategoryId: number) => {
+  getSubCategory: async (subCategoryName: string) => {
     const subCategoryResult = await subCategory.findOne({
-      where: { id: subCategoryId },
-      attributes: ['name'],
+      where: { name: subCategoryName },
+      attributes: ['id'],
     });
     return subCategoryResult;
   },
