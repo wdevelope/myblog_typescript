@@ -22,6 +22,6 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           port: ${{ secrets.EC2_PORT }}
           script: |
-            sudo su
             cd /home/ubuntu/myblog
-            git pull
+            sudo git pull
+            sudo pm2 restart app
