@@ -30,7 +30,6 @@ exports.default = {
         try {
             const subCategoryName = req.query.subCategoryName;
             const page = parseInt(req.query.page) || 1;
-            console.log(subCategoryName);
             const response = yield post_1.default.getAllPost(page, subCategoryName);
             res.status(200).json(response);
         }

@@ -16,8 +16,16 @@ const view_1 = __importDefault(require("../services/view"));
 exports.default = {
     postViews: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         const postId = parseInt(req.params.postId);
+        const viewedPost = req.cookies.viewedPost || [];
+        if (viewedPost.includes(postId)) {
+            res.sendStatus(200);
+            return;
+        }
         try {
             yield view_1.default.postViews(postId);
+            res.cookie('viewedPost', [...viewedPost, postId], {
+                maxAge: 1 * 24 * 60 * 60 * 1000,
+            });
             res.sendStatus(200);
         }
         catch (err) {
@@ -27,8 +35,14 @@ exports.default = {
     }),
     visitorViews: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         const visitorId = parseInt(req.params.visitorId);
+        const viewedVisitors = req.cookies.viewedVisitors || [];
+        if (viewedVisitors.includes(visitorId)) {
+            res.sendStatus(200);
+            return;
+        }
         try {
             yield view_1.default.visitorViews(visitorId);
+            res.cookie('viewedVisitors', [...viewedVisitors, visitorId], { maxAge: 1 * 24 * 60 * 60 * 1000 });
             res.sendStatus(200);
         }
         catch (err) {

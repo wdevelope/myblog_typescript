@@ -28,6 +28,12 @@ exports.default = {
     findUserByEmail: (email) => __awaiter(void 0, void 0, void 0, function* () {
         return yield user_1.default.findOne({ where: { email } });
     }),
+    findUser: (email) => __awaiter(void 0, void 0, void 0, function* () {
+        return yield user_1.default.findOne({
+            where: { email },
+            attributes: { exclude: ['password', 'createdAt', 'updatedAt', 'id'] },
+        });
+    }),
     findUserById: (userId) => __awaiter(void 0, void 0, void 0, function* () {
         const userInfo = yield user_1.default.findOne({
             attributes: ['name', 'email', 'status'],

@@ -33,10 +33,11 @@ exports.default = {
         if (!isPasswordValid) {
             throw new Error('아이디 또는 비밀번호가 틀렸습니다.');
         }
-        const token = jsonwebtoken_1.default.sign({ userId: user.id, status: user.status }, process.env.JWT_SECRET || '', {
-            expiresIn: process.env.JWT_EXPIREIN || '1h',
+        const userInfo = yield user_1.default.findUser(email);
+        const token = jsonwebtoken_1.default.sign({ userId: user.id, status: user.status }, process.env.JWT_SECRET, {
+            expiresIn: process.env.JWT_EXPIREIN,
         });
-        return token;
+        return { token, userInfo };
     }),
     userInfo: (userId) => __awaiter(void 0, void 0, void 0, function* () {
         const user = yield user_1.default.findUserById(userId);

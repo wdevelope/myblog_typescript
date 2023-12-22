@@ -28,9 +28,9 @@ exports.default = {
     login: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         const { email, password } = req.body;
         try {
-            const token = yield user_1.default.login(email, password);
-            res.cookie('Authorization', `Bearer ${token}`, { maxAge: 3 * 24 * 60 * 60 * 1000 });
-            res.status(200).json({ token });
+            const { token, userInfo } = yield user_1.default.login(email, password);
+            res.cookie('Authorization', `Bearer ${token}`, { maxAge: 1 * 24 * 60 * 60 * 1000 });
+            res.status(200).json(userInfo);
         }
         catch (err) {
             console.error(err);
