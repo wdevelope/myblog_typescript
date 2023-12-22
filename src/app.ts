@@ -25,7 +25,7 @@ app.use(
 // API 라우트 설정
 app.use(router);
 
-// 프론트 정적 파일 경로
+// 프론트 정적 파일
 app.use(express.static(path.join(__dirname, 'public')));
 
 // react Router를 위한 와일드카드 라우트
