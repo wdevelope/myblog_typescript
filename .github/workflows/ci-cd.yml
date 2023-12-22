@@ -25,4 +25,3 @@ jobs:
             sudo su
             cd /home/ubuntu/myblog
             git pull
-            pm2 restart app

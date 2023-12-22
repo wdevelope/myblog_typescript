@@ -14,7 +14,10 @@ export default {
 
     try {
       await viewService.postViews(postId);
-      res.cookie('viewedPost', [...viewedPost, postId], { maxAge: 1 * 24 * 60 * 60 * 1000 });
+      res.cookie('viewedPost', [...viewedPost, postId], {
+        maxAge: 1 * 24 * 60 * 60 * 1000,
+        secure: true, // HTTPS 연결에서만 전송
+      });
       res.sendStatus(200);
     } catch (err) {
       console.error(err);
@@ -33,7 +36,7 @@ export default {
     }
     try {
       await viewService.visitorViews(visitorId);
-      res.cookie('viewedVisitors', [...viewedVisitors, visitorId], { maxAge: 1 * 24 * 60 * 60 * 1000 });
+      res.cookie('viewedVisitors', [...viewedVisitors, visitorId], { maxAge: 1 * 24 * 60 * 60 * 1000, secure: true });
       res.sendStatus(200);
     } catch (err) {
       console.error(err);
