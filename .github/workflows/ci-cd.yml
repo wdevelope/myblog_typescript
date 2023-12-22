@@ -24,4 +24,3 @@ jobs:
           script: |
             cd /home/ubuntu/myblog
             sudo git pull
-            pm2 restart app
