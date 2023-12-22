@@ -18,9 +18,9 @@ export default {
   login: async (req: Request, res: Response) => {
     const { email, password } = req.body;
     try {
-      const token = await userService.login(email, password);
-      res.cookie('Authorization', `Bearer ${token}`, { maxAge: 3 * 24 * 60 * 60 * 1000 });
-      res.status(200).json({ token });
+      const { token, userInfo } = await userService.login(email, password);
+      res.cookie('Authorization', `Bearer ${token}`, { maxAge: 1 * 24 * 60 * 60 * 1000 });
+      res.status(200).json(userInfo);
     } catch (err) {
       console.error(err);
       res.status(500).json({ errorMessage: err.message });

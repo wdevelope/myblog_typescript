@@ -21,6 +21,14 @@ export default {
     return await User.findOne({ where: { email } });
   },
 
+  // 로그인 유저 찾기
+  findUser: async (email: string) => {
+    return await User.findOne({
+      where: { email },
+      attributes: { exclude: ['password', 'createdAt', 'updatedAt', 'id'] },
+    });
+  },
+
   // 유저 Id 찾기
   findUserById: async (userId: number) => {
     const userInfo = await User.findOne({

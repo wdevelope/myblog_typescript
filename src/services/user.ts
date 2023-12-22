@@ -29,11 +29,13 @@ export default {
       throw new Error('아이디 또는 비밀번호가 틀렸습니다.');
     }
 
-    const token = jwt.sign({ userId: user.id, status: user.status }, process.env.JWT_SECRET || '', {
-      expiresIn: process.env.JWT_EXPIREIN || '1h',
+    const userInfo = await userRepository.findUser(email);
+
+    const token = jwt.sign({ userId: user.id, status: user.status }, process.env.JWT_SECRET, {
+      expiresIn: process.env.JWT_EXPIREIN,
     });
 
-    return token;
+    return { token, userInfo };
   },
 
   // 유저 정보

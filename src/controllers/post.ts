@@ -20,7 +20,6 @@ export default {
     try {
       const subCategoryName = req.query.subCategoryName as string;
       const page = parseInt(req.query.page as string) || 1;
-      console.log(subCategoryName);
       const response = await postService.getAllPost(page, subCategoryName);
       res.status(200).json(response);
     } catch (err) {
