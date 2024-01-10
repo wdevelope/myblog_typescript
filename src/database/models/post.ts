@@ -7,6 +7,7 @@ class Post extends Model {
   public content!: string;
   public userId!: number;
   public subCategoryId!: number;
+  public accessLevel!: number;
 }
 
 Post.init(

@@ -71,6 +71,10 @@ export default {
       throw new Error('게시글이 존재하지 않습니다.');
     }
 
+    if (getPost.dataValues.accessLevel !== 0) {
+      throw new Error('비공개된 게시글 입니다.');
+    }
+
     return getPost;
   },
 };
