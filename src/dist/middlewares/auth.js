@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.authAdmin = exports.auth = void 0;
+exports.authOptional = exports.authAdmin = exports.auth = void 0;
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const auth = (req, res, next) => {
     const BearerToken = req.cookies.Authorization;
@@ -32,3 +32,22 @@ const authAdmin = (req, res, next) => {
     next();
 };
 exports.authAdmin = authAdmin;
+const authOptional = (req, res, next) => {
+    const BearerToken = req.cookies.Authorization;
+    if (BearerToken) {
+        const token = BearerToken.split(' ')[1];
+        try {
+            const decoded = jsonwebtoken_1.default.verify(token, process.env.JWT_SECRET);
+            res.locals.user = decoded;
+            next();
+        }
+        catch (ex) {
+            console.error('토큰 검증 오류:', ex);
+            next();
+        }
+    }
+    else {
+        next();
+    }
+};
+exports.authOptional = authOptional;

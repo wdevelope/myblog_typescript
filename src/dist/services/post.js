@@ -57,14 +57,14 @@ exports.default = {
         const deletedpost = yield post_1.default.deletePost(postId);
         return deletedpost;
     }),
-    getPost: (postId) => __awaiter(void 0, void 0, void 0, function* () {
-        const getPost = yield post_1.default.getPost(postId);
-        if (!getPost) {
+    getPost: (postId, user) => __awaiter(void 0, void 0, void 0, function* () {
+        const post = yield post_1.default.getPost(postId);
+        if (!post) {
             throw new Error('게시글이 존재하지 않습니다.');
         }
-        if (getPost.dataValues.accessLevel !== 0) {
+        if (post.dataValues.accessLevel !== 0 && (!user || user.status !== 'admin')) {
             throw new Error('비공개된 게시글 입니다.');
         }
-        return getPost;
+        return post;
     }),
 };

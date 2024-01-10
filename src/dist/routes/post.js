@@ -12,5 +12,5 @@ router.post('/', [auth_1.auth, auth_1.authAdmin], validation_1.createPost, post_
 router.get('/', post_1.default.getAllPost);
 router.patch('/:postId', [auth_1.auth, auth_1.authAdmin], post_1.default.updatePost);
 router.delete('/:postId', [auth_1.auth, auth_1.authAdmin], post_1.default.deletePost);
-router.get('/:postId', post_1.default.getPost);
+router.get('/:postId', auth_1.authOptional, post_1.default.getPost);
 exports.default = router;

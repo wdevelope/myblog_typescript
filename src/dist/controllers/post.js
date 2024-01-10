@@ -65,7 +65,8 @@ exports.default = {
     getPost: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         try {
             const postId = parseInt(req.params.postId);
-            const post = yield post_1.default.getPost(postId);
+            const user = res.locals.user;
+            const post = yield post_1.default.getPost(postId, user);
             res.status(200).json(post);
         }
         catch (err) {
