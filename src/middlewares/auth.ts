@@ -35,4 +35,24 @@ const authAdmin = (req: Request, res: Response, next: NextFunction) => {
   next();
 };
 
-export { auth, authAdmin };
+// 유저 인증 체크 (선택적)
+const authOptional = (req: Request, res: Response, next: NextFunction) => {
+  const BearerToken = req.cookies.Authorization;
+  if (BearerToken) {
+    const token = BearerToken.split(' ')[1];
+    try {
+      const decoded = jwt.verify(token, process.env.JWT_SECRET as string) as UserPayload;
+      res.locals.user = decoded;
+      next();
+    } catch (ex) {
+      console.error('토큰 검증 오류:', ex);
+      // 토큰 검증 실패 시에도 요청은 계속 진행
+      next();
+    }
+  } else {
+    // 토큰이 없는 경우에도 요청은 계속 진행
+    next();
+  }
+};
+
+export { auth, authAdmin, authOptional };

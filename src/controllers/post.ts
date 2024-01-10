@@ -58,7 +58,8 @@ export default {
   getPost: async (req: Request, res: Response) => {
     try {
       const postId = parseInt(req.params.postId);
-      const post = await postService.getPost(postId);
+      const user = res.locals.user;
+      const post = await postService.getPost(postId, user);
       res.status(200).json(post);
     } catch (err) {
       console.log(err);

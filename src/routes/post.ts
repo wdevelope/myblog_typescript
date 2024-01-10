@@ -1,6 +1,6 @@
 import express from 'express';
 const router = express.Router();
-import { auth, authAdmin } from '../middlewares/auth';
+import { auth, authAdmin, authOptional } from '../middlewares/auth';
 import { createPost } from '../middlewares/validation';
 import postController from '../controllers/post';
 
@@ -13,6 +13,6 @@ router.patch('/:postId', [auth, authAdmin], postController.updatePost);
 // 게시글 삭제
 router.delete('/:postId', [auth, authAdmin], postController.deletePost);
 // 게시글 상세조회
-router.get('/:postId', postController.getPost);
+router.get('/:postId', authOptional, postController.getPost);
 
 export default router;

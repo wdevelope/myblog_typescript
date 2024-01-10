@@ -64,17 +64,17 @@ export default {
   },
 
   // 게시글 상세조회
-  getPost: async (postId: number) => {
-    const getPost = await postRepository.getPost(postId);
+  getPost: async (postId: number, user: any) => {
+    const post = await postRepository.getPost(postId);
 
-    if (!getPost) {
+    if (!post) {
       throw new Error('게시글이 존재하지 않습니다.');
     }
 
-    if (getPost.dataValues.accessLevel !== 0) {
+    if (post.dataValues.accessLevel !== 0 && (!user || user.status !== 'admin')) {
       throw new Error('비공개된 게시글 입니다.');
     }
 
-    return getPost;
+    return post;
   },
 };
