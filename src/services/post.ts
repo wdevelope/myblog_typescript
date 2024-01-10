@@ -3,14 +3,20 @@ import Post from '../database/models/post';
 
 export default {
   // 게시글 생성
-  createPost: async (userId: number, title: string, content: string, subCategoryName: string): Promise<Post> => {
+  createPost: async (
+    userId: number,
+    title: string,
+    content: string,
+    subCategoryName: string,
+    accessLevel: number
+  ): Promise<Post> => {
     const subCategoryInfo = await postRepository.getSubCategory(subCategoryName);
 
     if (!subCategoryInfo) {
       throw new Error('서브카테고리가 존재하지 않습니다.');
     }
 
-    const newpost = await postRepository.createPost(userId, title, content, subCategoryInfo.id);
+    const newpost = await postRepository.createPost(userId, title, content, subCategoryInfo.id, accessLevel);
 
     return newpost;
   },
@@ -41,13 +47,13 @@ export default {
   },
 
   // 게시글 수정
-  updatePost: async (postId: number, userId: number, title: string, content: string) => {
+  updatePost: async (postId: number, userId: number, title: string, content: string, accessLevel: number) => {
     const post = await postRepository.postFindById(postId);
     if (!post || post.userId !== userId) {
       throw new Error('수정 권한이 없습니다.');
     }
 
-    const updatedpost = await postRepository.updatePost(postId, title, content);
+    const updatedpost = await postRepository.updatePost(postId, title, content, accessLevel);
     return updatedpost;
   },
 

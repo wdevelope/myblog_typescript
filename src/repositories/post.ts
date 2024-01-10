@@ -4,12 +4,19 @@ import subCategory from '../database/models/subCategory';
 
 export default {
   // 게시글 생성
-  createPost: async (userId: number, title: string, content: string, subCategoryId: number): Promise<Post> => {
+  createPost: async (
+    userId: number,
+    title: string,
+    content: string,
+    subCategoryId: number,
+    accessLevel: number
+  ): Promise<Post> => {
     return await Post.create({
       userId,
       title,
       content,
       subCategoryId,
+      accessLevel,
     });
   },
 
@@ -50,11 +57,12 @@ export default {
   },
 
   // 게시글 수정
-  updatePost: async (id: number, title: string, content: string) => {
+  updatePost: async (id: number, title: string, content: string, accessLevel: number) => {
     return await Post.update(
       {
         title,
         content,
+        accessLevel,
       },
       {
         where: {

@@ -5,9 +5,9 @@ export default {
   // 게시글 생성
   createPost: async (req: Request, res: Response) => {
     try {
-      const { title, content, subCategoryName } = req.body;
+      const { title, content, subCategoryName, accessLevel } = req.body;
       const user = res.locals.user;
-      await postService.createPost(user.userId, title, content, subCategoryName);
+      await postService.createPost(user.userId, title, content, subCategoryName, accessLevel);
       res.status(201).json({ message: '게시글 생성 완료' });
     } catch (err) {
       console.log(err);
@@ -32,8 +32,8 @@ export default {
     try {
       const postId = parseInt(req.params.postId);
       const user = res.locals.user;
-      const { title, content } = req.body;
-      await postService.updatePost(postId, user.userId, title, content);
+      const { title, content, accessLevel } = req.body;
+      await postService.updatePost(postId, user.userId, title, content, accessLevel);
       res.status(200).json({ message: '게시글 수정 완료' });
     } catch (err) {
       console.log(err);
