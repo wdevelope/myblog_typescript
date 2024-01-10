@@ -14,12 +14,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const post_1 = __importDefault(require("../repositories/post"));
 exports.default = {
-    createPost: (userId, title, content, subCategoryName) => __awaiter(void 0, void 0, void 0, function* () {
+    createPost: (userId, title, content, subCategoryName, accessLevel) => __awaiter(void 0, void 0, void 0, function* () {
         const subCategoryInfo = yield post_1.default.getSubCategory(subCategoryName);
         if (!subCategoryInfo) {
             throw new Error('서브카테고리가 존재하지 않습니다.');
         }
-        const newpost = yield post_1.default.createPost(userId, title, content, subCategoryInfo.id);
+        const newpost = yield post_1.default.createPost(userId, title, content, subCategoryInfo.id, accessLevel);
         return newpost;
     }),
     getAllPost: (page, subCategoryName) => __awaiter(void 0, void 0, void 0, function* () {
@@ -41,12 +41,12 @@ exports.default = {
             },
         };
     }),
-    updatePost: (postId, userId, title, content) => __awaiter(void 0, void 0, void 0, function* () {
+    updatePost: (postId, userId, title, content, accessLevel) => __awaiter(void 0, void 0, void 0, function* () {
         const post = yield post_1.default.postFindById(postId);
         if (!post || post.userId !== userId) {
             throw new Error('수정 권한이 없습니다.');
         }
-        const updatedpost = yield post_1.default.updatePost(postId, title, content);
+        const updatedpost = yield post_1.default.updatePost(postId, title, content, accessLevel);
         return updatedpost;
     }),
     deletePost: (postId, userId) => __awaiter(void 0, void 0, void 0, function* () {

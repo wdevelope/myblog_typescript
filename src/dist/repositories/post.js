@@ -16,12 +16,13 @@ const post_1 = __importDefault(require("../database/models/post"));
 const user_1 = __importDefault(require("../database/models/user"));
 const subCategory_1 = __importDefault(require("../database/models/subCategory"));
 exports.default = {
-    createPost: (userId, title, content, subCategoryId) => __awaiter(void 0, void 0, void 0, function* () {
+    createPost: (userId, title, content, subCategoryId, accessLevel) => __awaiter(void 0, void 0, void 0, function* () {
         return yield post_1.default.create({
             userId,
             title,
             content,
             subCategoryId,
+            accessLevel,
         });
     }),
     getAllPost: (offset, pageSize, subCategoryId) => __awaiter(void 0, void 0, void 0, function* () {
@@ -55,10 +56,11 @@ exports.default = {
         });
         return subCategoryResult;
     }),
-    updatePost: (id, title, content) => __awaiter(void 0, void 0, void 0, function* () {
+    updatePost: (id, title, content, accessLevel) => __awaiter(void 0, void 0, void 0, function* () {
         return yield post_1.default.update({
             title,
             content,
+            accessLevel,
         }, {
             where: {
                 id: id,
