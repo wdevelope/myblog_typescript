@@ -74,6 +74,12 @@ export default {
       order: [['createdAt', 'DESC']],
       attributes: ['id', 'title', 'createdAt'],
       limit: 7,
+      include: [
+        {
+          model: subCategory,
+          attributes: ['name'],
+        },
+      ],
     });
     return result;
   },
