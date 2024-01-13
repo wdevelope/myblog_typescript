@@ -53,6 +53,16 @@ export default {
     const lowerKeyword = keyword.toLowerCase(); // 검색어를 소문자로 변환
 
     const result = await Post.findAndCountAll({
+      include: [
+        {
+          model: User,
+          attributes: ['name'],
+        },
+        {
+          model: subCategory,
+          attributes: ['name'],
+        },
+      ],
       where: {
         title: Sequelize.where(Sequelize.fn('LOWER', Sequelize.col('title')), {
           [Op.like]: `%${lowerKeyword}%`,

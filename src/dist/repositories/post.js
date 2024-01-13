@@ -53,6 +53,16 @@ exports.default = {
     searchPost: (keyword, offset, pageSize) => __awaiter(void 0, void 0, void 0, function* () {
         const lowerKeyword = keyword.toLowerCase();
         const result = yield post_1.default.findAndCountAll({
+            include: [
+                {
+                    model: user_1.default,
+                    attributes: ['name'],
+                },
+                {
+                    model: subCategory_1.default,
+                    attributes: ['name'],
+                },
+            ],
             where: {
                 title: sequelize_1.Sequelize.where(sequelize_1.Sequelize.fn('LOWER', sequelize_1.Sequelize.col('title')), {
                     [sequelize_1.Op.like]: `%${lowerKeyword}%`,
