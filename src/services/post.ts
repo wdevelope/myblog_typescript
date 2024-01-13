@@ -64,6 +64,12 @@ export default {
     };
   },
 
+  // 최신글 모음
+  latestPost: async () => {
+    const latestpost = await postRepository.latestPost();
+    return latestpost;
+  },
+
   // 게시글 수정
   updatePost: async (postId: number, userId: number, title: string, content: string, accessLevel: number) => {
     const post = await postRepository.postFindById(postId);

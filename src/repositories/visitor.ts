@@ -23,6 +23,16 @@ export default {
     };
   },
 
+  // 최신 방명록 모음
+  getLatestVisitor: async () => {
+    const result = await Visitor.findAll({
+      order: [['createdAt', 'DESC']],
+      attributes: ['id', 'title', 'createdAt'],
+      limit: 5,
+    });
+    return result;
+  },
+
   // 특정 방명록 조회
   getVisitorById: async (id: number) => {
     const visitor = await Visitor.findByPk(id, {

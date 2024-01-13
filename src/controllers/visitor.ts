@@ -27,6 +27,17 @@ export default {
     }
   },
 
+  // 최신 방명록 모음
+  getLatestVisitor: async (req: Request, res: Response) => {
+    try {
+      const visitors = await visitorService.getLatestVisitor();
+      res.status(200).json(visitors);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ errorMessage: error.message });
+    }
+  },
+
   // 특정 방명록 조회
   getOneVisitor: async (req: Request, res: Response) => {
     try {

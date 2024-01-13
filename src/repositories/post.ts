@@ -68,6 +68,16 @@ export default {
     };
   },
 
+  // 최신글 모음
+  latestPost: async () => {
+    const result = await Post.findAll({
+      order: [['createdAt', 'DESC']],
+      attributes: ['id', 'title', 'createdAt'],
+      limit: 7,
+    });
+    return result;
+  },
+
   //서브카테고리 이름 조회
   getSubCategory: async (subCategoryName: string) => {
     const subCategoryResult = await subCategory.findOne({

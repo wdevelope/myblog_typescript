@@ -7,6 +7,8 @@ import visitorController from '../controllers/visitor';
 router.post('/', auth, visitorController.createVisitor);
 // 방명록 전체조회
 router.get('/', visitorController.getAllVisitor);
+// 최신 방명록 모음
+router.get('/latest', visitorController.getLatestVisitor);
 // 방명록 상세조회
 router.post('/:visitorId', visitorController.getOneVisitor);
 // 방명록 수정

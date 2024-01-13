@@ -36,6 +36,12 @@ export default {
     };
   },
 
+  // 최신 방명록 모음
+  getLatestVisitor: async () => {
+    const latestVisitor = await visitorRepository.getLatestVisitor();
+    return latestVisitor;
+  },
+
   // 특정 방명록 조회
   getVisitorById: async (visitorId: number, password: string) => {
     const visitor = await visitorRepository.getVisitorById(visitorId);

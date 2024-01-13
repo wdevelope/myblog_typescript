@@ -10,6 +10,8 @@ router.post('/', [auth, authAdmin], createPost, postController.createPost);
 router.get('/', postController.getAllPost);
 // 게시글 검색
 router.get('/search', postController.searchPost);
+// 최신글 모음
+router.get('/latest', postController.latestPost);
 // 게시글 수정
 router.patch('/:postId', [auth, authAdmin], postController.updatePost);
 // 게시글 삭제

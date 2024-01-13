@@ -40,6 +40,17 @@ export default {
     }
   },
 
+  // 최신글 모음
+  latestPost: async (req: Request, res: Response) => {
+    try {
+      const response = await postService.latestPost();
+      res.status(200).json(response);
+    } catch (err) {
+      console.log(err);
+      res.status(500).json({ errorMessage: err.message });
+    }
+  },
+
   // 게시글 수정
   updatePost: async (req: Request, res: Response) => {
     try {
