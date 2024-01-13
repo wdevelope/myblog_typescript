@@ -27,6 +27,19 @@ export default {
     }
   },
 
+  // 게시글 검색
+  searchPost: async (req: Request, res: Response) => {
+    try {
+      const keyword = req.query.keyword as string;
+      const page = parseInt(req.query.page as string) || 1;
+      const response = await postService.searchPost(keyword, page);
+      res.status(200).json(response);
+    } catch (err) {
+      console.log(err);
+      res.status(500).json({ errorMessage: err.message });
+    }
+  },
+
   // 게시글 수정
   updatePost: async (req: Request, res: Response) => {
     try {

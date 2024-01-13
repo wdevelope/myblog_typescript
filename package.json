@@ -12,7 +12,7 @@
     "start:node": "nodemon src/app.js",
     "build": "tsc",
     "start": "tsc-watch --onSuccess \"node dist/src/app.js\"",
-    "dev": "ts-node src/app.ts",
+    "dev": "nodemon --exec ts-node src/app.ts",
     "prod": "node src/dist/app.js",
     "stress": "artillery quick --count 10000 -n 5 http://localhost:"
   },

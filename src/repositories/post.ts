@@ -1,6 +1,7 @@
 import Post from '../database/models/post';
 import User from '../database/models/user';
 import subCategory from '../database/models/subCategory';
+import { Op, Sequelize } from 'sequelize';
 
 export default {
   // 게시글 생성
@@ -36,6 +37,26 @@ export default {
       order: [['createdAt', 'DESC']],
       where: {
         subCategoryId: subCategoryId, // 서브카테고리 ID로 필터링
+      },
+      offset, // 페이지 시작 위치
+      limit: pageSize, // 페이지당 아이템 수
+    });
+
+    return {
+      posts: result.rows,
+      totalCount: result.count,
+    };
+  },
+
+  // 게시글 검색
+  searchPost: async (keyword: string, offset: number, pageSize: number) => {
+    const lowerKeyword = keyword.toLowerCase(); // 검색어를 소문자로 변환
+
+    const result = await Post.findAndCountAll({
+      where: {
+        title: Sequelize.where(Sequelize.fn('LOWER', Sequelize.col('title')), {
+          [Op.like]: `%${lowerKeyword}%`,
+        }),
       },
       offset, // 페이지 시작 위치
       limit: pageSize, // 페이지당 아이템 수

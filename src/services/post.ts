@@ -46,6 +46,24 @@ export default {
     };
   },
 
+  // 게시글 검색
+  searchPost: async (keyword: string, page: number) => {
+    const pageSize = 15;
+    const offset = (page - 1) * pageSize;
+
+    const { posts, totalCount } = await postRepository.searchPost(keyword, offset, pageSize);
+    const totalPages = Math.ceil(totalCount / pageSize);
+
+    return {
+      posts,
+      meta: {
+        totalPages,
+        currentPage: page,
+        totalCount,
+      },
+    };
+  },
+
   // 게시글 수정
   updatePost: async (postId: number, userId: number, title: string, content: string, accessLevel: number) => {
     const post = await postRepository.postFindById(postId);
