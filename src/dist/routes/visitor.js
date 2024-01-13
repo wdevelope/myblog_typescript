@@ -9,6 +9,7 @@ const auth_1 = require("../middlewares/auth");
 const visitor_1 = __importDefault(require("../controllers/visitor"));
 router.post('/', auth_1.auth, visitor_1.default.createVisitor);
 router.get('/', visitor_1.default.getAllVisitor);
+router.get('/latest', visitor_1.default.getLatestVisitor);
 router.post('/:visitorId', visitor_1.default.getOneVisitor);
 router.patch('/:visitorId', auth_1.auth, visitor_1.default.updateVisitor);
 router.delete('/:visitorId', auth_1.auth, visitor_1.default.deleteVisitor);

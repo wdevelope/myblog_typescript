@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const post_1 = __importDefault(require("../database/models/post"));
 const user_1 = __importDefault(require("../database/models/user"));
 const subCategory_1 = __importDefault(require("../database/models/subCategory"));
+const sequelize_1 = require("sequelize");
 exports.default = {
     createPost: (userId, title, content, subCategoryId, accessLevel) => __awaiter(void 0, void 0, void 0, function* () {
         return yield post_1.default.create({
@@ -48,6 +49,36 @@ exports.default = {
             posts: result.rows,
             totalCount: result.count,
         };
+    }),
+    searchPost: (keyword, offset, pageSize) => __awaiter(void 0, void 0, void 0, function* () {
+        const lowerKeyword = keyword.toLowerCase();
+        const result = yield post_1.default.findAndCountAll({
+            where: {
+                title: sequelize_1.Sequelize.where(sequelize_1.Sequelize.fn('LOWER', sequelize_1.Sequelize.col('title')), {
+                    [sequelize_1.Op.like]: `%${lowerKeyword}%`,
+                }),
+            },
+            offset,
+            limit: pageSize,
+        });
+        return {
+            posts: result.rows,
+            totalCount: result.count,
+        };
+    }),
+    latestPost: () => __awaiter(void 0, void 0, void 0, function* () {
+        const result = yield post_1.default.findAll({
+            order: [['createdAt', 'DESC']],
+            attributes: ['id', 'title', 'createdAt'],
+            limit: 7,
+            include: [
+                {
+                    model: subCategory_1.default,
+                    attributes: ['name'],
+                },
+            ],
+        });
+        return result;
     }),
     getSubCategory: (subCategoryName) => __awaiter(void 0, void 0, void 0, function* () {
         const subCategoryResult = yield subCategory_1.default.findOne({

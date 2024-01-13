@@ -32,6 +32,14 @@ exports.default = {
             totalCount: result.count,
         };
     }),
+    getLatestVisitor: () => __awaiter(void 0, void 0, void 0, function* () {
+        const result = yield visitor_1.default.findAll({
+            order: [['createdAt', 'DESC']],
+            attributes: ['id', 'title', 'createdAt'],
+            limit: 5,
+        });
+        return result;
+    }),
     getVisitorById: (id) => __awaiter(void 0, void 0, void 0, function* () {
         const visitor = yield visitor_1.default.findByPk(id, {
             include: [

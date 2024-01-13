@@ -40,6 +40,10 @@ exports.default = {
             },
         };
     }),
+    getLatestVisitor: () => __awaiter(void 0, void 0, void 0, function* () {
+        const latestVisitor = yield visitor_1.default.getLatestVisitor();
+        return latestVisitor;
+    }),
     getVisitorById: (visitorId, password) => __awaiter(void 0, void 0, void 0, function* () {
         const visitor = yield visitor_1.default.getVisitorById(visitorId);
         if (!visitor) {

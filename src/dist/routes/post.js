@@ -10,6 +10,8 @@ const validation_1 = require("../middlewares/validation");
 const post_1 = __importDefault(require("../controllers/post"));
 router.post('/', [auth_1.auth, auth_1.authAdmin], validation_1.createPost, post_1.default.createPost);
 router.get('/', post_1.default.getAllPost);
+router.get('/search', post_1.default.searchPost);
+router.get('/latest', post_1.default.latestPost);
 router.patch('/:postId', [auth_1.auth, auth_1.authAdmin], post_1.default.updatePost);
 router.delete('/:postId', [auth_1.auth, auth_1.authAdmin], post_1.default.deletePost);
 router.get('/:postId', auth_1.authOptional, post_1.default.getPost);

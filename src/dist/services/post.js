@@ -41,6 +41,24 @@ exports.default = {
             },
         };
     }),
+    searchPost: (keyword, page) => __awaiter(void 0, void 0, void 0, function* () {
+        const pageSize = 15;
+        const offset = (page - 1) * pageSize;
+        const { posts, totalCount } = yield post_1.default.searchPost(keyword, offset, pageSize);
+        const totalPages = Math.ceil(totalCount / pageSize);
+        return {
+            posts,
+            meta: {
+                totalPages,
+                currentPage: page,
+                totalCount,
+            },
+        };
+    }),
+    latestPost: () => __awaiter(void 0, void 0, void 0, function* () {
+        const latestpost = yield post_1.default.latestPost();
+        return latestpost;
+    }),
     updatePost: (postId, userId, title, content, accessLevel) => __awaiter(void 0, void 0, void 0, function* () {
         const post = yield post_1.default.postFindById(postId);
         if (!post || post.userId !== userId) {

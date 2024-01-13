@@ -37,6 +37,16 @@ exports.default = {
             res.status(500).json({ errorMessage: error.message });
         }
     }),
+    getLatestVisitor: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+        try {
+            const visitors = yield visitor_1.default.getLatestVisitor();
+            res.status(200).json(visitors);
+        }
+        catch (error) {
+            console.error(error);
+            res.status(500).json({ errorMessage: error.message });
+        }
+    }),
     getOneVisitor: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         try {
             const visitorId = parseInt(req.params.visitorId);

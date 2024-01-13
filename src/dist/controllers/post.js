@@ -37,6 +37,28 @@ exports.default = {
             res.status(500).json({ errorMessage: err.message });
         }
     }),
+    searchPost: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+        try {
+            const keyword = req.query.keyword;
+            const page = parseInt(req.query.page) || 1;
+            const response = yield post_1.default.searchPost(keyword, page);
+            res.status(200).json(response);
+        }
+        catch (err) {
+            console.log(err);
+            res.status(500).json({ errorMessage: err.message });
+        }
+    }),
+    latestPost: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+        try {
+            const response = yield post_1.default.latestPost();
+            res.status(200).json(response);
+        }
+        catch (err) {
+            console.log(err);
+            res.status(500).json({ errorMessage: err.message });
+        }
+    }),
     updatePost: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         try {
             const postId = parseInt(req.params.postId);
