@@ -8,6 +8,7 @@ const sequelize = new Sequelize({
   password: process.env.DB_PASSWORD as string,
   database: process.env.DB_NAME as string,
   port: Number(process.env.DB_PORT),
+  logging: false,  // 로깅 비활성화
 });
 
 export default sequelize;
