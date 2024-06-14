@@ -16,7 +16,7 @@ app.use(express.json());
 // cors 설정
 app.use(
   cors({
-    origin: [`https://${process.env.FNT_SERVER_PORT}`, 'http://localhost:8080'],
+    origin: [`https://${process.env.FNT_SERVER_PORT}`, 'http://localhost:3000', 'http://localhost:8080'],
     methods: ['GET', 'POST', 'DELETE', 'PATCH', 'PUT'],
     credentials: true,
   })
@@ -26,11 +26,11 @@ app.use(
 app.use(router);
 
 // 프론트 정적 파일
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, '../../frontend/build')));
 
 // react Router를 위한 와일드카드 라우트
 app.get('*', (req: Request, res: Response) => {
-  res.sendFile(path.join(__dirname, 'public/index.html'));
+  res.sendFile(path.join(__dirname, '../../frontend/build/index.html'));
 });
 
 // 서버 실행

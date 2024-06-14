@@ -6,7 +6,7 @@
     "moduleResolution": "node",
     "allowJs": true, // js 파일들 ts에서 import해서 쓸 수 있는지
     "checkJs": false, // 일반 js 파일에서도 에러체크 여부
-    "outDir": "./src/dist", //js파일 아웃풋 경로바꾸기
+    "outDir": "./dist", //js파일 아웃풋 경로바꾸기
     "rootDir": "./src", //루트경로 바꾸기 (js 파일 아웃풋 경로에 영향줌)
     "removeComments": true, //컴파일시 주석제거
 
@@ -22,7 +22,7 @@
     //"noUnusedParameters": true, //쓰지않는 파라미터 있으면 에러내기
     "noImplicitReturns": true //함수에서 return 빼먹으면 에러내기
   },
-  "include": ["**/*.ts"], // 컴파일 포함
+  "include": ["src/**/*.ts"], // 컴파일 포함
   "exclude": [
     "node_modules",
     "dist",
