@@ -51,11 +51,20 @@ export default {
   // 로그아웃
   logout: async (req: Request, res: Response, next: NextFunction) => {
     try {
-      res.clearCookie('accessToken');
-      res.clearCookie('refreshToken');
+      res.cookie('accessToken', '', {
+        expires: new Date(0),
+      });
+      res.cookie('refreshToken', '', {
+        expires: new Date(0),
+      });
       res.status(200).json({ message: '로그아웃 되었습니다.' });
     } catch (error) {
       next(error);
     }
+  },
+
+  // 로그인 확인
+  check: async (req: Request, res: Response) => {
+    res.status(200).json({ isLoggedIn: !!res.locals.user });
   },
 };

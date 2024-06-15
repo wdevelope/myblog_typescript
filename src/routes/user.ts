@@ -15,8 +15,6 @@ router.patch('/status', [auth, authAdmin], userController.updateUser);
 // 로그아웃
 router.post('/logout', auth, userController.logout);
 // 로그인 확인
-router.get('/check', auth, (req, res) => {
-  res.status(200).json({ isLoggedIn: true });
-});
+router.get('/check', auth, userController.check);
 
 export default router;
