@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import userService from '../services/user';
+import cookieOptions from '../config/cookie';
 
 export default {
   // 회원가입
@@ -17,8 +18,9 @@ export default {
   login: async (req: Request, res: Response, next: NextFunction) => {
     const { email, password } = req.body;
     try {
-      const { token, userInfo } = await userService.login(email, password);
-      res.cookie('Authorization', `Bearer ${token}`, { maxAge: 1 * 24 * 60 * 60 * 1000 });
+      const { accessToken, refreshToken, userInfo } = await userService.login(email, password);
+      res.cookie('accessToken', accessToken, cookieOptions.accessToken);
+      res.cookie('refreshToken', refreshToken, cookieOptions.refreshToken);
       res.status(200).json(userInfo);
     } catch (error) {
       next(error);
@@ -49,7 +51,8 @@ export default {
   // 로그아웃
   logout: async (req: Request, res: Response, next: NextFunction) => {
     try {
-      res.clearCookie('Authorization');
+      res.clearCookie('accessToken');
+      res.clearCookie('refreshToken');
       res.status(200).json({ message: '로그아웃 되었습니다.' });
     } catch (error) {
       next(error);

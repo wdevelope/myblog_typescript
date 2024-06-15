@@ -6,26 +6,51 @@ interface UserPayload {
   status: string;
 }
 
-// 유저 인증 체크
+// * 유저 검증 미들웨어
 const auth = (req: Request, res: Response, next: NextFunction) => {
-  const BearerToken = req.cookies.Authorization;
-  if (!BearerToken) {
+  const accessToken = req.cookies.accessToken;
+  const refreshToken = req.cookies.refreshToken;
+
+  if (!accessToken) {
     res.status(401).json({ errorMessage: '로그인을 해주세요.' });
     return;
   }
 
-  const token = BearerToken.split(' ')[1];
   try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET as string) as UserPayload;
+    const decoded = jwt.verify(accessToken, process.env.JWT_SECRET as string) as UserPayload;
     res.locals.user = decoded;
     next();
-  } catch (ex) {
-    console.error('토큰 검증 오류:', ex);
-    res.status(400).json({ errorMessage: '토큰 인증 실패' });
+  } catch (error) {
+    if (!refreshToken) {
+      res.status(401).json({ errorMessage: '로그인을 해주세요.' });
+      return;
+    }
+
+    try {
+      const decodedRefreshToken = jwt.verify(refreshToken, process.env.JWT_REFRESH_SECRET as string) as UserPayload;
+
+      const newAccessToken = jwt.sign(
+        { userId: decodedRefreshToken.userId, status: decodedRefreshToken.status },
+        process.env.JWT_SECRET as string,
+        { expiresIn: '1h' }
+      );
+
+      res.cookie('accessToken', newAccessToken, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        maxAge: 1 * 60 * 60 * 1000, // 1시간
+      });
+
+      res.locals.user = jwt.verify(newAccessToken, process.env.JWT_SECRET as string) as UserPayload;
+      next();
+    } catch (ex) {
+      console.error('리프레시 토큰 검증 오류:', ex);
+      res.status(400).json({ errorMessage: '토큰 인증 실패' });
+    }
   }
 };
 
-// 관리자 권한 체크
+// * 관리자 검증 미들웨어
 const authAdmin = (req: Request, res: Response, next: NextFunction) => {
   const user = res.locals.user as UserPayload;
   if (!user || user.status !== 'admin') {
@@ -35,17 +60,16 @@ const authAdmin = (req: Request, res: Response, next: NextFunction) => {
   next();
 };
 
-// 유저 인증 체크 (선택적)
 const authOptional = (req: Request, res: Response, next: NextFunction) => {
-  const BearerToken = req.cookies.Authorization;
-  if (BearerToken) {
-    const token = BearerToken.split(' ')[1];
+  const accessToken = req.cookies.accessToken;
+
+  if (accessToken) {
     try {
-      const decoded = jwt.verify(token, process.env.JWT_SECRET as string) as UserPayload;
+      const decoded = jwt.verify(accessToken, process.env.JWT_SECRET as string) as UserPayload;
       res.locals.user = decoded;
       next();
-    } catch (ex) {
-      console.error('토큰 검증 오류:', ex);
+    } catch (error) {
+      console.error('토큰 검증 오류:', error);
       // 토큰 검증 실패 시에도 요청은 계속 진행
       next();
     }

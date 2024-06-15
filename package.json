@@ -11,10 +11,9 @@
     "test:integration": "jest __tests__/integration --forceExit",
     "build": "tsc",
     "start:node": "nodemon src/app.js",
-    "start:prod": "tsc-watch --onSuccess \"node dist/src/app.js\"",
+    "start:prod": "NODE_ENV=production tsc-watch --onSuccess \"node dist/src/app.js\"",
     "start:dev": "nodemon --exec ts-node src/app.ts",
-    "start:pm2": "tsc && pm2 start dist/app.js --name my-blog --watch",
-    "prod": "node src/dist/app.js",
+    "start:pm2": "NODE_ENV=production tsc && pm2 start dist/src/app.js --name my-blog --watch",
     "stress": "artillery quick --count 10000 -n 5 http://localhost:"
   },
   "author": "",
