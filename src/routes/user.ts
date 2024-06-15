@@ -13,8 +13,8 @@ router.get('/userInfo', auth, userController.userInfo);
 // 유저상태변경
 router.patch('/status', [auth, authAdmin], userController.updateUser);
 // 로그아웃
-router.post('/logout', auth, userController.logout);
+router.post('/logout', userController.logout);
 // 로그인 확인
-router.get('/check', auth, userController.check);
+router.get('/check-auth', auth, userController.checkAuth);
 
 export default router;

@@ -9,7 +9,8 @@ function getCookieOptions(env: string) {
       httpOnly: true,
       secure: isProduction,
       sameSite: isProduction ? sameSiteValue : 'lax',
-      maxAge: 3600000, // 1시간
+      maxAge: 3600000, // 1시간,
+      // maxAge: 5000, // 5초
     },
     // 리프레시 토큰
     refreshToken: {

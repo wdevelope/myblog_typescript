@@ -31,13 +31,21 @@ export default {
 
     const userInfo = await userRepository.findUser(email);
 
-    const accessToken = jwt.sign({ userId: user.id, status: user.status }, process.env.JWT_SECRET, {
-      expiresIn: '1h',
-    });
+    const accessToken = jwt.sign(
+      { userId: user.id, status: user.status, email: user.email, name: user.name },
+      process.env.JWT_SECRET,
+      {
+        expiresIn: '1h',
+      }
+    );
 
-    const refreshToken = jwt.sign({ userId: user.id }, process.env.JWT_REFRESH_SECRET, {
-      expiresIn: '7d',
-    });
+    const refreshToken = jwt.sign(
+      { userId: user.id, status: user.status, email: user.email, name: user.name },
+      process.env.JWT_REFRESH_SECRET,
+      {
+        expiresIn: '7d',
+      }
+    );
 
     return { accessToken, refreshToken, userInfo };
   },

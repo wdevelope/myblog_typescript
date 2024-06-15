@@ -1,5 +1,6 @@
 import jwt from 'jsonwebtoken';
 import { Request, Response, NextFunction } from 'express';
+import cookieOptions from '../config/cookie';
 
 interface UserPayload {
   userId: number;
@@ -11,42 +12,36 @@ const auth = (req: Request, res: Response, next: NextFunction) => {
   const accessToken = req.cookies.accessToken;
   const refreshToken = req.cookies.refreshToken;
 
-  if (!accessToken) {
-    res.status(401).json({ errorMessage: '로그인을 해주세요.' });
-    return;
+  if (accessToken) {
+    try {
+      const decoded = jwt.verify(accessToken, process.env.JWT_SECRET as string) as UserPayload;
+      res.locals.user = decoded;
+      return next();
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  if (!refreshToken) {
+    return res.status(401).json({ errorMessage: '로그인을 해주세요.' });
   }
 
   try {
-    const decoded = jwt.verify(accessToken, process.env.JWT_SECRET as string) as UserPayload;
-    res.locals.user = decoded;
+    const decodedRefreshToken = jwt.verify(refreshToken, process.env.JWT_REFRESH_SECRET as string) as UserPayload;
+
+    const newAccessToken = jwt.sign(
+      { userId: decodedRefreshToken.userId, status: decodedRefreshToken.status },
+      process.env.JWT_SECRET as string,
+      { expiresIn: process.env.JWT_EXPIRES_IN }
+    );
+
+    res.cookie('accessToken', newAccessToken, cookieOptions.accessToken);
+
+    res.locals.user = jwt.verify(newAccessToken, process.env.JWT_SECRET as string) as UserPayload;
     next();
-  } catch (error) {
-    if (!refreshToken) {
-      res.status(401).json({ errorMessage: '로그인을 해주세요.' });
-      return;
-    }
-
-    try {
-      const decodedRefreshToken = jwt.verify(refreshToken, process.env.JWT_REFRESH_SECRET as string) as UserPayload;
-
-      const newAccessToken = jwt.sign(
-        { userId: decodedRefreshToken.userId, status: decodedRefreshToken.status },
-        process.env.JWT_SECRET as string,
-        { expiresIn: '1h' }
-      );
-
-      res.cookie('accessToken', newAccessToken, {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === 'production',
-        maxAge: 1 * 60 * 60 * 1000, // 1시간
-      });
-
-      res.locals.user = jwt.verify(newAccessToken, process.env.JWT_SECRET as string) as UserPayload;
-      next();
-    } catch (ex) {
-      console.error('리프레시 토큰 검증 오류:', ex);
-      res.status(400).json({ errorMessage: '토큰 인증 실패' });
-    }
+  } catch (ex) {
+    console.error('리프레시 토큰 검증 오류:', ex);
+    res.status(400).json({ errorMessage: '토큰 인증 실패' });
   }
 };
 
