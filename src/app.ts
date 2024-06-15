@@ -9,6 +9,7 @@ import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import errorHandler from './middlewares/errorHandler';
 import errorLogger from './middlewares/errorLogger';
+import corsOptions from './config/corsOptions';
 
 const app = express();
 
@@ -16,17 +17,11 @@ const app = express();
 app.use(cookieParser());
 app.use(express.json());
 
-// cors 설정
-app.use(
-  cors({
-    origin: [process.env.FRONT_PORT as string],
-    methods: ['GET', 'POST', 'DELETE', 'PATCH', 'PUT'],
-    credentials: true,
-  })
-);
+// CORS 설정
+app.use(cors(corsOptions));
 
 // API 라우트 설정
-app.use(router);
+app.use('/api', router);
 
 // 프론트 정적 파일
 app.use(express.static(path.join(__dirname, '../../frontend/build')));

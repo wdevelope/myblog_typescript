@@ -10,18 +10,18 @@ import viewRouter from './view';
 import visitorCommentRouter from './visitorComment';
 
 // 유저
-router.use('/api/user', userRouter);
+router.use('/user', userRouter);
 // 카테고리
-router.use('/api/category', categoryRouter);
+router.use('/category', categoryRouter);
 // 서브 카테고리
-router.use('/api/subCategory', subCategoryRouter);
+router.use('/subCategory', subCategoryRouter);
 // 게시판
-router.use('/api/post', postRouter);
+router.use('/post', postRouter);
 // 방명록
-router.use('/api/visitor', visitorRouter);
+router.use('/visitor', visitorRouter);
 // 방명록 댓글
-router.use('/api/visitorComment', visitorCommentRouter);
+router.use('/visitorComment', visitorCommentRouter);
 // 조회수
-router.use('/api/view', viewRouter);
+router.use('/view', viewRouter);
 
 export default router;
