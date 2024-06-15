@@ -16,7 +16,7 @@ app.use(express.json());
 // cors 설정
 app.use(
   cors({
-    origin: [`https://${process.env.FNT_SERVER_PORT}`, 'http://localhost:3000', 'http://localhost:8080'],
+    origin: [`${process.env.FRONT_PORT}`],
     methods: ['GET', 'POST', 'DELETE', 'PATCH', 'PUT'],
     credentials: true,
   })
