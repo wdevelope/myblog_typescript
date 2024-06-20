@@ -28,5 +28,8 @@ study.txt
 
 # 빌드파일 제외
 dist/
+package-lock.json
+logs/
+
 
 # dist

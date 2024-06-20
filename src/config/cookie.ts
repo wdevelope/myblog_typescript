@@ -4,7 +4,7 @@ dotenv.config();
 function getCookieOptions(env: string) {
   const isProduction = env === 'production';
   const sameSiteValue = (process.env.COOKIE_SAMESITE || 'strict').toLowerCase() as 'strict' | 'lax' | 'none';
-  const domain = isProduction ? 'www.w-life.store' : undefined;
+  const domain = isProduction ? '.w-life.store' : undefined;
   return {
     // 엑세스 토큰
     accessToken: {
