@@ -46,6 +46,7 @@ Post.init(
   {
     sequelize,
     modelName: 'post',
+    tableName: 'Posts',
   }
 );
 

@@ -35,6 +35,7 @@ VisitorComment.init(
   {
     sequelize,
     modelName: 'visitorComment',
+    tableName: 'VisitorComments',
   }
 );
 

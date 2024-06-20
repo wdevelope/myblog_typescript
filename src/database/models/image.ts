@@ -27,6 +27,7 @@ Image.init(
     sequelize,
     timestamps: false,
     modelName: 'image',
+    tableName: 'Images',
   }
 );
 

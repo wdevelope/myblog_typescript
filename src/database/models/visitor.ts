@@ -50,6 +50,7 @@ Visitor.init(
   {
     sequelize,
     modelName: 'visitor',
+    tableName: 'Visitors',
   }
 );
 
