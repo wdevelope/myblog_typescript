@@ -38,6 +38,9 @@ export default {
       where: {
         subCategoryId: subCategoryId, // 서브카테고리 ID로 필터링
       },
+      attributes: {
+        exclude: ['content'], // content 속성 제외
+      },
       offset, // 페이지 시작 위치
       limit: pageSize, // 페이지당 아이템 수
     });
