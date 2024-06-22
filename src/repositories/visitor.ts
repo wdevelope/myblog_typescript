@@ -11,7 +11,7 @@ export default {
   // 모든 방명록 조회
   getAllVisitors: async (offset: number, pageSize: number) => {
     const result = await Visitor.findAndCountAll({
-      attributes: { exclude: ['password'] },
+      attributes: { exclude: ['password', 'content'] },
       include: { model: User, attributes: ['name'] },
       order: [['createdAt', 'DESC']],
       offset,
