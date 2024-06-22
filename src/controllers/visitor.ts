@@ -55,8 +55,7 @@ export default {
       await visitorService.visitorPasswordCheck(visitorId, password);
       res.sendStatus(200);
     } catch (error) {
-      console.error(error);
-      res.status(500).json({ errorMessage: error.message });
+      next(error);
     }
   },
 

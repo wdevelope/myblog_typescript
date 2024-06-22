@@ -9,7 +9,7 @@ export default {
       await subCategoryService.createSubCategory(categoryName, name, position);
       res.status(201).json({ message: '서브카테고리 생성 완료' });
     } catch (error) {
-      res.status(400).json({ errorMessage: error.message });
+      next(error);
     }
   },
 
@@ -20,7 +20,7 @@ export default {
       const categories = await subCategoryService.getAllSubCategory(categoryId);
       res.status(200).json(categories);
     } catch (error) {
-      res.status(500).json({ errorMessage: error.message });
+      next(error);
     }
   },
 

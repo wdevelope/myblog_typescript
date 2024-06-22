@@ -62,7 +62,11 @@ export default {
   },
 
   // 로그인 확인
-  checkAuth: async (req: Request, res: Response) => {
-    res.status(200).json({ isLoggedIn: true, user: res.locals.user });
+  checkAuth: async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      res.status(200).json({ isLoggedIn: true, user: res.locals.user });
+    } catch (error) {
+      next(error);
+    }
   },
 };
